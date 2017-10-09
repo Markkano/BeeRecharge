@@ -1,0 +1,251 @@
+@font-face {
+   font-family: "Old Bookshop";
+   src: url("Font/Old Bookshop HK.ttf") format("truetype");
+}
+@font-face {
+   font-family: "Crayon Crumble";
+   src: url("Font/DK Crayon Crumble.ttf") format("truetype");
+}
+
+.marco {
+  background-color: white;
+  width: 200px;
+  height: 200px;
+  padding: 2px;
+  margin-right: 20px;
+}
+
+.descripcion {
+  margin: auto;
+  width: 800px;
+  height: inherit;
+  background-color: green;
+  padding: 15px;
+}
+
+.centrar {
+  margin: auto;
+}
+
+.expandir-fondo {
+  background-size: 100% 100%; /* Expande el background */
+}
+
+.pizarra {
+  background-image: url("/Css/pizarra.jpg");
+  border: 2px solid;
+  padding-bottom: 15px;
+  font-size: 20px;
+  color: white;
+}
+
+.fondo-madera {
+  background-image: url("/Css/background.jpg");
+  background-attachment: fixed;
+}
+
+.link-cerveza {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+.link-cerveza:hover {
+  text-decoration: underline;
+}
+
+.tabla-envases {
+  padding: 10px;
+}
+.tabla-envases td {
+  padding: 5px 15px 5px 15px;
+}
+
+.volver {
+  font-size: 20px;
+  background-color: black;
+  color: white;
+  display: inline-block;
+  padding: 15px;
+  text-decoration: none;
+}
+
+.volver:hover {
+  text-decoration: underline;
+}
+
+/********** VENTANA POPUP **********/
+/*
+popup: <div> que define el popup.
+popup-texto: <span> dentro del <div> popup que contiene.
+
+<div class="popup">
+  <span class="popup-texto" id="popup">
+    <form action="#" method="post">
+      <table>
+        <tr>
+          <td colspan="2">Amber Lager Premium</td>
+        </tr>
+        <tr>
+          <td colspan="2">Botellon de 2 Litros</td>
+        </tr>
+        <tr>
+          <td><label id="label" for="cantidad">Cantidad</label></td>
+          <td><input id="cant" type="number" name="cantidad"></td>
+        </tr>
+        <tr>
+          <td><input type="submit" value="Aceptar"></td>
+        </tr>
+      </table>
+    </form>
+  </span>
+</div>
+*/
+.popup {
+  display: inline-block;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 370px;
+}
+
+.popup .popup-texto {
+  visibility: hidden;
+  background-color: white;
+  color: black;
+  border-radius: 6px;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+  padding: 10px;
+}
+
+.popup .popup-texto td {
+  padding: 5px 10px 5px 10px;
+}
+
+/* Popup flechita */
+.popup .popup-texto::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+
+/* Muestra el Popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Animacion del popup */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.tabla-cervezas {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-cervezas td {
+  padding: 0px;
+  padding-left: 20px;
+}
+
+.tabla-cervezas td:nth-child(1), .tabla-cervezas td:nth-child(5) {
+  width: 100px;
+}
+
+.tabla-cervezas td:nth-child(4) {
+  border-right: 2px solid white;
+}
+
+.link-cerveza {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+.link-cerveza:hover {
+  text-decoration: underline;
+}
+
+
+/********** DROPDOWN **********/
+/*
+dropdown-contenedor: Se aplica al <ul> que contiene los enlaces.
+dropdown-link: Link dentro de la barra de navegacion
+dropdown-btn Boton que despliega un menu
+dropdown-contenido: div que contiene los enlaces del menu desplegable
+
+<ul class="dropdown-contenedor">
+  <li class="dropdown">
+    <a href="#" class="dropdown-btn">Gestion Cervezas</a>
+    <div class="dropdown-contenido">
+      <a href="#">Alta</a>
+      <a href="#">Baja</a>
+      <a href="#">Modificacion</a>
+    </div>
+  </li>
+</ul>
+*/
+.dropdown-contenedor {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.dropdown-contenedor li {
+  float: left;
+}
+
+.dropdown-link, .dropdown-btn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown-link:hover, .dropdown:hover .dropdown-btn {
+  background-color: #111;
+}
+
+.dropdown-contenido {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-contenido * {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-contenido *:hover {
+  background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-contenido {
+  display: block;
+}

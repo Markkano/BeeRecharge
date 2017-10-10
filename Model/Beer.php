@@ -9,8 +9,8 @@ class Beer {
 	private $ibu;
 	private $srm;
 	private $graduation;
-	
-	public function __construct($name, $description, $price, $image, $ibu, $srm, $graduation) {
+
+	public function __construct($name, $description, $price, $ibu, $srm, $graduation, $image = "") {
 		$this->setName($name);
 		$this->setDescription($description);
 		$this->setPrice($price);

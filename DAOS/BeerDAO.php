@@ -1,16 +1,28 @@
 <?php namespace DAOS;
 use DAOS\Connection as Connection;
 use Model\Beer as Beer;
-
-
 class BeerDAO extends SingletonDAO implements IDAO {
 
   public function __construct() {}
 
   public function Insert($object) {
+    $pdo = Connection::getInstance();
+    $stmt = $pdo->Prepare("INSERT INTO Beers (name, description, price, graduation, ibu, srm, image) values (?,?,?,?,?,?,?)");
+    $stmt->execute(array(
+      $object->getName(),
+      $object->getDescription(),
+      $object->getPrice(),
+      $object->getGraduation(),
+      $object->getIbu(),
+      $object->getSrm(),
+      $object->getImage()
+    ));
   }
 
   public function Delete($object) {
+    $pdo = Connection::getInstance();
+    $stmt = $pdo->Prepare("DELETE FROM Beers WHERE id_beer = ?");
+    $stmt->execute(array($object->getId()));
   }
 
   public function SelectByID($id) {
@@ -55,5 +67,17 @@ class BeerDAO extends SingletonDAO implements IDAO {
   }
 
   public function Update($object) {
+    $pdo = Connection::getInstance();
+    $stmt = $pdo->Prepare("UPDATE Beers SET (name = ?, description = ?, price = ?, graduation = ?, ibu = ?, srm = ?, image = ?) WHERE id_beer = ?");
+    $stmt->execute(array(
+      $object->getName(),
+      $object->getDescription(),
+      $object->getPrice(),
+      $object->getGraduation(),
+      $object->getIbu(),
+      $object->getSrm(),
+      $object->getImage(),
+      $object->getId()
+    ));
   }
 } ?>

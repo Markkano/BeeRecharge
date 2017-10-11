@@ -36,9 +36,10 @@ class Request {
     if($methodRequest == 'GET') {
       if(!empty($UrlArray)) {
         $this->parameters = $UrlArray;
-      } else {
-        $this->parameters = $_POST;
       }
+    }
+    else {
+      $this->parameters = $_POST;
     }
   }
 

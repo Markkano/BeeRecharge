@@ -161,12 +161,12 @@ popup-texto: <span> dentro del <div> popup que contiene.
 }
 
 .tabla-cervezas td {
-  padding: 0px;
+  padding: 10px;
   padding-left: 20px;
 }
 
 .tabla-cervezas td:nth-child(1), .tabla-cervezas td:nth-child(5) {
-  width: 100px;
+  width: 200px;
 }
 
 .tabla-cervezas td:nth-child(4) {

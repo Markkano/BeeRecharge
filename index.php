@@ -17,6 +17,8 @@ echo($request->getController());
 echo "<br/> Method: ";
 echo($request->getMethod());
 echo "<br/> Parameters: ";
+echo "Method: ".$request->getRequestMethod();
+echo "<br/>";
 print_r($request->getParameters());
 echo "<br/>";*/
 Router::Route($request);

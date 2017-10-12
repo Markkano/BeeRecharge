@@ -34,9 +34,9 @@ class BeerDAO extends SingletonDAO implements IDAO {
           $result['name'],
           $result['description'],
           $result['price'],
-          $result['graduation'],
           $result['ibu'],
           $result['srm'],
+          $result['graduation'],
           $result['image']
         );
         $beer->setId($result['id_beer']);
@@ -55,9 +55,10 @@ class BeerDAO extends SingletonDAO implements IDAO {
           $result['name'],
           $result['description'],
           $result['price'],
-          $result['graduation'],
           $result['ibu'],
-          $result['srm']
+          $result['srm'],
+          $result['graduation'],
+          $result['image']
         );
         $beer->setId($result['id_beer']);
         array_push($cervezas, $beer);

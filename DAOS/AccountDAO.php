@@ -41,7 +41,7 @@ class AccountDAO extends SingletonDAO implements IDAO {
 
   public function SelectByUsername($username) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Accounts WHERE username = '?'");
+    $stmt = $pdo->Prepare("SELECT * FROM Accounts WHERE username = ?");
     if ($stmt->execute(array($username))) {
       if ($result = $stmt->fetch()) {
         $account = new Account(

@@ -15,7 +15,7 @@ class Account	{
 	}
 
 	public function setId($value) {
-		$this->id_account = $value
+		$this->id_account = $value;
 	}
 
 	public function getId()	{

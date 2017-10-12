@@ -8,12 +8,12 @@ class OrderLine {
 	private $packaging;
 	private $order;
 
-	public function __construct($amount, $price, $beer, $packaging, $order)	{
-		$this->amount = $amount;
-		$this->price = $price;
-		$this->beer = $beer;
-		$this->packaging = $packaging;
-		$this->order = $order;
+public function __construct($amount, $price, $beer, $packaging, $order)	{
+		$this->setAmount($amount);
+		$this->setPrice($price);
+		$this->setBeer($beer);
+		$this->setPackaging($packaging);
+		$this->setOrder($order);
 	}
 
 	public function getId(){

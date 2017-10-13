@@ -83,4 +83,17 @@ class Beer {
 	public function setGraduation($value) {
 		$this->graduation = $value;
 	}
+
+	public function toJson() {
+    return [
+			'id_beer' => $this->id_beer,
+			'name' => $this->name,
+			'description' => $this->description,
+			'price' => $this->price,
+			'ibu' => $this->ibu,
+			'srm' => $this->srm,
+			'graduation' => $this->graduation,
+			'image' => $this->image
+		];
+  }
 } ?>

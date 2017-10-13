@@ -6,15 +6,17 @@ class Staff extends Person {
 	private $account;
 	private $role;
 
-	public function __construct ($name, $surname, $dni, $address, $phone, $salary) {
+	public function __construct ($name, $surname, $dni, $address, $phone, $salary, $account, $role) {
 		parent::__construct($name, $surname, $dni, $address, $phone);
 		$this->setSalary($salary);
+		$this->setAccount($account);
+		$this->setRole($role);
 	}
 
 	public function setId($id_staff) {
 		$this->id_staff = $id_staff;
 	}
-	
+
 	public function getId()	{
 		return $this->id_staff;
 	}
@@ -28,7 +30,7 @@ class Staff extends Person {
 	}
 
 	public function setAccount(Account $account) {
-		$this->account = new Account($account);
+		$this->account = $account;
 	}
 
 	public function getAccount() {
@@ -36,7 +38,7 @@ class Staff extends Person {
 	}
 
 	public function setRole(Role $role)	{
-		$this->role = new Role($role);
+		$this->role = $role;
 	}
 
 	public function getRole()	{

@@ -10,6 +10,8 @@ class Subsidiary {
 	public function __construct($address, $phone, $lat = 0.0, $lon = 0.0)	{
 		$this->setAddress($address);
 		$this->setPhone($phone);
+		$this->setLat($lat);
+		$this->setLon($lon);
 	}
 
 	public function getId() {
@@ -51,4 +53,14 @@ class Subsidiary {
 	public function setLon($value) {
 		$this->lon = $value;
 	}
+
+	public function toJson() {
+    return [
+			'id_subsidiary' => $this->id_subsidiary,
+			'address' => $this->address,
+			'phone' => $this->phone,
+			'lat' => $this->lat,
+			'lon' => $this->lon
+		];
+  }
 } ?>

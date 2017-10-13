@@ -4,8 +4,9 @@ class Client extends Person	{
 	private $id_person;
 	private $account;
 
-	public function __construct ($name, $surname, $dni, $address, $phone)	{
+	public function __construct ($name, $surname, $dni, $address, $phone, $account = null)	{
 		parent::__construct($name, $surname, $dni, $address, $phone);
+		$this->setAccount($account);
 	}
 
 	public function setId($value) {
@@ -16,8 +17,8 @@ class Client extends Person	{
 		return $this->id_person;
 	}
 
-	public function setAccount(Account $account) {
-		$this->account = new Account($account);
+	public function setAccount($value) {
+		$this->account = $value;
 	}
 
 	public function getAccount() {

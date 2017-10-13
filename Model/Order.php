@@ -4,11 +4,13 @@ class Order {
 	private $order_number;
 	private $order_date;
 	private $state;
+	private $client;
 
-	public function __construct($order_number, $order_date, $state) {
+	public function __construct($order_number, $order_date, $state, $client) {
 		$this->setOrderNumber($order_number);
 		$this->setOrderDate($order_date);
 		$this->setState($state);
+
 	}
 
 	public function getOrderNumber() {
@@ -23,6 +25,10 @@ class Order {
 		return $this->state;
 	}
 
+	public function getClient() {
+		return $this->client;
+	}
+
 	public function setOrderNumber($value) {
 		$this->order_number = $value;
 	}
@@ -33,5 +39,9 @@ class Order {
 
 	public function setState($value) {
 		$this->state = $value;
+	}
+
+	public function setClient($value) {
+		$this->client = $value;
 	}
 } ?>

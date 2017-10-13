@@ -19,7 +19,6 @@
   margin: auto;
   width: 800px;
   height: inherit;
-  background-color: green;
   padding: 15px;
 }
 
@@ -61,16 +60,19 @@
   padding: 5px 15px 5px 15px;
 }
 
-.volver {
-  font-size: 20px;
-  background-color: black;
+.btn-volver {
+  background-color: rgb(19, 23, 21);
+  border: none;
   color: white;
+  padding: 15px 32px;
+  text-align: center;
   display: inline-block;
-  padding: 15px;
+  font-size: 20px;
+  border-radius: 8px;
   text-decoration: none;
 }
 
-.volver:hover {
+.btn-volver:hover {
   text-decoration: underline;
 }
 
@@ -248,4 +250,142 @@ dropdown-contenido: div que contiene los enlaces del menu desplegable
 
 .dropdown:hover .dropdown-contenido {
   display: block;
+}
+
+
+/********** LOGIN **********/
+.login-register {
+  text-align: center;
+  font-size: 17px;
+  transition: font-size 0.02s;
+}
+
+.login-register a {
+  color: white;
+  text-decoration: none;
+}
+
+.login-register a:hover {
+  text-decoration: underline;
+}
+
+.btn-login {
+  width: 100%;
+  background-color: rgb(50, 61, 54);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: all 1s;
+}
+
+.btn-login:hover {
+  background-color: rgb(129, 143, 123);
+}
+
+.img-login {
+   width: 300px;
+}
+
+.tabla-login {
+  width: 300px;
+  margin-top: 15px;
+}
+
+.tabla-login td {
+  padding: 10px;
+}
+
+.tabla-login input {
+  width: 100%;
+}
+
+.tabla-register {
+  width: 450px;
+  margin-top: 15px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.tabla-register td {
+  padding: 8px 20px 8px 20px;
+}
+
+.tabla-register input {
+  width: 100%;
+}
+
+/********** GESTION **********/
+.form {
+  padding-top: 30px;
+}
+
+.form table {
+  border-collapse: collapse;
+  width: 350px;
+}
+
+.form td {
+  padding: 5px;
+}
+
+.form label {
+  font-weight: bold;
+}
+
+.form input, .form textarea, .form select {
+  margin-left: 20px;
+  width: 100%
+}
+
+.form select {
+  background-color: #333;
+  padding: 8px;
+  border: none;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.submit {
+  margin-top: 10px;
+  width: 100%;
+  background-color: #333;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.submit:hover {
+  background-color: #111;
+}
+
+.alert {
+  margin: auto;
+  width: 350px;
+  padding: 20px 10px;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.green {
+  background-color: rgb(74, 227, 84);
+}
+
+.yellow {
+  background-color: rgb(246, 244, 0);
+}
+
+.red {
+  background-color: rgb(255, 0, 0);
 }

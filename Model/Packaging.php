@@ -43,4 +43,13 @@ class Packaging {
 	public function setFactor($value){
 		$this->factor = $value;
 	}
+
+	public function toJson() {
+    return [
+			'id_packaging' => $this->id_packaging,
+			'description' => $this->description,
+			'capacity' => $this->capacity,
+			'factor' => $this->factor
+		];
+  }
 } ?>

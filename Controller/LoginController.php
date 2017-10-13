@@ -21,7 +21,13 @@ class LoginController {
     if (isset($account)) {
       if(strcmp ($account->getUserName() , $username ) == 0 && (strcmp ($account->getPassword() , $password )) == 0) {
         $_SESSION['account'] = $account;
-        header('location: /listaCervezas');
+        if (true) {
+          header('location: /listaCervezas');
+        } else {
+          header('location: /gestion');
+        }
+      } else {
+        echo "Credenciales Incorrectas";
       }
     }
      #TODO Credenciales Incorrectas

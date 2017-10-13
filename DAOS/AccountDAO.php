@@ -24,7 +24,7 @@ class AccountDAO extends SingletonDAO implements IDAO {
 
   public function SelectByID($id) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Accounts where id_account = ?");
+    $stmt = $pdo->Prepare("SELECT * FROM Accounts where id_account = ? LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $account = new Account(
@@ -41,7 +41,7 @@ class AccountDAO extends SingletonDAO implements IDAO {
 
   public function SelectByUsername($username) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Accounts WHERE username = ?");
+    $stmt = $pdo->Prepare("SELECT * FROM Accounts WHERE username = ? LIMIT 1");
     if ($stmt->execute(array($username))) {
       if ($result = $stmt->fetch()) {
         $account = new Account(
@@ -62,7 +62,7 @@ class AccountDAO extends SingletonDAO implements IDAO {
     $stmt = $pdo->Prepare("SELECT * FROM Accounts");
     if ($stmt->execute()) {
       while ($result = $stmt->fetch()) {
-        $account = new Beer(
+        $account = new Account(
           $result['username'],
           $result['email'],
           $result['password'],
@@ -77,7 +77,7 @@ class AccountDAO extends SingletonDAO implements IDAO {
 
   public function Update($object) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("UPDATE Beers SET (name = ?, description = ?, price = ?, graduation = ?, ibu = ?, srm = ?, image = ?) WHERE id_account = ?");
+    $stmt = $pdo->Prepare("UPDATE Accounts SET (name = ?, description = ?, price = ?, graduation = ?, ibu = ?, srm = ?, image = ?) WHERE id_account = ?");
     $stmt->execute(array(
       $object->getName(),
       $object->getDescription(),

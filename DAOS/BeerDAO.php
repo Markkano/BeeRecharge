@@ -17,6 +17,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
       $object->getSrm(),
       $object->getImage()
     ));
+    $object->setId($pdo->LastInsertId());
   }
 
   public function Delete($object) {
@@ -27,7 +28,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
 
   public function SelectByID($id) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Beers where id_beer = ?");
+    $stmt = $pdo->Prepare("SELECT * FROM Beers where id_beer = ? LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $beer = new Beer(

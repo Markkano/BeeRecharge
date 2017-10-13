@@ -23,7 +23,7 @@ class PackagingDAO extends SingletonDAO implements IDAO {
 
   public function SelectByID($id) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Packagings where id_packaging = ?");
+    $stmt = $pdo->Prepare("SELECT * FROM Packagings where id_packaging = ? LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $packaging = new Packaging(

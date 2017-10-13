@@ -1,16 +1,18 @@
 <?php namespace DAOS;
 use DAOS\Connection as Connection;
+use DAOS\AccountDAO as AccountDAO;
 use Model\Client as Client;
 class ClientDAO extends SingletonDAO implements IDAO {
 
   private $AccountDAO;
 
   public function __construct() {
-    $this->$AccountDAO = new AccountDAO();
+    $this->AccountDAO = new AccountDAO();
   }
 
   public function Insert($object) {
     $pdo = Connection::getInstance();
+    $this->AccountDAO->Insert($object->getAccount());
     $stmt = $pdo->Prepare("INSERT INTO Clients (name, surname, dni, address, phone, id_account) values (?,?,?,?,?,?)");
     $stmt->execute(array(
       $object->getName(),
@@ -18,7 +20,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
       $object->getDni(),
       $object->getAddress(),
       $object->getPhone(),
-      $object->getAccount()->getId()
+      $pdo->LastInsertId()
     ));
   }
 
@@ -30,7 +32,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
 
   public function SelectByID($id) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Clients where id_client = ?");
+    $stmt = $pdo->Prepare("SELECT * FROM Clients where id_client = ?  LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $account = $this->$AccountDAO->SelectByID($result['id_account']);

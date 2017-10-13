@@ -34,7 +34,7 @@ class StaffDAO extends SingletonDAO implements IDAO {
 
   public function SelectByID($id) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Staff where id_staff = ?");
+    $stmt = $pdo->Prepare("SELECT * FROM Staff where id_staff = ? LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $account = $this->$AccountDAO->SelectByID($result['id_account']);

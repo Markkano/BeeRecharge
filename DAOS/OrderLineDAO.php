@@ -38,7 +38,7 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
 
   public function SelectByID($id) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM OrderLines where id_order_line = ?");
+    $stmt = $pdo->Prepare("SELECT * FROM OrderLines where id_order_line = ? LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $beer = $this->$BeerDAO->SelectByID($result['id_beer']);

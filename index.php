@@ -10,16 +10,8 @@ Autoload::Start();
 use Config\Request as Request;
 use Config\Router as Router;
 
+session_start();
+
 $request = Request::getInstance();
-/*echo "URL: " . $_GET['url'];
-echo "<br/> Controller: ";
-echo($request->getController());
-echo "<br/> Method: ";
-echo($request->getMethod());
-echo "<br/> Parameters: ";
-echo "Method: ".$request->getRequestMethod();
-echo "<br/>";
-print_r($request->getParameters());
-echo "<br/>";*/
 Router::Route($request);
 ?>

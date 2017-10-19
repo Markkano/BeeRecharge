@@ -18,12 +18,36 @@ class BeerDAO extends SingletonDAO implements IDAO {
       $object->getImage()
     ));
     $object->setId($pdo->LastInsertId());
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+      $errors = $stmt->errorInfo();
+      return $errors[2];
+    }
   }
 
   public function Delete($object) {
     $pdo = Connection::getInstance();
     $stmt = $pdo->Prepare("DELETE FROM Beers WHERE id_beer = ?");
     $stmt->execute(array($object->getId()));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+      $errors = $stmt->errorInfo();
+      return $errors[2];
+    }
+  }
+
+  public function DeleteById($id) {
+    $pdo = Connection::getInstance();
+    $stmt = $pdo->Prepare("DELETE FROM Beers WHERE id_beer = ?");
+    $stmt->execute(array($id));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+      $errors = $stmt->errorInfo();
+      return $errors[2];
+    }
   }
 
   public function SelectByID($id) {
@@ -41,8 +65,13 @@ class BeerDAO extends SingletonDAO implements IDAO {
           $result['image']
         );
         $beer->setId($result['id_beer']);
-        return $beer;
       }
+    }
+    if($stmt->errorCode() == 0) {
+      return $beer;
+    } else {
+      $errors = $stmt->errorInfo();
+      return $errors[2];
     }
   }
 
@@ -65,12 +94,17 @@ class BeerDAO extends SingletonDAO implements IDAO {
         array_push($cervezas, $beer);
       }
     }
-    return $cervezas;
+    if($stmt->errorCode() == 0) {
+      return $cervezas;
+    } else {
+      $errors = $stmt->errorInfo();
+      return $errors[2];
+    }
   }
 
   public function Update($object) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("UPDATE Beers SET (name = ?, description = ?, price = ?, graduation = ?, ibu = ?, srm = ?, image = ?) WHERE id_beer = ?");
+    $stmt = $pdo->Prepare("UPDATE Beers SET name = ?, description = ?, price = ?, graduation = ?, ibu = ?, srm = ?, image = ? WHERE id_beer = ?");
     $stmt->execute(array(
       $object->getName(),
       $object->getDescription(),
@@ -81,5 +115,11 @@ class BeerDAO extends SingletonDAO implements IDAO {
       $object->getImage(),
       $object->getId()
     ));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+      $errors = $stmt->errorInfo();
+      return $errors[2];
+    }
   }
 } ?>

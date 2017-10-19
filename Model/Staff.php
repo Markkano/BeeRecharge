@@ -29,7 +29,7 @@ class Staff extends Person {
 		return $this->salary;
 	}
 
-	public function setAccount(Account $account) {
+	public function setAccount($account) {
 		$this->account = $account;
 	}
 
@@ -37,11 +37,25 @@ class Staff extends Person {
 		return $this->account;
 	}
 
-	public function setRole(Role $role)	{
+	public function setRole($role)	{
 		$this->role = $role;
 	}
 
 	public function getRole()	{
 		return $this->role;
 	}
+
+	public function toJson() {
+    return [
+			'id_staff' => $this->id_staff,
+			'name' => $this->name,
+			'surname' => $this->surname,
+			'dni' => $this->dni,
+			'address' => $this->address,
+			'phone' => $this->phone,
+			'salary' => $this->salary,
+			'account' => $this->account->toJson(),
+			'role' => $this->role->toJson()
+		];
+  }
 } ?>

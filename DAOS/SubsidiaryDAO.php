@@ -1,6 +1,8 @@
 <?php namespace DAOS;
+
 use DAOS\Connection as Connection;
 use Model\Subsidiary as Subsidiary;
+
 class SubsidiaryDAO extends SingletonDAO implements IDAO {
 
   public function __construct() {}
@@ -15,12 +17,36 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
       $object->getLon()
     ));
     $object->setId($pdo->LastInsertId());
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 
   public function Delete($object) {
     $pdo = Connection::getInstance();
     $stmt = $pdo->Prepare("DELETE FROM Subsidiarys WHERE id_subsidiary = ?");
     $stmt->execute(array($object->getId()));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
+  }
+
+  public function DeleteById($id) {
+    $pdo = Connection::getInstance();
+    $stmt = $pdo->Prepare("DELETE FROM Subsidiarys WHERE id_subsidiary = ?");
+    $stmt->execute(array($id));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 
   public function SelectByID($id) {
@@ -35,8 +61,13 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
           $result['lon']
         );
         $subsidiary->setId($result['id_subsidiary']);
-        return $subsidiary;
       }
+    }
+    if($stmt->errorCode() == 0) {
+      return $subsidiary;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
     }
   }
 
@@ -56,12 +87,17 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
         array_push($lista, $subsidiary);
       }
     }
-    return $lista;
+    if($stmt->errorCode() == 0) {
+      return $lista;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 
   public function Update($object) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("UPDATE Subsidiarys SET (address = ?, phone = ?, lat = ?, lon = ?) WHERE id_subsidiary = ?");
+    $stmt = $pdo->Prepare("UPDATE Subsidiarys SET address = ?, phone = ?, lat = ?, lon = ? WHERE id_subsidiary = ?");
     $stmt->execute(array(
       $object->getAddress(),
       $object->getPhone(),
@@ -69,5 +105,11 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
       $object->getLon(),
       $object->getId()
     ));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 } ?>

@@ -24,5 +24,9 @@ class Connection {
   public function LastInsertId() {
     return $this->pdo->lastInsertId();
   }
+
+  public function ErrorInfo() {
+    return $this->pdo->errorInfo();
+  }
 }
 ?>

@@ -1,12 +1,12 @@
 <?php namespace Model;
 
 abstract class Person	{
-	private $idperson;
-	private $name;
-	private $surname;
-	private $dni;
-	private $address;
-	private $phone;
+	protected $idperson;
+	protected $name;
+	protected $surname;
+	protected $dni;
+	protected $address;
+	protected $phone;
 
 	public function __construct($name, $surname, $dni, $address, $phone) {
 		$this->setName($name);

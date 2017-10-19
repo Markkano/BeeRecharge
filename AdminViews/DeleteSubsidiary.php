@@ -6,6 +6,9 @@
 <form class="form" name="form" action="/GestionSubsidiary/DeleteSubsidiary" method="post" onsubmit="return Confirmar();">
   <table class="centrar">
     <tr>
+      <td><h1>Eliminar Sucursal</h1></td>
+    </tr>
+    <tr>
       <td colspan="2">
         <select name="subsidiary" onchange="Actualizar()">
           <?php foreach($list as $subsidiary) { ?>

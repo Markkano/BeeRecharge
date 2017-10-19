@@ -5,11 +5,12 @@ class Order {
 	private $order_date;
 	private $state;
 	private $client;
+	private $subsidiary;
 
-	public function __construct($order_number, $order_date, $state, $client) {
-		$this->setOrderNumber($order_number);
+	public function __construct($order_date, $state, $client, $subsidiary = null) {
 		$this->setOrderDate($order_date);
 		$this->setState($state);
+		$this->setSubsidiary($subsidiary);
 
 	}
 
@@ -27,6 +28,14 @@ class Order {
 
 	public function getClient() {
 		return $this->client;
+	}
+
+	public function getSubsidiary() {
+		return $this->subsidiary;
+	}
+
+	public function setSubsidiary($value) {
+		$this->subsidiary = $value;
 	}
 
 	public function setOrderNumber($value) {

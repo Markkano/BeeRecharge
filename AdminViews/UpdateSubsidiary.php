@@ -7,6 +7,9 @@
 <form class="form" name="form" action="/gestionSubsidiary/UpdateSubsidiary" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
+      <td><h1>Modificar Sucursal</h1></td>
+    </tr>
+    <tr>
       <td colspan="2">
         <select name="id" id="subsidiary" onchange="Actualizar()">
           <?php foreach($list as $subsidiary) { ?>
@@ -65,6 +68,8 @@ function Actualizar() {
     Mostrar(respuestaAjax);
   });
 }
+
+window.onload = function() {Actualizar();}
 </script>
 </body>
 </html>

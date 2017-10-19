@@ -6,6 +6,9 @@
 <form class="form" name="form" action="/gestionPackaging/UpdatePackaging" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
+      <td><h1>Modificar Envase</h1></td>
+    </tr>
+    <tr>
       <td colspan="2">
         <select name="id" id="packaging" onchange="Actualizar()">
           <?php foreach($list as $beer) { ?>
@@ -24,13 +27,13 @@
       <td><label for="capacity">Capacidad</label></td>
     </tr>
     <tr>
-      <td colspan="2"><input type="number" step="0.1" min="0" name="capacity" value=""></td>
+      <td colspan="2"><input type="number" step="0.01" min="0" name="capacity" value=""></td>
     </tr>
     <tr>
       <td><label for="factor">Factor de descuento</label></td>
     </tr>
     <tr>
-      <td colspan="2"><input type="number" step="0.1" min="0" name="factor" value="1.0"></td>
+      <td colspan="2"><input type="number" step="0.01" min="0" name="factor" value="1.0"></td>
     </tr>
     <tr>
       <td colspan="2"><input type="submit" class="submit" value="Guardar cambios"></td>
@@ -67,6 +70,8 @@ function Actualizar() {
     Mostrar(respuestaAjax);
   });
 }
+
+window.onload = function() {Actualizar();}
 </script>
 </body>
 </html>

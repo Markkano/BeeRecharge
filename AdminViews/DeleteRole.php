@@ -3,16 +3,16 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/gestionBeer/DeleteBeer" method="post" onsubmit="return Confirmar();">
+<form class="form" name="form" action="/gestionRole/DeleteRole" method="post" onsubmit="return Confirmar();">
   <tr>
-    <td><h1>Eliminar Cerveza</h1></td>
+    <td><h1>Eliminar Rol</h1></td>
   </tr>
   <table class="centrar">
     <tr>
       <td colspan="2">
-        <select name="beer" onchange="Actualizar()">
-          <?php foreach($list as $beer) { ?>
-          <option value="<?=$beer->getId();?>"><?=$beer->getName();?></option>
+        <select name="role" onchange="Actualizar()">
+          <?php foreach($list as $role) { ?>
+          <option value="<?=$role->getId();?>"><?=$role->getRolename();?></option>
           <?php } ?>
         </select>
       </td>
@@ -21,18 +21,18 @@
       <input hidden="hidden" type="text" name="name" value="">
     </tr>
     <tr>
-      <td colspan="2"><input type="submit" class="submit" value="Eliminar Cerveza"></td>
+      <td colspan="2"><input type="submit" class="submit" value="Eliminar Rol"></td>
     </tr>
   </table>
 </form>
 
 <script type="text/javascript">
 function Actualizar() {
-  form.name.value = document.form.beer.options[form.beer.selectedIndex].text;
+  form.name.value = document.form.role.options[form.role.selectedIndex].text;
 }
 
 function Confirmar() {
-  return confirm("Desea elminar la Cerveza?");
+  return confirm("Desea elminar el Rol?");
 }
 
 window.onload = function() {Actualizar();}

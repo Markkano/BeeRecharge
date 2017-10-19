@@ -6,6 +6,9 @@
 <form class="form" name="form" action="/gestionBeer/UpdateBeer" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
+      <td><h1>Modificar Cerveza</h1></td>
+    </tr>
+    <tr>
       <td colspan="2">
         <select name="id" id="beer" onchange="Actualizar()">
           <?php foreach($list as $beer) { ?>
@@ -98,6 +101,8 @@ function Actualizar() {
     Mostrar(respuestaAjax);
   });
 }
+
+window.onload = function() {Actualizar();}
 </script>
 </body>
 </html>

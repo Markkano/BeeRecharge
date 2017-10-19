@@ -7,6 +7,9 @@
 <form class="form" name="form" action="/gestionSubsidiary/SubmitSubsidiary" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
+      <td><h1>Nueva Sucursal</h1></td>
+    </tr>
+    <tr>
       <td><label for="address">Dirección</label></td>
     </tr>
     <tr>

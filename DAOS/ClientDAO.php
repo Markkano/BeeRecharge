@@ -2,6 +2,7 @@
 use DAOS\Connection as Connection;
 use DAOS\AccountDAO as AccountDAO;
 use Model\Client as Client;
+
 class ClientDAO extends SingletonDAO implements IDAO {
 
   private $AccountDAO;
@@ -22,12 +23,25 @@ class ClientDAO extends SingletonDAO implements IDAO {
       $object->getPhone(),
       $pdo->LastInsertId()
     ));
+    $object->setId($pdo->LastInsertId());
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 
   public function Delete($object) {
     $pdo = Connection::getInstance();
     $stmt = $pdo->Prepare("DELETE FROM Clients WHERE id_client = ?");
     $stmt->execute(array($object->getId()));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 
   public function SelectByID($id) {
@@ -35,7 +49,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
     $stmt = $pdo->Prepare("SELECT * FROM Clients where id_client = ?  LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
-        $account = $this->$AccountDAO->SelectByID($result['id_account']);
+        $account = $this->AccountDAO->SelectByID($result['id_account']);
         $client = new Client(
           $result['name'],
           $result['surname'],
@@ -45,8 +59,13 @@ class ClientDAO extends SingletonDAO implements IDAO {
           $account
         );
         $client->setId($result['id_client']);
-        return $client;
       }
+    }
+    if($stmt->errorCode() == 0) {
+      return $client;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
     }
   }
 
@@ -55,7 +74,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
     $stmt = $pdo->Prepare("SELECT * FROM Clients where id_account = ?  LIMIT 1");
     if ($stmt->execute(array($object->getId()))) {
       if ($result = $stmt->fetch()) {
-        $account = $this->$AccountDAO->SelectByID($result['id_account']);
+        $account = $this->AccountDAO->SelectByID($result['id_account']);
         $client = new Client(
           $result['name'],
           $result['surname'],
@@ -65,8 +84,17 @@ class ClientDAO extends SingletonDAO implements IDAO {
           $account
         );
         $client->setId($result['id_client']);
-        return $client;
       }
+    }
+    if($stmt->errorCode() == 0) {
+      if (isset($client)) {
+        return $client;
+      } else {
+        return null;
+      }
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
     }
   }
 
@@ -76,7 +104,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
     $stmt = $pdo->Prepare("SELECT * FROM Clients");
     if ($stmt->execute()) {
       while ($result = $stmt->fetch()) {
-        $account = $this->$AccountDAO->SelectByID($result['id_account']);
+        $account = $this->AccountDAO->SelectByID($result['id_account']);
         $client = new Client(
           $result['name'],
           $result['surname'],
@@ -89,12 +117,17 @@ class ClientDAO extends SingletonDAO implements IDAO {
         array_push($list, $client);
       }
     }
-    return $list;
+    if($stmt->errorCode() == 0) {
+      return $list;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 
   public function Update($object) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("UPDATE Clients SET (name = ?, surname = ?, dni = ?, address = ?, phone = ?, id_account = ?) WHERE id_client = ?");
+    $stmt = $pdo->Prepare("UPDATE Clients SET name = ?, surname = ?, dni = ?, address = ?, phone = ?, id_account = ? WHERE id_client = ?");
     $stmt->execute(array(
       $object->getName(),
       $object->getSurname(),
@@ -104,5 +137,11 @@ class ClientDAO extends SingletonDAO implements IDAO {
       $object->getAccount()->getId(),
       $object->getId()
     ));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 } ?>

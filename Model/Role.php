@@ -33,4 +33,12 @@ class Role {
 	public function getDescription() {
 		return $this->description;
 	}
+
+	public function toJson() {
+    return [
+			'id_role' => $this->id_role,
+			'rolename' => $this->rolename,
+			'description' => $this->description
+		];
+  }
 } ?>

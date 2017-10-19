@@ -53,4 +53,14 @@ class Account	{
 	public function getImage() {
 		return $this->image;
 	}
+
+	public function toJson() {
+    return [
+			'id_account' => $this->id_account,
+			'name' => $this->username,
+			'email' => $this->email,
+			'password' => $this->password,
+			'image' => $this->image
+		];
+  }
 } ?>

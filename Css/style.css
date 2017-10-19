@@ -287,7 +287,7 @@ dropdown-contenido: div que contiene los enlaces del menu desplegable
 }
 
 .img-login {
-   width: 300px;
+   width: 100%;
 }
 
 .tabla-login {
@@ -295,13 +295,19 @@ dropdown-contenido: div que contiene los enlaces del menu desplegable
   margin-top: 15px;
 }
 
-.tabla-login td {
-  padding: 10px;
-}
-
 .tabla-login input {
+  margin-bottom: 15px;
   width: 100%;
 }
+
+.tabla-login input[type=text], .tabla-login input[type=password] {
+    width: 300px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: none;
+    border-bottom: 3px solid yellow;
+}
+
 
 .tabla-register {
   width: 450px;
@@ -321,7 +327,13 @@ dropdown-contenido: div que contiene los enlaces del menu desplegable
 
 /********** GESTION **********/
 .form {
-  padding-top: 30px;
+  padding-top: 20px;
+}
+
+.form h1 {
+  margin: 0 auto;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .form table {

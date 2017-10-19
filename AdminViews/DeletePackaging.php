@@ -6,6 +6,9 @@
 <form class="form" name="form" action="/gestionPackaging/DeletePackaging" method="post" onsubmit="return Confirmar();">
   <table class="centrar">
     <tr>
+      <td><h1>Eliminar Envase</h1></td>
+    </tr>
+    <tr>
       <td colspan="2">
         <select name="packaging" onchange="Actualizar()">
           <?php foreach($list as $packaging) { ?>

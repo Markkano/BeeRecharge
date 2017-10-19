@@ -13,12 +13,37 @@ class PackagingDAO extends SingletonDAO implements IDAO {
       $object->getCapacity(),
       $object->getFactor(),
     ));
+    $object->setId($pdo->LastInsertId());
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 
   public function Delete($object) {
     $pdo = Connection::getInstance();
     $stmt = $pdo->Prepare("DELETE FROM Packagings WHERE id_packaging = ?");
     $stmt->execute(array($object->getId()));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
+  }
+
+  public function DeleteById($id) {
+    $pdo = Connection::getInstance();
+    $stmt = $pdo->Prepare("DELETE FROM Packagings WHERE id_packaging = ?");
+    $stmt->execute(array($id));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 
   public function SelectByID($id) {
@@ -32,8 +57,13 @@ class PackagingDAO extends SingletonDAO implements IDAO {
           $result['factor']
         );
         $packaging->setId($result['id_packaging']);
-        return $packaging;
       }
+    }
+    if($stmt->errorCode() == 0) {
+      return $packaging;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
     }
   }
 
@@ -52,17 +82,28 @@ class PackagingDAO extends SingletonDAO implements IDAO {
         array_push($envases, $packaging);
       }
     }
-    return $envases;
+    if($stmt->errorCode() == 0) {
+      return $envases;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 
   public function Update($object) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("UPDATE Packagings SET (description = ?, capacity = ?, factor = ?) WHERE id_packaging = ?");
+    $stmt = $pdo->Prepare("UPDATE Packagings SET description = ?, capacity = ?, factor = ? WHERE id_packaging = ?");
     $stmt->execute(array(
       $object->getDescription(),
       $object->getCapacity(),
       $object->getFactor(),
       $object->getId()
     ));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 } ?>

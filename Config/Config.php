@@ -7,6 +7,6 @@ define('DB_USER', 'root');
 define('DB_PASS', '35331374');
 define('DB_NAME', 'BeeRecharge');
 
-define('IMG_PATH', 'Images/');
+define('IMG_PATH', 'Image/');
 define('MAX_IMG_SIZE', 5000000);
 ?>

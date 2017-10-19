@@ -14,6 +14,13 @@ class AccountDAO extends SingletonDAO implements IDAO {
       $object->getPassword(),
       $object->getImage()
     ));
+    $object->setId($pdo->LastInsertId());
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+      $errors = $stmt->errorInfo();
+      return $errors[2];
+    }
   }
 
   public function Delete($object) {
@@ -34,8 +41,17 @@ class AccountDAO extends SingletonDAO implements IDAO {
           $result['image']
         );
         $account->setId($result['id_account']);
-        return $account;
       }
+    }
+    if($stmt->errorCode() == 0) {
+      if (isset($account)) {
+        return $account;
+      } else {
+        return null;
+      }
+    } else {
+      $errors = $stmt->errorInfo();
+      return $errors[2];
     }
   }
 
@@ -51,8 +67,17 @@ class AccountDAO extends SingletonDAO implements IDAO {
           $result['image']
         );
         $account->setId($result['id_account']);
-        return $account;
       }
+    }
+    if($stmt->errorCode() == 0) {
+      if (isset($account)) {
+        return $account;
+      } else {
+        return null;
+      }
+    } else {
+      $errors = $stmt->errorInfo();
+      return $errors[2];
     }
   }
 
@@ -72,12 +97,17 @@ class AccountDAO extends SingletonDAO implements IDAO {
         array_push($list, $account);
       }
     }
-    return $list;
+    if($stmt->errorCode() == 0) {
+      return $list;
+    } else {
+      $errors = $stmt->errorInfo();
+      return $errors[2];
+    }
   }
 
   public function Update($object) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("UPDATE Accounts SET (name = ?, description = ?, price = ?, graduation = ?, ibu = ?, srm = ?, image = ?) WHERE id_account = ?");
+    $stmt = $pdo->Prepare("UPDATE Accounts SET name = ?, description = ?, price = ?, graduation = ?, ibu = ?, srm = ?, image = ? WHERE id_account = ?");
     $stmt->execute(array(
       $object->getName(),
       $object->getDescription(),
@@ -88,5 +118,11 @@ class AccountDAO extends SingletonDAO implements IDAO {
       $object->getImage(),
       $object->getId()
     ));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+      $errors = $stmt->errorInfo();
+      return $errors[2];
+    }
   }
 } ?>

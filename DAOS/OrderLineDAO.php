@@ -13,9 +13,9 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
   private $OrderDAO;
 
   public function __construct() {
-    $this->$BeerDAO = new BeerDAO();
-    $this->$PackagingDAO = new PackagingDAO();
-    $this->$OrderDAO = new OrderDAO();
+    $this->BeerDAO = new BeerDAO();
+    $this->PackagingDAO = new PackagingDAO();
+    $this->OrderDAO = new OrderDAO();
   }
 
   public function Insert($object) {
@@ -28,12 +28,25 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
       $object->getPackaging()->getId(),
       $object->getOrder()->getId()
     ));
+    $object->setId($pdo->LastInsertId());
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 
   public function Delete($object) {
     $pdo = Connection::getInstance();
     $stmt = $pdo->Prepare("DELETE FROM OrderLines WHERE id_order_line = ?");
     $stmt->execute(array($object->getId()));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 
   public function SelectByID($id) {
@@ -41,9 +54,9 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
     $stmt = $pdo->Prepare("SELECT * FROM OrderLines where id_order_line = ? LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
-        $beer = $this->$BeerDAO->SelectByID($result['id_beer']);
-        $packaging = $this->$PackagingDAO->SelectByID($result['id_packaging']);
-        $order = $this->$OrderDAO->SelectByID($result['order_number']);
+        $beer = $this->BeerDAO->SelectByID($result['id_beer']);
+        $packaging = $this->PackagingDAO->SelectByID($result['id_packaging']);
+        $order = $this->OrderDAO->SelectByID($result['order_number']);
         $orderLine = new OrderLine(
           $result['amount'],
           $result['price'],
@@ -52,22 +65,25 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
           $order
         );
         $orderLine->setId($result['id_order_line']);
-        return $orderLine;
       }
+    }
+    if($stmt->errorCode() == 0) {
+      return $orderLine;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
     }
   }
 
   public function SelectAll() {
-
-
     $lines = array();
     $pdo = Connection::getInstance();
     $stmt = $pdo->Prepare("SELECT * FROM OrderLines");
     if ($stmt->execute()) {
       while ($result = $stmt->fetch()) {
-        $beer = $this->$BeerDAO->SelectByID($result['id_beer']);
-        $packaging = $this->$PackagingDAO->SelectByID($result['id_packaging']);
-        $order = $this->$OrderDAO->SelectByID($result['order_number']);
+        $beer = $this->BeerDAO->SelectByID($result['id_beer']);
+        $packaging = $this->PackagingDAO->SelectByID($result['id_packaging']);
+        $order = $this->OrderDAO->SelectByID($result['order_number']);
         $orderLine = new OrderLine(
           $result['amount'],
           $result['price'],
@@ -79,12 +95,17 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
         array_push($lines, $beer);
       }
     }
-    return $lines;
+    if($stmt->errorCode() == 0) {
+      return $lines;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 
   public function Update($object) {
     $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("UPDATE OrderLines SET (amount = ?, price = ?, id_beer = ?, id_packaging = ?, id_order = ?) WHERE id_order_line = ?");
+    $stmt = $pdo->Prepare("UPDATE OrderLines SET amount = ?, price = ?, id_beer = ?, id_packaging = ?, id_order = ? WHERE id_order_line = ?");
     $stmt->execute(array(
       $object->getAmount(),
       $object->getPrice(),
@@ -93,5 +114,11 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
       $object->getOrder()->getId(),
       $object->getId()
     ));
+    if($stmt->errorCode() == 0) {
+      return null;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
   }
 } ?>

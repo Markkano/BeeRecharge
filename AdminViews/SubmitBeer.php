@@ -7,6 +7,9 @@
     <form class="form" name="form" action="/gestionBeer/SubmitBeer" method="post" onsubmit="return Validar();">
       <table class="centrar">
         <tr>
+          <td><h1>Nueva Cerveza</h1></td>
+        </tr>
+        <tr>
           <td><label for="name">Nombre</label></td>
         </tr>
         <tr>

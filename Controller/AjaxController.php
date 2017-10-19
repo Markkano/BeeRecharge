@@ -8,6 +8,12 @@ use Model\Packaging as Packaging;
 use DAOS\SubsidiaryDAO as SubsidiaryDAO;
 use Model\Subsidiary as Subsidiary;
 
+use DAOS\StaffDAO as StaffDAO;
+use Model\Staff as Staff;
+
+use DAOS\RoleDAO as RoleDAO;
+use Model\Role as Role;
+
 class AjaxController {
 
   public function GetBeer($id) {
@@ -26,5 +32,17 @@ class AjaxController {
     $subsidiaryDAO = new SubsidiaryDAO();
     $subsidiary = $subsidiaryDAO->SelectByID($id);
     echo json_encode($subsidiary->toJson());
+  }
+
+  public function GetStaff($id) {
+    $staffDAO = new StaffDAO();
+    $staff = $staffDAO->SelectByID($id);
+    echo json_encode($staff->toJson());
+  }
+
+  public function GetRole($id) {
+    $roleDAO = new RoleDAO();
+    $role = $roleDAO->SelectByID($id);
+    echo json_encode($role->toJson());
   }
 } ?>

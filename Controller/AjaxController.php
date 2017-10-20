@@ -16,33 +16,39 @@ use Model\Role as Role;
 
 class AjaxController {
 
+  private $beerDAO;
+  private $packagingDAO;
+  private $subsidiary;
+  private $staffDAO;
+  private $roleDAO;
+
   public function GetBeer($id) {
-    $beerDAO = new BeerDAO();
-    $beer = $beerDAO->SelectByID($id);
+    $this->beerDAO = new BeerDAO();
+    $beer = $this->beerDAO->SelectByID($id);
     echo json_encode($beer->toJson());
   }
 
   public function GetPackaging($id) {
-    $packagingDAO = new PackagingDAO();
-    $packaging = $packagingDAO->SelectByID($id);
+    $this->packagingDAO = new PackagingDAO();
+    $packaging = $this->packagingDAO->SelectByID($id);
     echo json_encode($packaging->toJson());
   }
 
   public function GetSubsidiary($id) {
-    $subsidiaryDAO = new SubsidiaryDAO();
-    $subsidiary = $subsidiaryDAO->SelectByID($id);
+    $this->subsidiaryDAO = new SubsidiaryDAO();
+    $subsidiary = $this->subsidiaryDAO->SelectByID($id);
     echo json_encode($subsidiary->toJson());
   }
 
   public function GetStaff($id) {
-    $staffDAO = new StaffDAO();
-    $staff = $staffDAO->SelectByID($id);
+    $this->staffDAO = new StaffDAO();
+    $staff = $this->staffDAO->SelectByID($id);
     echo json_encode($staff->toJson());
   }
 
   public function GetRole($id) {
-    $roleDAO = new RoleDAO();
-    $role = $roleDAO->SelectByID($id);
+    $this->roleDAO = new RoleDAO();
+    $role = $this->roleDAO->SelectByID($id);
     echo json_encode($role->toJson());
   }
 } ?>

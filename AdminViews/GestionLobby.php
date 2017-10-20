@@ -49,6 +49,7 @@
           <a href="/GestionSubsidiary/SubmitSubsidiary">Alta</a>
           <a href="/GestionSubsidiary/DeleteSubsidiary">Baja</a>
           <a href="/GestionSubsidiary/UpdateSubsidiary">Modificacion</a>
+          <a href="/GestionSubsidiary/ManageMarkers">Administrar Marcadores</a>
         </div>
       </li>
       <li class="dropdown">

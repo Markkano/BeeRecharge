@@ -3,8 +3,8 @@ define('ROOT', dirname(__DIR__).'/');
 
 ## Base de datos
 define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '35331374');
+define('DB_USER', 'beer');
+define('DB_PASS', '1234');
 define('DB_NAME', 'BeeRecharge');
 
 define('IMG_PATH', 'Image/');

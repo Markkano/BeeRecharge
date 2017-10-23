@@ -8,17 +8,19 @@ use Model\Account as Account;
 
 class StaffDAO extends SingletonDAO implements IDAO {
 
+  private $pdo;
   private $AccountDAO;
   private $RoleDAO;
 
   public function __construct() {
-    $this->AccountDAO = new AccountDAO();
-    $this->RoleDAO = new RoleDAO();
+    $this->pdo = Connection::getInstance();
+    $this->AccountDAO = AccountDAO::getInstance();
+    $this->RoleDAO = RoleDAO::getInstance();
   }
 
   public function Insert($object) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("INSERT INTO Staff (name, surname, dni, address, phone, salary, id_account, id_role) values (?,?,?,?,?,?,?,?)");
+
+    $stmt = $this->pdo->Prepare("INSERT INTO Staff (name, surname, dni, address, phone, salary, id_account, id_role) values (?,?,?,?,?,?,?,?)");
     $stmt->execute(array(
       $object->getName(),
       $object->getSurname(),
@@ -29,7 +31,7 @@ class StaffDAO extends SingletonDAO implements IDAO {
       $object->getAccount()->getId(),
       $object->getRole()->getId()
     ));
-    $object->setId($pdo->LastInsertId());
+    $object->setId($this->pdo->LastInsertId());
     if($stmt->errorCode() == 0) {
       return null;
     } else {
@@ -39,8 +41,7 @@ class StaffDAO extends SingletonDAO implements IDAO {
   }
 
   public function Delete($object) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("DELETE FROM Staff WHERE id_staff = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM Staff WHERE id_staff = ?");
     $stmt->execute(array($object->getId()));
     if($stmt->errorCode() == 0) {
       return null;
@@ -51,8 +52,7 @@ class StaffDAO extends SingletonDAO implements IDAO {
   }
 
   public function DeleteById($id) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("DELETE FROM Staff WHERE id_staff = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM Staff WHERE id_staff = ?");
     $stmt->execute(array($id));
     if($stmt->errorCode() == 0) {
       return null;
@@ -64,8 +64,7 @@ class StaffDAO extends SingletonDAO implements IDAO {
 
 
   public function SelectByID($id) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Staff where id_staff = ? LIMIT 1");
+    $stmt = $this->pdo->Prepare("SELECT * FROM Staff where id_staff = ? LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $account = $this->AccountDAO->SelectByID($result['id_account']);
@@ -96,8 +95,7 @@ class StaffDAO extends SingletonDAO implements IDAO {
   }
 
   public function SelectByAccount($object) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Staff where id_account = ?  LIMIT 1");
+    $stmt = $this->pdo->Prepare("SELECT * FROM Staff where id_account = ?  LIMIT 1");
     if ($stmt->execute(array($object->getId()))) {
       if ($result = $stmt->fetch()) {
         $account = $this->AccountDAO->SelectByID($result['id_account']);
@@ -129,8 +127,7 @@ class StaffDAO extends SingletonDAO implements IDAO {
 
   public function SelectAll() {
     $list = array();
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Staff");
+    $stmt = $this->pdo->Prepare("SELECT * FROM Staff");
     if ($stmt->execute()) {
       while ($result = $stmt->fetch()) {
         $account = $this->AccountDAO->SelectByID($result['id_account']);
@@ -158,8 +155,7 @@ class StaffDAO extends SingletonDAO implements IDAO {
   }
 
   public function Update($object) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("UPDATE Staff SET name = ?, surname = ?, dni = ?, address = ?, phone = ?, salary = ?, id_account = ?, id_role = ? WHERE id_staff = ?");
+    $stmt = $this->pdo->Prepare("UPDATE Staff SET name = ?, surname = ?, dni = ?, address = ?, phone = ?, salary = ?, id_account = ?, id_role = ? WHERE id_staff = ?");
     $stmt->execute(array(
       $object->getName(),
       $object->getSurname(),

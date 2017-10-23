@@ -12,7 +12,6 @@ class GestionTimeRangeController extends GestionController {
     	self::$roles = array('Admin');
     	parent::__construct();
   	}
-		
 	public function Index() {}
 
 	public function SubmitTimeRange($from = null, $to = null) {
@@ -48,21 +47,19 @@ class GestionTimeRangeController extends GestionController {
 		//requerira la vista correspondiente
 		require 'AdminViews/UpdateTimeRange.php';
 	}
-	public function DeleteTimeRange($from = null, $to = null, $id_timeRange = null) {
+
+	public function DeleteTimeRange($id_timeRange = null) {
 	    $this->timeRangeDAO = TimeRangeDAO::getInstance();
-	    /*
-	    Si recibo parametros, elimino el que tengo en la BD.
-	    */
-	    if (isset($from) && isset($to)) {
-	      $error = $this->timeRangeDAO->DeleteById($id_timeRange);
-	      if (!isset($error)) {
-	        $alert = "green";
-	        $msj = "Rango Horario eliminado";
-	      } else {
-	        $alert = "yellow";
-	        $msj = "Ocurrio un problema: ".$error;
-	      }
-	    }
+			if (isset($id_timeRange)) {
+				$error = $this->timeRangeDAO->DeleteById($id_timeRange);
+		    if (!isset($error)) {
+		    	$alert = "green";
+		        $msj = "Rango Horario eliminado";
+		    } else {
+		        $alert = "yellow";
+		        $msj = "Ocurrio un problema: ".$error;
+		    }
+			}
 	    $list = $this->timeRangeDAO->SelectAll();
 	    //requerira la vista correspondiente
 	    require 'AdminViews/DeleteTimeRange.php';

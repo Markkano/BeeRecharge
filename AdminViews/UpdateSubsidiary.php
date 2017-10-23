@@ -31,8 +31,8 @@
     <tr>
       <td colspan="2"><input type="tel" name="phone" value=""></td>
     </tr>
-    <input hidden="hidden" type="number" name="lat" value="0">
-    <input hidden="hidden" type="number" name="lon" value="0">
+    <input hidden="hidden" type="text" name="lat" value="0">
+    <input hidden="hidden" type="text" name="lon" value="0">
     <tr>
       <td colspan="2"><input type="submit" class="submit" value="Guardar cambios"></td>
     </tr>

@@ -71,9 +71,9 @@
       <li class="dropdown">
         <a class="dropdown-btn">Gestion Rangos Horarios</a>
         <div class="dropdown-contenido">
-          <a href="/gestionRole/SubmitRole">Alta</a>
-          <a href="/gestionRole/DeleteRole">Baja</a>
-          <a href="/gestionRole/UpdateRole">Modificacion</a>
+          <a href="/gestionTimeRange/SubmitTimeRange">Alta</a>
+          <a href="/gestionTimeRange/DeleteTimeRange">Baja</a>
+          <a href="/gestionTimeRange/UpdateTimeRange">Modificacion</a>
         </div>
       </li>
       <li><a href="/login/logout" class="dropdown-link">Cerrar sesión</a></li>

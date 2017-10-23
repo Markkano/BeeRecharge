@@ -33,4 +33,12 @@ class TimeRange {
 	public function setTo($value) {
 		$this->to = $value;
 	}
+
+	public function toJson() {
+    return [
+			'id_timeRange' => $this->id_timeRange,
+			'from' => $this->from,
+			'to' => $this->to
+		];
+  }
 } ?>

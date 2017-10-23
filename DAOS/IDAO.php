@@ -5,4 +5,5 @@ interface IDAO {
   public function SelectByID($id);
   public function SelectAll();
   public function Update($object);
+  //public function DeleteById($id);
 } ?>

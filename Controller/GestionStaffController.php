@@ -16,9 +16,9 @@ class GestionStaffController extends GestionController {
 
   public function __construct() {
     self::$roles = array('Admin');
-    $this->staffDAO = new StaffDAO();
-    $this->roleDAO = new RoleDAO();
-    $this->accountDAO = new AccountDAO();
+    $this->staffDAO = StaffDAO::getInstance();
+    $this->roleDAO = RoleDAO::getInstance();
+    $this->accountDAO = AccountDAO::getInstance();
     parent::__construct();
   }
 

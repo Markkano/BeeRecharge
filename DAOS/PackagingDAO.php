@@ -3,17 +3,20 @@ use DAOS\Connection as Connection;
 use Model\Packaging as Packaging;
 class PackagingDAO extends SingletonDAO implements IDAO {
 
-  public function __construct() {}
+  private $pdo;
+
+  public function __construct() {
+    $this->pdo = Connection::getInstance();
+  }
 
   public function Insert($object) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("INSERT INTO Packagings (description, capacity, factor) values (?,?,?)");
+    $stmt = $this->pdo->Prepare("INSERT INTO Packagings (description, capacity, factor) values (?,?,?)");
     $stmt->execute(array(
       $object->getDescription(),
       $object->getCapacity(),
       $object->getFactor(),
     ));
-    $object->setId($pdo->LastInsertId());
+    $object->setId($this->pdo->LastInsertId());
     if($stmt->errorCode() == 0) {
       return null;
     } else {
@@ -23,8 +26,7 @@ class PackagingDAO extends SingletonDAO implements IDAO {
   }
 
   public function Delete($object) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("DELETE FROM Packagings WHERE id_packaging = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM Packagings WHERE id_packaging = ?");
     $stmt->execute(array($object->getId()));
     if($stmt->errorCode() == 0) {
       return null;
@@ -35,8 +37,7 @@ class PackagingDAO extends SingletonDAO implements IDAO {
   }
 
   public function DeleteById($id) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("DELETE FROM Packagings WHERE id_packaging = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM Packagings WHERE id_packaging = ?");
     $stmt->execute(array($id));
     if($stmt->errorCode() == 0) {
       return null;
@@ -47,8 +48,7 @@ class PackagingDAO extends SingletonDAO implements IDAO {
   }
 
   public function SelectByID($id) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Packagings where id_packaging = ? LIMIT 1");
+    $stmt = $this->pdo->Prepare("SELECT * FROM Packagings where id_packaging = ? LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $packaging = new Packaging(
@@ -69,8 +69,7 @@ class PackagingDAO extends SingletonDAO implements IDAO {
 
   public function SelectAll() {
     $envases = array();
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Packagings");
+    $stmt = $this->pdo->Prepare("SELECT * FROM Packagings");
     if ($stmt->execute()) {
       while ($result = $stmt->fetch()) {
         $packaging = new Packaging(
@@ -91,8 +90,7 @@ class PackagingDAO extends SingletonDAO implements IDAO {
   }
 
   public function Update($object) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("UPDATE Packagings SET description = ?, capacity = ?, factor = ? WHERE id_packaging = ?");
+    $stmt = $this->pdo->Prepare("UPDATE Packagings SET description = ?, capacity = ?, factor = ? WHERE id_packaging = ?");
     $stmt->execute(array(
       $object->getDescription(),
       $object->getCapacity(),

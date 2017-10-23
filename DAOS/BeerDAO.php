@@ -3,11 +3,13 @@ use DAOS\Connection as Connection;
 use Model\Beer as Beer;
 class BeerDAO extends SingletonDAO implements IDAO {
 
-  public function __construct() {}
+  private $pdo;
+  public function __construct() {
+    $this->pdo = Connection::getInstance();
+  }
 
   public function Insert($object) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("INSERT INTO Beers (name, description, price, graduation, ibu, srm, image) values (?,?,?,?,?,?,?)");
+    $stmt = $this->pdo->Prepare("INSERT INTO Beers (name, description, price, graduation, ibu, srm, image) values (?,?,?,?,?,?,?)");
     $stmt->execute(array(
       $object->getName(),
       $object->getDescription(),
@@ -17,7 +19,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
       $object->getSrm(),
       $object->getImage()
     ));
-    $object->setId($pdo->LastInsertId());
+    $object->setId($this->pdo->LastInsertId());
     if($stmt->errorCode() == 0) {
       return null;
     } else {
@@ -27,8 +29,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
   }
 
   public function Delete($object) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("DELETE FROM Beers WHERE id_beer = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM Beers WHERE id_beer = ?");
     $stmt->execute(array($object->getId()));
     if($stmt->errorCode() == 0) {
       return null;
@@ -39,8 +40,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
   }
 
   public function DeleteById($id) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("DELETE FROM Beers WHERE id_beer = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM Beers WHERE id_beer = ?");
     $stmt->execute(array($id));
     if($stmt->errorCode() == 0) {
       return null;
@@ -51,8 +51,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
   }
 
   public function SelectByID($id) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Beers where id_beer = ? LIMIT 1");
+    $stmt = $this->pdo->Prepare("SELECT * FROM Beers where id_beer = ? LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $beer = new Beer(
@@ -77,8 +76,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
 
   public function SelectAll() {
     $cervezas = array();
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("SELECT * FROM Beers");
+    $stmt = $this->pdo->Prepare("SELECT * FROM Beers");
     if ($stmt->execute()) {
       while ($result = $stmt->fetch()) {
         $beer = new Beer(
@@ -103,8 +101,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
   }
 
   public function Update($object) {
-    $pdo = Connection::getInstance();
-    $stmt = $pdo->Prepare("UPDATE Beers SET name = ?, description = ?, price = ?, graduation = ?, ibu = ?, srm = ?, image = ? WHERE id_beer = ?");
+    $stmt = $this->pdo->Prepare("UPDATE Beers SET name = ?, description = ?, price = ?, graduation = ?, ibu = ?, srm = ?, image = ? WHERE id_beer = ?");
     $stmt->execute(array(
       $object->getName(),
       $object->getDescription(),

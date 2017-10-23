@@ -27,37 +27,37 @@ class AjaxController {
   private $timeRangeDAO;
 
   public function GetBeer($id) {
-    $this->beerDAO = new BeerDAO();
+    $this->beerDAO = BeerDAO::getInstance();
     $beer = $this->beerDAO->SelectByID($id);
     echo json_encode($beer->toJson());
   }
 
   public function GetPackaging($id) {
-    $this->packagingDAO = new PackagingDAO();
+    $this->packagingDAO = PackagingDAO::getInstance();
     $packaging = $this->packagingDAO->SelectByID($id);
     echo json_encode($packaging->toJson());
   }
 
   public function GetSubsidiary($id) {
-    $this->subsidiaryDAO = new SubsidiaryDAO();
+    $this->subsidiaryDAO = SubsidiaryDAO::getInstance();
     $subsidiary = $this->subsidiaryDAO->SelectByID($id);
     echo json_encode($subsidiary->toJson());
   }
 
   public function GetStaff($id) {
-    $this->staffDAO = new StaffDAO();
+    $this->staffDAO = StaffDAO::getInstance();
     $staff = $this->staffDAO->SelectByID($id);
     echo json_encode($staff->toJson());
   }
 
   public function GetRole($id) {
-    $this->roleDAO = new RoleDAO();
+    $this->roleDAO = RoleDAO::getInstance();
     $role = $this->roleDAO->SelectByID($id);
     echo json_encode($role->toJson());
   }
 
   public function GetTimeRange($id) {
-    $this->timeRangeDAO = new TimeRangeDAO();
+    $this->timeRangeDAO = TimeRangeDAO::getInstance();
     $timeRange = $this->timeRangeDAO->SelectByID($id);
     echo json_encode($timeRange->toJson());
   }

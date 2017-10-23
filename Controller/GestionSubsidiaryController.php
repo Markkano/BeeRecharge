@@ -10,7 +10,7 @@ class GestionSubsidiaryController extends GestionController {
 
   public function __construct() {
     self::$roles = array('Admin');
-    $this->subsidiaryDAO = new SubsidiaryDAO();
+    $this->subsidiaryDAO = SubsidiaryDAO::getInstance();
     parent::__construct();
   }
 

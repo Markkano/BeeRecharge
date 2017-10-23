@@ -13,9 +13,9 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
 
   public function __construct() {
     $this->pdo = Connection::getInstance();
-    $this->BeerDAO = new BeerDAO();
-    $this->PackagingDAO = new PackagingDAO();
-    $this->OrderDAO = new OrderDAO();
+    $this->BeerDAO = BeerDAO::getInstance();
+    $this->PackagingDAO = PackagingDAO::getInstance();
+    $this->OrderDAO = OrderDAO::getInstance();
   }
 
   public function Insert($object) {

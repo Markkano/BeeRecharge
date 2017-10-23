@@ -10,7 +10,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
 
   public function __construct() {
     $this->pdo = Connection::getInstance();
-    $this->AccountDAO = new AccountDAO();
+    $this->AccountDAO = AccountDAO::getInstance();
   }
 
   public function Insert($object) {

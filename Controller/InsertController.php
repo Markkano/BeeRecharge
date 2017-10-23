@@ -9,7 +9,7 @@ class InsertController {
   }
 
   public function Insert($name, $description, $price, $ibu, $srm, $graduation, $image) {
-    $BeerDAO = new BeerDAO();
+    $BeerDAO = BeerDAO::getInstance();
     $beer = new Beer($name, $description, $price, $ibu, $srm, $graduation, $image);
     $BeerDAO->Insert($beer);
     #require 'menu principal';

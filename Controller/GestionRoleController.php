@@ -10,7 +10,7 @@ class GestionRoleController extends GestionController {
 
   public function __construct() {
     self::$roles = array('Admin');
-    $this->roleDAO = new RoleDAO();
+    $this->roleDAO = RoleDAO::getInstance();
     parent::__construct();
   }
 

@@ -11,7 +11,7 @@ class GestionBeerController extends GestionController {
 
   public function __construct() {
     self::$roles = array('Admin', 'Empleado', 'Vendedor', 'Flaquito');
-    $this->beerDAO = new BeerDAO();
+    $this->beerDAO = BeerDAO::getInstance();
     parent::__construct();
   }
 

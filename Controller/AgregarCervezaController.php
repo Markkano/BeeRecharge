@@ -1,18 +1,25 @@
 <?php namespace Controller;
 use DAOS\BeerDAO as BeerDAO;
 use DAOS\PackagingDAO as PackagingDAO;
+
 class AgregarCervezaController {
 
+  private $beerDAO;
+  private $packagingDAO;
+
+  public function __construct() {
+    $this->beerDAO = BeerDAO::getInstance();
+    $this->packagingDAO = PackagingDAO::getInstance();
+  }
+
   public function Traer($id) {
-    $BeerDAO = new BeerDAO();
-    $beer = $BeerDAO->SelectByID($id);
+    $beer = $this->beerDAO->SelectByID($id);
     return $beer;
   }
 
   public function Mostrar($id) {
-    $PackagingDAO = new PackagingDAO();
     $beer = $this->Traer($id);
-    $envases = $PackagingDAO->SelectAll();
+    $envases = $this->packagingDAO->SelectAll();
     if (isset($beer)) {
       require 'Views/agregarCerveza.php';
     } else {

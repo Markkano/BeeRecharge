@@ -10,7 +10,7 @@ class gestionPackagingController extends GestionController {
 
   public function __construct() {
     self::$roles = array('Admin', 'Empleado');
-    $this->packagingDAO = new PackagingDAO();
+    $this->packagingDAO = PackagingDAO::getInstance();
     parent::__construct();
   }
 

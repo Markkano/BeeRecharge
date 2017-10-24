@@ -6,6 +6,7 @@ use Model\Order as Order;
 class ClientDAO extends SingletonDAO implements IDAO {
 
   private $pdo;
+  protected $table = 'Orders';
   private $ClientDAO;
   private $subsidiaryDAO;
 
@@ -16,7 +17,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
   }
 
   public function Insert($object) {
-    $stmt = $this->pdo->Prepare("INSERT INTO Orders (order_date, state, id_client, id_subsidiary) values (?,?,?,?,?)");
+    $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (order_date, state, id_client, id_subsidiary) values (?,?,?,?,?)");
     $stmt->execute(array(
       $object->getOrderDate(),
       $object->getState(),
@@ -33,7 +34,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
   }
 
   public function Delete($object) {
-    $stmt = $this->pdo->Prepare("DELETE FROM Orders WHERE order_number = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE order_number = ?");
     $stmt->execute(array($object->getOrderNumber()));
     if($stmt->errorCode() == 0) {
       return null;
@@ -44,7 +45,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
   }
 
   public function SelectByID($id) {
-    $stmt = $this->pdo->Prepare("SELECT * FROM Orders where order_number = ? LIMIT 1");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." where order_number = ? LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $order = $this->ClientDAO->SelectByID($result['id_client']);
@@ -68,7 +69,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
 
   public function SelectAll() {
     $list = array();
-    $stmt = $this->pdo->Prepare("SELECT * FROM Orders");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table."");
     if ($stmt->execute()) {
       while ($result = $stmt->fetch()) {
         $client = $this->ClientDAO->SelectByID($result['id_client']);
@@ -94,7 +95,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
   // TODO: Definir parametros
   public function SelectAllFromClient() {
     $list = array();
-    $stmt = $this->pdo->Prepare("SELECT * FROM Orders WHERE id_client = ?");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." WHERE id_client = ?");
     if ($stmt->execute(array(/***/))) {
       while ($result = $stmt->fetch()) {
         $client = $this->ClientDAO->SelectByID($result['id_client']);
@@ -120,7 +121,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
   // TODO: Definir parametros
   public function SelectAllFromSubsidiary() {
     $list = array();
-    $stmt = $this->pdo->Prepare("SELECT * FROM Orders WHERE id_subsidiary = ?");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." WHERE id_subsidiary = ?");
     if ($stmt->execute(array(/***/))) {
       while ($result = $stmt->fetch()) {
         $client = $this->ClientDAO->SelectByID($result['id_client']);
@@ -146,7 +147,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
   // TODO: Definir parametros
   public function SelectAllFromDate() {
     $list = array();
-    $stmt = $this->pdo->Prepare("SELECT * FROM Orders WHERE order_date = ?");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." WHERE order_date = ?");
     if ($stmt->execute(array(/***/))) {
       while ($result = $stmt->fetch()) {
         $client = $this->ClientDAO->SelectByID($result['id_client']);
@@ -170,7 +171,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
   }
 
   public function Update($object) {
-    $stmt = $this->pdo->Prepare("UPDATE Orders SET order_date = ?, state = ?, id_client = ?, id_subsidiary = ? WHERE order_number = ?");
+    $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET order_date = ?, state = ?, id_client = ?, id_subsidiary = ? WHERE order_number = ?");
     $stmt->execute(array(
       $object->getOrderDate(),
       $object->getState(),

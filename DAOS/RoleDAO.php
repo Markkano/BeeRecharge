@@ -4,13 +4,14 @@ use Model\Role as Role;
 class RoleDAO extends SingletonDAO implements IDAO {
 
   private $pdo;
+  protected $table = 'Roles';
 
   public function __construct() {
     $this->pdo = Connection::getInstance();
   }
 
   public function Insert($object) {
-    $stmt = $this->pdo->Prepare("INSERT INTO Roles (rolename, description) values (?,?)");
+    $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (rolename, description) values (?,?)");
     $stmt->execute(array(
       $object->getRolename(),
       $object->getDescription()
@@ -25,7 +26,7 @@ class RoleDAO extends SingletonDAO implements IDAO {
   }
 
   public function Delete($object) {
-    $stmt = $this->pdo->Prepare("DELETE FROM Roles WHERE id_role = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_role = ?");
     $stmt->execute(array($object->getId()));
     if($stmt->errorCode() == 0) {
       return null;
@@ -36,7 +37,7 @@ class RoleDAO extends SingletonDAO implements IDAO {
   }
 
   public function DeleteById($id) {
-    $stmt = $this->pdo->Prepare("DELETE FROM Roles WHERE id_role = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_role = ?");
     $stmt->execute(array($id));
     if($stmt->errorCode() == 0) {
       return null;
@@ -47,7 +48,7 @@ class RoleDAO extends SingletonDAO implements IDAO {
   }
 
   public function SelectByID($id) {
-    $stmt = $this->pdo->Prepare("SELECT * FROM Roles where id_role = ?");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." where id_role = ?");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $role = new Role(
@@ -67,7 +68,7 @@ class RoleDAO extends SingletonDAO implements IDAO {
 
   public function SelectAll() {
     $list = array();
-    $stmt = $this->pdo->Prepare("SELECT * FROM Roles");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table."");
     if ($stmt->execute()) {
       while ($result = $stmt->fetch()) {
         $role = new Role(
@@ -87,7 +88,7 @@ class RoleDAO extends SingletonDAO implements IDAO {
   }
 
   public function Update($object) {
-    $stmt = $this->pdo->Prepare("UPDATE Roles SET rolename = ?, description = ? WHERE id_role = ?");
+    $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET rolename = ?, description = ? WHERE id_role = ?");
     $stmt->execute(array(
       $object->getRolename(),
       $object->getDescription(),

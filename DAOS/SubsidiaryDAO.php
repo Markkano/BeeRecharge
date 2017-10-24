@@ -6,13 +6,14 @@ use Model\Subsidiary as Subsidiary;
 class SubsidiaryDAO extends SingletonDAO implements IDAO {
 
   private $pdo;
+  protected $table = 'Subsidiarys';
 
   public function __construct() {
     $this->pdo = Connection::getInstance();
   }
 
   public function Insert($object) {
-    $stmt = $this->pdo->Prepare("INSERT INTO Subsidiarys (address, phone, lat, lon) values (?,?,?,?)");
+    $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (address, phone, lat, lon) values (?,?,?,?)");
     $stmt->execute(array(
       $object->getAddress(),
       $object->getPhone(),
@@ -29,7 +30,7 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
   }
 
   public function Delete($object) {
-    $stmt = $this->pdo->Prepare("DELETE FROM Subsidiarys WHERE id_subsidiary = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_subsidiary = ?");
     $stmt->execute(array($object->getId()));
     if($stmt->errorCode() == 0) {
       return null;
@@ -40,7 +41,7 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
   }
 
   public function DeleteById($id) {
-    $stmt = $this->pdo->Prepare("DELETE FROM Subsidiarys WHERE id_subsidiary = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_subsidiary = ?");
     $stmt->execute(array($id));
     if($stmt->errorCode() == 0) {
       return null;
@@ -51,7 +52,7 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
   }
 
   public function SelectByID($id) {
-    $stmt = $this->pdo->Prepare("SELECT * FROM Subsidiarys where id_subsidiary = ? LIMIT 1");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." where id_subsidiary = ? LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $subsidiary = new Subsidiary(
@@ -73,7 +74,7 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
 
   public function SelectAll() {
     $lista = array();
-    $stmt = $this->pdo->Prepare("SELECT * FROM Subsidiarys");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table."");
     if ($stmt->execute()) {
       while ($result = $stmt->fetch()) {
         $subsidiary = new Subsidiary(
@@ -95,7 +96,7 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
   }
 
   public function Update($object) {
-    $stmt = $this->pdo->Prepare("UPDATE Subsidiarys SET address = ?, phone = ?, lat = ?, lon = ? WHERE id_subsidiary = ?");
+    $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET address = ?, phone = ?, lat = ?, lon = ? WHERE id_subsidiary = ?");
     $stmt->execute(array(
       $object->getAddress(),
       $object->getPhone(),

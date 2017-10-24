@@ -6,6 +6,7 @@ use Model\Client as Client;
 class ClientDAO extends SingletonDAO implements IDAO {
 
   private $pdo;
+  protected $table = 'Clients';
   private $AccountDAO;
 
   public function __construct() {
@@ -15,7 +16,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
 
   public function Insert($object) {
     $this->AccountDAO->Insert($object->getAccount());
-    $stmt = $this->pdo->Prepare("INSERT INTO Clients (name, surname, dni, address, phone, id_account) values (?,?,?,?,?,?)");
+    $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (name, surname, dni, address, phone, id_account) values (?,?,?,?,?,?)");
     $stmt->execute(array(
       $object->getName(),
       $object->getSurname(),
@@ -34,7 +35,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
   }
 
   public function Delete($object) {
-    $stmt = $this->pdo->Prepare("DELETE FROM Clients WHERE id_client = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_client = ?");
     $stmt->execute(array($object->getId()));
     if($stmt->errorCode() == 0) {
       return null;
@@ -45,7 +46,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
   }
 
   public function SelectByID($id) {
-    $stmt = $this->pdo->Prepare("SELECT * FROM Clients where id_client = ?  LIMIT 1");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." WHERE id_client = ?  LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $account = $this->AccountDAO->SelectByID($result['id_account']);
@@ -69,7 +70,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
   }
 
   public function SelectByAccount($object) {
-    $stmt = $this->pdo->Prepare("SELECT * FROM Clients where id_account = ?  LIMIT 1");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." WHERE id_account = ?  LIMIT 1");
     if ($stmt->execute(array($object->getId()))) {
       if ($result = $stmt->fetch()) {
         $account = $this->AccountDAO->SelectByID($result['id_account']);
@@ -98,7 +99,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
 
   public function SelectAll() {
     $list = array();
-    $stmt = $this->pdo->Prepare("SELECT * FROM Clients");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table."");
     if ($stmt->execute()) {
       while ($result = $stmt->fetch()) {
         $account = $this->AccountDAO->SelectByID($result['id_account']);
@@ -123,7 +124,7 @@ class ClientDAO extends SingletonDAO implements IDAO {
   }
 
   public function Update($object) {
-    $stmt = $this->pdo->Prepare("UPDATE Clients SET name = ?, surname = ?, dni = ?, address = ?, phone = ?, id_account = ? WHERE id_client = ?");
+    $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET name = ?, surname = ?, dni = ?, address = ?, phone = ?, id_account = ? WHERE id_client = ?");
     $stmt->execute(array(
       $object->getName(),
       $object->getSurname(),

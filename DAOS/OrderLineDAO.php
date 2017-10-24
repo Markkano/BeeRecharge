@@ -7,6 +7,7 @@ use Model\OrderLine as OrderLine;
 class OrderLineDAO extends SingletonDAO implements IDAO {
 
   private $pdo;
+  protected $table = 'OrderLines';
   private $BeerDAO;
   private $PackagingDAO;
   private $OrderDAO;
@@ -19,7 +20,7 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
   }
 
   public function Insert($object) {
-    $stmt = $this->pdo->Prepare("INSERT INTO OrderLines (amount, price, id_beer, id_packaging, id_order) values (?,?,?,?,?)");
+    $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (amount, price, id_beer, id_packaging, id_order) values (?,?,?,?,?)");
     $stmt->execute(array(
       $object->getAmount(),
       $object->getPrice(),
@@ -37,7 +38,7 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
   }
 
   public function Delete($object) {
-    $stmt = $this->pdo->Prepare("DELETE FROM OrderLines WHERE id_order_line = ?");
+    $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_order_line = ?");
     $stmt->execute(array($object->getId()));
     if($stmt->errorCode() == 0) {
       return null;
@@ -48,7 +49,7 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
   }
 
   public function SelectByID($id) {
-    $stmt = $this->pdo->Prepare("SELECT * FROM OrderLines where id_order_line = ? LIMIT 1");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." where id_order_line = ? LIMIT 1");
     if ($stmt->execute(array($id))) {
       if ($result = $stmt->fetch()) {
         $beer = $this->BeerDAO->SelectByID($result['id_beer']);
@@ -74,7 +75,7 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
 
   public function SelectAll() {
     $lines = array();
-    $stmt = $this->pdo->Prepare("SELECT * FROM OrderLines");
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table."");
     if ($stmt->execute()) {
       while ($result = $stmt->fetch()) {
         $beer = $this->BeerDAO->SelectByID($result['id_beer']);
@@ -100,7 +101,7 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
   }
 
   public function Update($object) {
-    $stmt = $this->pdo->Prepare("UPDATE OrderLines SET amount = ?, price = ?, id_beer = ?, id_packaging = ?, id_order = ? WHERE id_order_line = ?");
+    $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET amount = ?, price = ?, id_beer = ?, id_packaging = ?, id_order = ? WHERE id_order_line = ?");
     $stmt->execute(array(
       $object->getAmount(),
       $object->getPrice(),

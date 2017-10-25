@@ -4,7 +4,7 @@
   </div>
 <?php } ?>
 
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionSubsidiary/UpdateSubsidiary" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionSubsidiary/Update" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Modificar Sucursal</h1></td>

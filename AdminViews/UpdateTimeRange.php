@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionTimeRange/UpdateTimeRange" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionTimeRange/Update" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Modificar Rango Horario</h1></td>

@@ -15,15 +15,15 @@ class GestionController {
 
   public function Index() {}
 
-  public function SubmitRole($object = null) {
+  public function Submit($object = null) {
     require_once 'AdminViews/SubmitPackaging.php';
   }
 
-  public function UpdateRole($object = null) {
+  public function Update($object = null) {
     require_once 'AdminViews/UpdatePackaging.php';
   }
 
-  public function DeleteRole($object = null) {
+  public function Delete($object = null) {
     require_once 'AdminViews/DeletePackaging.php';
   }
 } ?>

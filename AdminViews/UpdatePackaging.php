@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionPackaging/UpdatePackaging" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionPackaging/Update" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Modificar Envase</h1></td>

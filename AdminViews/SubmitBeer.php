@@ -4,7 +4,7 @@
       </div>
     <?php } ?>
 
-    <form class="form" name="form" action="/<?= BASE_URL ?>gestionBeer/SubmitBeer" method="post" onsubmit="return Validar();" enctype="multipart/form-data">
+    <form class="form" name="form" action="/<?= BASE_URL ?>gestionBeer/Submit" method="post" onsubmit="return Validar();" enctype="multipart/form-data">
       <table class="centrar">
         <tr>
           <td><h1>Nueva Cerveza</h1></td>

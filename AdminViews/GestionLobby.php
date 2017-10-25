@@ -30,50 +30,50 @@
       <li class="dropdown">
         <a class="dropdown-btn">Gestion Cervezas</a>
         <div class="dropdown-contenido">
-          <a href="/<?= BASE_URL ?>gestionBeer/SubmitBeer">Alta</a>
-          <a href="/<?= BASE_URL ?>gestionBeer/DeleteBeer">Baja</a>
-          <a href="/<?= BASE_URL ?>gestionBeer/UpdateBeer">Modificacion</a>
+          <a href="/<?= BASE_URL ?>gestionBeer/Submit">Alta</a>
+          <a href="/<?= BASE_URL ?>gestionBeer/Delete">Baja</a>
+          <a href="/<?= BASE_URL ?>gestionBeer/Update">Modificacion</a>
         </div>
       </li>
       <li class="dropdown">
         <a class="dropdown-btn">Gestion Envases</a>
         <div class="dropdown-contenido">
-          <a href="/<?= BASE_URL ?>gestionPackaging/SubmitPackaging">Alta</a>
-          <a href="/<?= BASE_URL ?>gestionPackaging/DeletePackaging">Baja</a>
-          <a href="/<?= BASE_URL ?>gestionPackaging/UpdatePackaging">Modificacion</a>
+          <a href="/<?= BASE_URL ?>gestionPackaging/Submit">Alta</a>
+          <a href="/<?= BASE_URL ?>gestionPackaging/Delete">Baja</a>
+          <a href="/<?= BASE_URL ?>gestionPackaging/Update">Modificacion</a>
         </div>
       </li>
       <li class="dropdown">
         <a class="dropdown-btn">Gestion Sucursales</a>
         <div class="dropdown-contenido">
-          <a href="/<?= BASE_URL ?>GestionSubsidiary/SubmitSubsidiary">Alta</a>
-          <a href="/<?= BASE_URL ?>GestionSubsidiary/DeleteSubsidiary">Baja</a>
-          <a href="/<?= BASE_URL ?>GestionSubsidiary/UpdateSubsidiary">Modificacion</a>
+          <a href="/<?= BASE_URL ?>GestionSubsidiary/Submit">Alta</a>
+          <a href="/<?= BASE_URL ?>GestionSubsidiary/Delete">Baja</a>
+          <a href="/<?= BASE_URL ?>GestionSubsidiary/Update">Modificacion</a>
           <a href="/<?= BASE_URL ?>GestionSubsidiary/ManageMarkers">Administrar Marcadores</a>
         </div>
       </li>
       <li class="dropdown">
         <a class="dropdown-btn">Gestion Staff</a>
         <div class="dropdown-contenido">
-          <a href="/<?= BASE_URL ?>gestionStaff/SubmitStaff">Alta</a>
-          <a href="/<?= BASE_URL ?>gestionStaff/DeleteStaff">Baja</a>
-          <a href="/<?= BASE_URL ?>gestionStaff/UpdateStaff">Modificacion</a>
+          <a href="/<?= BASE_URL ?>gestionStaff/Submit">Alta</a>
+          <a href="/<?= BASE_URL ?>gestionStaff/Delete">Baja</a>
+          <a href="/<?= BASE_URL ?>gestionStaff/Update">Modificacion</a>
         </div>
       </li>
       <li class="dropdown">
         <a class="dropdown-btn">Gestion Roles</a>
         <div class="dropdown-contenido">
-          <a href="/<?= BASE_URL ?>gestionRole/SubmitRole">Alta</a>
-          <a href="/<?= BASE_URL ?>gestionRole/DeleteRole">Baja</a>
-          <a href="/<?= BASE_URL ?>gestionRole/UpdateRole">Modificacion</a>
+          <a href="/<?= BASE_URL ?>gestionRole/Submit">Alta</a>
+          <a href="/<?= BASE_URL ?>gestionRole/Delete">Baja</a>
+          <a href="/<?= BASE_URL ?>gestionRole/Update">Modificacion</a>
         </div>
       </li>
       <li class="dropdown">
         <a class="dropdown-btn">Gestion Rangos Horarios</a>
         <div class="dropdown-contenido">
-          <a href="/<?= BASE_URL ?>gestionTimeRange/SubmitTimeRange">Alta</a>
-          <a href="/<?= BASE_URL ?>gestionTimeRange/DeleteTimeRange">Baja</a>
-          <a href="/<?= BASE_URL ?>gestionTimeRange/UpdateTimeRange">Modificacion</a>
+          <a href="/<?= BASE_URL ?>gestionTimeRange/Submit">Alta</a>
+          <a href="/<?= BASE_URL ?>gestionTimeRange/Delete">Baja</a>
+          <a href="/<?= BASE_URL ?>gestionTimeRange/Update">Modificacion</a>
         </div>
       </li>
       <li><a href="/<?= BASE_URL ?>login/logout" class="dropdown-link">Cerrar sesión</a></li>

@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionRole/UpdateRole" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionRole/Update" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Modificar Rol</h1></td>

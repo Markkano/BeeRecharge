@@ -4,7 +4,7 @@ use DAOS\RoleDAO as RoleDAO;
 use Model\Role as Role;
 use Controller\GestionController as GestionController;
 
-class GestionRoleController extends GestionController {
+class GestionRoleController extends GestionController implements IGestion {
 
   private $roleDAO;
 
@@ -16,7 +16,7 @@ class GestionRoleController extends GestionController {
 
   public function Index() {}
 
-  public function SubmitRole($rolename = null, $description = null) {
+  public function Submit($rolename = null, $description = null) {
     if (isset($rolename) && isset($description)) {
       $role = new Role($rolename, $description);
       $error = $this->roleDAO->Insert($role);
@@ -31,7 +31,7 @@ class GestionRoleController extends GestionController {
     require_once 'AdminViews/SubmitRole.php';
   }
 
-  public function UpdateRole($id_role = null, $rolename = null, $description = null) {
+  public function Update($id_role = null, $rolename = null, $description = null) {
     /*
     Si recibo parametros, creo el objeto Beer y actualizo el que tengo en la BD.
     */
@@ -51,7 +51,7 @@ class GestionRoleController extends GestionController {
     require_once 'AdminViews/UpdateRole.php';
   }
 
-  public function DeleteRole($rolename = null, $id_role = null) {
+  public function Delete($rolename = null, $id_role = null) {
     /*
     Si recibo parametros, elimino el que tengo en la BD.
     */

@@ -5,7 +5,7 @@
   </div>
 <?php } ?>
 
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionStaff/SubmitStaff" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionStaff/Submit" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Nuevo Staff</h1></td>

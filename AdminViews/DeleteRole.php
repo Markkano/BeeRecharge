@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionRole/DeleteRole" method="post" onsubmit="return Confirmar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionRole/Delete" method="post" onsubmit="return Confirmar();">
   <tr>
     <td><h1>Eliminar Rol</h1></td>
   </tr>

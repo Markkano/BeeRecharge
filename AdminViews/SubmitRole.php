@@ -4,7 +4,7 @@
   </div>
 <?php } ?>
 
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionRole/SubmitRole" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionRole/Submit" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Nuevo Rol</h1></td>

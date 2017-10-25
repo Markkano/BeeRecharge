@@ -8,7 +8,7 @@ use DAOS\AccountDAO as AccountDAO;
 use Model\Account as Account;
 use Controller\GestionController as GestionController;
 
-class GestionStaffController extends GestionController {
+class GestionStaffController extends GestionController implements IGestion {
 
   private $roleDAO;
   private $accountDAO;
@@ -24,7 +24,7 @@ class GestionStaffController extends GestionController {
 
   public function Index() {}
 
-  public function SubmitStaff(
+  public function Submit(
     $name = null, $surname = null, $dni = null, $address = null, $phone = null, $salary = null, $id_role = null, $id_account = null
   ) {
     //echo "name:".$name."-surname:".$surname."-dni:".$dni."-address:".$address."-phone".$phone."-salary".$salary."-id_role".$id_role."-id_account".$id_account;
@@ -61,7 +61,7 @@ class GestionStaffController extends GestionController {
     require_once 'AdminViews/SubmitStaff.php';
   }
 
-  public function UpdateStaff($id_staff = null, $name = null, $surname = null, $dni = null, $address = null, $phone = null, $salary = null, $id_role = null, $id_account = null) {
+  public function Update($id_staff = null, $name = null, $surname = null, $dni = null, $address = null, $phone = null, $salary = null, $id_role = null, $id_account = null) {
     $roles = $this->roleDAO->SelectAll();
     $accounts = $this->accountDAO->SelectAll();
     /*
@@ -100,7 +100,7 @@ class GestionStaffController extends GestionController {
     require_once 'AdminViews/UpdateStaff.php';
   }
 
-  public function DeleteStaff($name = null, $id_staff = null) {
+  public function Delete($name = null, $id_staff = null) {
     /*
     Si recibo parametros, elimino el que tengo en la BD.
     */

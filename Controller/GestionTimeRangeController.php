@@ -14,7 +14,7 @@ class GestionTimeRangeController extends GestionController {
   	}
 	public function Index() {}
 
-	public function SubmitTimeRange($from = null, $to = null) {
+	public function Submit($from = null, $to = null) {
 	    if (isset($from) && isset($to)) {
 	      $this->timeRangeDAO = TimeRangeDAO::getInstance();
 	      $timeRange = new TimeRange($from, $to);
@@ -26,7 +26,7 @@ class GestionTimeRangeController extends GestionController {
 	    require_once 'AdminViews/SubmitTimeRange.php';
 	}
 
-	public function UpdateTimeRange($id_timeRange = null, $from = null, $to = null) {
+	public function Update($id_timeRange = null, $from = null, $to = null) {
 		$this->timeRangeDAO = TimeRangeDAO::getInstance();
 		/*
 		Si recibo parametros, creo el objeto TimeRange y actualizo el que tengo en la BD.
@@ -48,7 +48,7 @@ class GestionTimeRangeController extends GestionController {
 		require_once 'AdminViews/UpdateTimeRange.php';
 	}
 
-	public function DeleteTimeRange($id_timeRange = null) {
+	public function Delete($id_timeRange = null) {
 	    $this->timeRangeDAO = TimeRangeDAO::getInstance();
 			if (isset($id_timeRange)) {
 				$error = $this->timeRangeDAO->DeleteById($id_timeRange);

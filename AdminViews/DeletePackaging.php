@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionPackaging/DeletePackaging" method="post" onsubmit="return Confirmar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionPackaging/Delete" method="post" onsubmit="return Confirmar();">
   <table class="centrar">
     <tr>
       <td><h1>Eliminar Envase</h1></td>

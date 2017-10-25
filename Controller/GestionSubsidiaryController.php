@@ -16,7 +16,7 @@ class GestionSubsidiaryController extends GestionController {
 
   public function Index() {}
 
-  public function SubmitSubsidiary($lat = 0.0, $lon = 0.0, $address = null, $phone = null) {
+  public function Submit($lat = 0.0, $lon = 0.0, $address = null, $phone = null) {
     if (isset($address)) {
       $subsidiary = new Subsidiary($address, $phone, $lat, $lon);
       $error = $this->subsidiaryDAO->Insert($subsidiary);
@@ -31,7 +31,7 @@ class GestionSubsidiaryController extends GestionController {
     require_once 'AdminViews/SubmitSubsidiary.php';
   }
 
-  public function UpdateSubsidiary($lat = 0.0, $lon = 0.0, $id_subsidiary = null, $address = null, $phone = null) {
+  public function Update($lat = 0.0, $lon = 0.0, $id_subsidiary = null, $address = null, $phone = null) {
     if (isset($address)) {
       $subsidiary = new Subsidiary($address, $phone, $lat, $lon);
       $subsidiary->setId($id_subsidiary);
@@ -48,7 +48,7 @@ class GestionSubsidiaryController extends GestionController {
     require_once 'AdminViews/UpdateSubsidiary.php';
   }
 
-  public function DeleteSubsidiary($address = null, $id_subsidiary = null) {
+  public function Delete($address = null, $id_subsidiary = null) {
     if (isset($address)) {
       $error = $this->subsidiaryDAO->DeleteById($id_subsidiary);
       if (!isset($error)) {

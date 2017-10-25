@@ -3,8 +3,8 @@
 class PrivilegeErrorController {
 
   public function __construct() {
-    require 'AdminViews/GestionLobby.php';
-    require 'AdminViews/Permiso.php';
+    require_once 'AdminViews/GestionLobby.php';
+    require_once 'AdminViews/Permiso.php';
   }
 
   public function Index() {}

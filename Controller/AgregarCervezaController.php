@@ -21,7 +21,7 @@ class AgregarCervezaController {
     $beer = $this->Traer($id);
     $envases = $this->packagingDAO->SelectAll();
     if (isset($beer)) {
-      require 'Views/agregarCerveza.php';
+      require_once 'Views/agregarCerveza.php';
     } else {
       #TODO Cerveza no encontrada
     }

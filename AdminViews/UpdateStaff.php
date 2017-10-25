@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/gestionStaff/UpdateStaff" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionStaff/UpdateStaff" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Modificar Staff</h1></td>
@@ -117,7 +117,7 @@ function Mostrar(datos) {
 
 function Actualizar() {
   var staff = form.staff.options[form.staff.selectedIndex].value;
-  Ajax('/Ajax/GetStaff', 'post', 'msj='+staff, function(respuestaAjax) {
+  Ajax('/<?= BASE_URL ?>Ajax/GetStaff', 'post', 'msj='+staff, function(respuestaAjax) {
     Mostrar(respuestaAjax);
   });
 }

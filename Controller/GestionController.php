@@ -5,25 +5,25 @@ class GestionController {
 
   public function __construct() {
     if (!isset($_SESSION['account']))
-      header('location: /');
+      header('location: /'.BASE_URL);
 
-    require 'AdminViews/GestionLobby.php';
+    require_once 'AdminViews/GestionLobby.php';
     if (!in_array($_SESSION['role']->getRolename(), self::$roles)) {
-      header('location: /PrivilegeError');
+      header('location: /'.BASE_URL.'PrivilegeError');
     }
   }
 
   public function Index() {}
 
   public function SubmitRole($object = null) {
-    require 'AdminViews/SubmitPackaging.php';
+    require_once 'AdminViews/SubmitPackaging.php';
   }
 
   public function UpdateRole($object = null) {
-    require 'AdminViews/UpdatePackaging.php';
+    require_once 'AdminViews/UpdatePackaging.php';
   }
 
   public function DeleteRole($object = null) {
-    require 'AdminViews/DeletePackaging.php';
+    require_once 'AdminViews/DeletePackaging.php';
   }
 } ?>

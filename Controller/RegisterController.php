@@ -15,7 +15,7 @@
   }
 
 	public function Index($msj = null, $alert = null) {
-		require 'Views/register.php';
+		require_once /*BASE_URL.*/'Views/register.php';
 	}
 
 	public function insertClient($username, $email, $password, $name, $surname, $dni, $address, $phone) {
@@ -37,7 +37,7 @@
   		$error = $this->ClientDAO->Insert($client);
       if (!isset($error)) {
         $_SESSION['client'] = $client;
-        header('location: /listaCervezas');
+        header('location: /'.BASE_URL.'listaCervezas');
       } else {
         # TODO: Ocurrio un problema
       }

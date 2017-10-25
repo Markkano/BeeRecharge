@@ -58,7 +58,7 @@ class GestionStaffController extends GestionController {
         }
       }
     }
-    require 'AdminViews/SubmitStaff.php';
+    require_once 'AdminViews/SubmitStaff.php';
   }
 
   public function UpdateStaff($id_staff = null, $name = null, $surname = null, $dni = null, $address = null, $phone = null, $salary = null, $id_role = null, $id_account = null) {
@@ -97,7 +97,7 @@ class GestionStaffController extends GestionController {
       }
     }
     $list = $this->staffDAO->SelectAll();
-    require 'AdminViews/UpdateStaff.php';
+    require_once 'AdminViews/UpdateStaff.php';
   }
 
   public function DeleteStaff($name = null, $id_staff = null) {
@@ -115,6 +115,6 @@ class GestionStaffController extends GestionController {
       }
     }
     $list = $this->staffDAO->SelectAll();
-    require 'AdminViews/DeleteStaff.php';
+    require_once 'AdminViews/DeleteStaff.php';
   }
 }

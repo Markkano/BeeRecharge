@@ -3,7 +3,7 @@
 class OrderController {
 
   public function __construct() {
-      require 'Views/Order.php';
+      require_once 'Views/Order.php';
   }
 
   public function Index() {

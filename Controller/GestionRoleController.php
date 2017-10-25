@@ -28,7 +28,7 @@ class GestionRoleController extends GestionController {
         $msj = "Ocurrio un problema";
       }
     }
-    require 'AdminViews/SubmitRole.php';
+    require_once 'AdminViews/SubmitRole.php';
   }
 
   public function UpdateRole($id_role = null, $rolename = null, $description = null) {
@@ -48,7 +48,7 @@ class GestionRoleController extends GestionController {
       }
     }
     $list = $this->roleDAO->SelectAll();
-    require 'AdminViews/UpdateRole.php';
+    require_once 'AdminViews/UpdateRole.php';
   }
 
   public function DeleteRole($rolename = null, $id_role = null) {
@@ -66,6 +66,6 @@ class GestionRoleController extends GestionController {
       }
     }
     $list = $this->roleDAO->SelectAll();
-    require 'AdminViews/DeleteRole.php';
+    require_once 'AdminViews/DeleteRole.php';
   }
 }

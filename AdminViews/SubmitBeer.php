@@ -4,7 +4,7 @@
       </div>
     <?php } ?>
 
-    <form class="form" name="form" action="/gestionBeer/SubmitBeer" method="post" onsubmit="return Validar();">
+    <form class="form" name="form" action="/<?= BASE_URL ?>gestionBeer/SubmitBeer" method="post" onsubmit="return Validar();" enctype="multipart/form-data">
       <table class="centrar">
         <tr>
           <td><h1>Nueva Cerveza</h1></td>
@@ -49,7 +49,7 @@
           <td><label for="image">Imagen</label></td>
         </tr>
         <tr>
-          <td colspan="2"><input type="file" name="image" value="" disabled></td>
+          <td colspan="2"><input type="file" name="image" value=""></td>
         </tr>
         <tr>
           <td colspan="2"><input type="submit" class="submit" value="Agregar Cerveza"></td>

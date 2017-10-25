@@ -4,7 +4,7 @@
   </div>
 <?php } ?>
 
-<form class="form" name="form" method="post" action="/gestionSubsidiary/ManageMarkers">
+<form class="form" name="form" method="post" action="/<?= BASE_URL ?>gestionSubsidiary/ManageMarkers">
   <table class="centrar">
     <tr>
       <td colspan="2"><h1>Modificar Marcadores</h1></td>
@@ -32,6 +32,14 @@
     </tr>
   </table>
 </form>
-<script src="/Js/GoogleMaps.js" charset="utf-8"></script>
+<script src="/<?= BASE_URL ?>Js/GoogleMaps.js" charset="utf-8"></script>
+<script type="text/javascript">
+function Actualizar() {
+  var subsidiary = form.subsidiary.options[form.subsidiary.selectedIndex].value;
+  Ajax('/<?= BASE_URL ?>Ajax/GetSubsidiary', 'post', 'msj='+subsidiary, function(respuestaAjax) {
+    Mostrar(respuestaAjax);
+  });
+}
+</script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCBbhiQn8Z1G7-uj5IVlDj1pSYKlgfT3I&callback=GenerateMap">
 </script>

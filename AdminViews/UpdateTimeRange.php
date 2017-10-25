@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/gestionTimeRange/UpdateTimeRange" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionTimeRange/UpdateTimeRange" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Modificar Rango Horario</h1></td>
@@ -59,7 +59,7 @@ function Mostrar(datos) {
 
 function Actualizar() {
   var timeRange = form.timeRange.options[form.timeRange.selectedIndex].value;
-  Ajax('/Ajax/GetTimeRange', 'post', 'msj='+timeRange, function(respuestaAjax) {
+  Ajax('/<?= BASE_URL ?>Ajax/GetTimeRange', 'post', 'msj='+timeRange, function(respuestaAjax) {
     Mostrar(respuestaAjax);
   });
 }

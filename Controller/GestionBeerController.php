@@ -10,7 +10,7 @@ class GestionBeerController extends GestionController {
   private $beerDAO;
 
   public function __construct() {
-    self::$roles = array('Admin', 'Empleado', 'Vendedor', 'Flaquito');
+    self::$roles = array('Admgin', 'Empleado', 'Vendedor', 'Flaquito');
     $this->beerDAO = BeerDAO::getInstance();
     parent::__construct();
   }
@@ -37,7 +37,7 @@ class GestionBeerController extends GestionController {
         $msj = "Ocurrio un problema";
       }
     }
-    require 'AdminViews/SubmitBeer.php';
+    require_once 'AdminViews/SubmitBeer.php';
   }
 
   public function UpdateBeer($id_beer = null, $name = null, $description = null, $price = null, $ibu = null, $srm = null, $graduation = null, $image = null) {
@@ -57,7 +57,7 @@ class GestionBeerController extends GestionController {
       }
     }
     $list = $this->beerDAO->SelectAll();
-    require 'AdminViews/UpdateBeer.php';
+    require_once 'AdminViews/UpdateBeer.php';
   }
 
   public function DeleteBeer($name = null, $id_beer = null) {
@@ -75,6 +75,6 @@ class GestionBeerController extends GestionController {
       }
     }
     $list = $this->beerDAO->SelectAll();
-    require 'AdminViews/DeleteBeer.php';
+    require_once 'AdminViews/DeleteBeer.php';
   }
 } ?>

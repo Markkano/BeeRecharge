@@ -1,5 +1,6 @@
 <?php namespace Config;
 define('ROOT', dirname(__DIR__).'/');
+define('BASE_URL', 'BeeRecharge/');
 
 ## Base de datos
 define('DB_HOST', 'localhost');

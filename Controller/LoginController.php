@@ -34,11 +34,11 @@ class LoginController {
         $client = $this->clientDAO->SelectByAccount($account);
       if (isset($client) /* TODO && !isset($staff)*/) {
           $_SESSION['client'] = $client;
-          header('location: /listaCervezas');
+          header('location: /'.BASE_URL.'/listaCervezas');
         } elseif (isset($staff) && !isset($client)) {
           $_SESSION['role'] = $staff->getRole();
           $_SESSION['staff'] = $staff;
-          header('location: /gestion');
+          header('location: /'.BASE_URL.'gestion');
         }
       } else {
         $this->Index('Credenciales incorrectas');
@@ -51,6 +51,6 @@ class LoginController {
     unset($_SESSION['account']);
     unset($_SESSION['role']);
     unset($_SESSION['staff']);
-    header('location: /');
+    header('location: /'.BASE_URL);
   }
 } ?>

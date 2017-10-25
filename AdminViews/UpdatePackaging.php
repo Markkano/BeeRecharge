@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/gestionPackaging/UpdatePackaging" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionPackaging/UpdatePackaging" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Modificar Envase</h1></td>
@@ -66,7 +66,7 @@ function Mostrar(datos) {
 
 function Actualizar() {
   var packaging = form.packaging.options[form.packaging.selectedIndex].value;
-  Ajax('/Ajax/GetPackaging', 'post', 'msj='+packaging, function(respuestaAjax) {
+  Ajax('/<?= BASE_URL ?>Ajax/GetPackaging', 'post', 'msj='+packaging, function(respuestaAjax) {
     Mostrar(respuestaAjax);
   });
 }

@@ -5,6 +5,6 @@ class ListaCervezasController {
     #$BeerDAO = BeerDAO::getInstance();
     $BeerDAO = BeerDAO::getInstance();
     $cervezas = $BeerDAO->SelectAll();
-    require 'Views/ListaCervezas.php';
+    require_once 'Views/ListaCervezas.php';
   }
 } ?>

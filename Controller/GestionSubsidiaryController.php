@@ -28,7 +28,7 @@ class GestionSubsidiaryController extends GestionController {
         $msj = "Ocurrio un problema";
       }
     }
-    require 'AdminViews/SubmitSubsidiary.php';
+    require_once 'AdminViews/SubmitSubsidiary.php';
   }
 
   public function UpdateSubsidiary($lat = 0.0, $lon = 0.0, $id_subsidiary = null, $address = null, $phone = null) {
@@ -45,7 +45,7 @@ class GestionSubsidiaryController extends GestionController {
       }
     }
     $list = $this->subsidiaryDAO->SelectAll();
-    require 'AdminViews/UpdateSubsidiary.php';
+    require_once 'AdminViews/UpdateSubsidiary.php';
   }
 
   public function DeleteSubsidiary($address = null, $id_subsidiary = null) {
@@ -60,7 +60,7 @@ class GestionSubsidiaryController extends GestionController {
       }
     }
     $list = $this->subsidiaryDAO->SelectAll();
-    require 'AdminViews/DeleteSubsidiary.php';
+    require_once 'AdminViews/DeleteSubsidiary.php';
   }
 
   public function ManageMarkers($id_subsidiary = null, $lat = null, $lon = null) {
@@ -79,6 +79,6 @@ class GestionSubsidiaryController extends GestionController {
       }
     }
     $list = $this->subsidiaryDAO->SelectAll();
-    require 'AdminViews/SubsidiaryMarkers.php';
+    require_once 'AdminViews/SubsidiaryMarkers.php';
   }
 }

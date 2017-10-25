@@ -28,7 +28,7 @@ class gestionPackagingController extends GestionController {
         $msj = "Ocurrio un problema";
       }
     }
-    require 'AdminViews/SubmitPackaging.php';
+    require_once 'AdminViews/SubmitPackaging.php';
   }
 
   public function UpdatePackaging($id_packaging = null, $description = null, $capacity = null, $factor = null) {
@@ -45,7 +45,7 @@ class gestionPackagingController extends GestionController {
       }
     }
     $list = $this->packagingDAO->SelectAll();
-    require 'AdminViews/UpdatePackaging.php';
+    require_once 'AdminViews/UpdatePackaging.php';
   }
 
   public function DeletePackaging($description = null, $id_packaging = null) {
@@ -60,6 +60,6 @@ class gestionPackagingController extends GestionController {
       }
     }
     $list = $this->packagingDAO->SelectAll();
-    require 'AdminViews/DeletePackaging.php';
+    require_once 'AdminViews/DeletePackaging.php';
   }
 }

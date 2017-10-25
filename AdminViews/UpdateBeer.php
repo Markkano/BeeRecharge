@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/gestionBeer/UpdateBeer" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionBeer/UpdateBeer" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Modificar Cerveza</h1></td>
@@ -97,7 +97,7 @@ function Mostrar(datos) {
 
 function Actualizar() {
   var beer = form.beer.options[form.beer.selectedIndex].value;
-  Ajax('/Ajax/GetBeer', 'post', 'msj='+beer, function(respuestaAjax) {
+  Ajax('/<?= BASE_URL ?>Ajax/GetBeer', 'post', 'msj='+beer, function(respuestaAjax) {
     Mostrar(respuestaAjax);
   });
 }

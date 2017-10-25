@@ -31,15 +31,8 @@ function GenerateMap() {
 
 function Mostrar(datos) {
   var subsidiary = JSON.parse(datos);
-  console.log(subsidiary.lat + " " + subsidiary.lon);
+  //console.log(subsidiary.lat + " " + subsidiary.lon);
   GenerateMarker(subsidiary);
-}
-
-function Actualizar() {
-  var subsidiary = form.subsidiary.options[form.subsidiary.selectedIndex].value;
-  Ajax('/Ajax/GetSubsidiary', 'post', 'msj='+subsidiary, function(respuestaAjax) {
-    Mostrar(respuestaAjax);
-  });
 }
 
 function GenerateMarker(subsidiary) {

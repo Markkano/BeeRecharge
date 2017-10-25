@@ -23,7 +23,7 @@ class GestionTimeRangeController extends GestionController {
 	      $msj = "Rango Horario añadido correctamente";
 	    }
 	    //requerira la vista correspondiente
-	    require 'AdminViews/SubmitTimeRange.php';
+	    require_once 'AdminViews/SubmitTimeRange.php';
 	}
 
 	public function UpdateTimeRange($id_timeRange = null, $from = null, $to = null) {
@@ -45,7 +45,7 @@ class GestionTimeRangeController extends GestionController {
 		}
 		$list = $this->timeRangeDAO->SelectAll();
 		//requerira la vista correspondiente
-		require 'AdminViews/UpdateTimeRange.php';
+		require_once 'AdminViews/UpdateTimeRange.php';
 	}
 
 	public function DeleteTimeRange($id_timeRange = null) {
@@ -62,7 +62,7 @@ class GestionTimeRangeController extends GestionController {
 			}
 	    $list = $this->timeRangeDAO->SelectAll();
 	    //requerira la vista correspondiente
-	    require 'AdminViews/DeleteTimeRange.php';
+	    require_once 'AdminViews/DeleteTimeRange.php';
 	}
 }
 

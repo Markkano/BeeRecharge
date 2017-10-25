@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/gestionRole/UpdateRole" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionRole/UpdateRole" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Modificar Rol</h1></td>
@@ -59,7 +59,7 @@ function Mostrar(datos) {
 
 function Actualizar() {
   var beer = form.role.options[form.role.selectedIndex].value;
-  Ajax('/Ajax/GetRole', 'post', 'msj='+beer, function(respuestaAjax) {
+  Ajax('/<?= BASE_URL ?>Ajax/GetRole', 'post', 'msj='+beer, function(respuestaAjax) {
     Mostrar(respuestaAjax);
   });
 }

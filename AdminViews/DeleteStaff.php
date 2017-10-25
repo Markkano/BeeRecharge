@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/gestionStaff/DeleteStaff" method="post" onsubmit="return Confirmar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionStaff/DeleteStaff" method="post" onsubmit="return Confirmar();">
   <tr>
     <td><h1>Eliminar Staff</h1></td>
   </tr>

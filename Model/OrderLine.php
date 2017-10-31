@@ -6,14 +6,12 @@ class OrderLine {
 	private $price;
 	private $beer;
 	private $packaging;
-	private $order;
 
-public function __construct($amount, $price, $beer, $packaging, $order)	{
+public function __construct($amount, $price, $beer, $packaging)	{
 		$this->setAmount($amount);
 		$this->setPrice($price);
 		$this->setBeer($beer);
 		$this->setPackaging($packaging);
-		$this->setOrder($order);
 	}
 
 	public function getId(){
@@ -36,10 +34,6 @@ public function __construct($amount, $price, $beer, $packaging, $order)	{
 		return $this->packaging;
 	}
 
-	public function getOrder(){
-		return $this->order;
-	}
-
 	public function setId($value){
 		$this->id_orderLine = $value;
 	}
@@ -58,9 +52,5 @@ public function __construct($amount, $price, $beer, $packaging, $order)	{
 
 	public function setPackaging($value){
 		$this->packaging = $value;
-	}
-
-	public function setOrder($value){
-		$this->order = $value;
 	}
 } ?>

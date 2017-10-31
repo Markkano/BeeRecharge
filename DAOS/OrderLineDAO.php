@@ -10,13 +10,11 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
   protected $table = 'OrderLines';
   private $BeerDAO;
   private $PackagingDAO;
-  private $OrderDAO;
 
   public function __construct() {
     $this->pdo = Connection::getInstance();
     $this->BeerDAO = BeerDAO::getInstance();
     $this->PackagingDAO = PackagingDAO::getInstance();
-    $this->OrderDAO = OrderDAO::getInstance();
   }
 
   public function Insert($object) {
@@ -54,13 +52,11 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
       if ($result = $stmt->fetch()) {
         $beer = $this->BeerDAO->SelectByID($result['id_beer']);
         $packaging = $this->PackagingDAO->SelectByID($result['id_packaging']);
-        $order = $this->OrderDAO->SelectByID($result['order_number']);
         $orderLine = new OrderLine(
           $result['amount'],
           $result['price'],
           $beer,
-          $packaging,
-          $order
+          $packaging
         );
         $orderLine->setId($result['id_order_line']);
       }
@@ -80,13 +76,36 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
       while ($result = $stmt->fetch()) {
         $beer = $this->BeerDAO->SelectByID($result['id_beer']);
         $packaging = $this->PackagingDAO->SelectByID($result['id_packaging']);
-        $order = $this->OrderDAO->SelectByID($result['order_number']);
         $orderLine = new OrderLine(
           $result['amount'],
           $result['price'],
           $beer,
-          $packaging,
-          $order
+          $packaging
+        );
+        $orderLine->setId($result['id_order_line']);
+        array_push($lines, $beer);
+      }
+    }
+    if($stmt->errorCode() == 0) {
+      return $lines;
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
+  }
+
+  public function SelectAllFromOrderNumber($order_number) {
+    $lines = array();
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." WHERE order_number = ? ");
+    if ($stmt->execute(array($order_number))) {
+      while ($result = $stmt->fetch()) {
+        $beer = $this->BeerDAO->SelectByID($result['id_beer']);
+        $packaging = $this->PackagingDAO->SelectByID($result['id_packaging']);
+        $orderLine = new OrderLine(
+          $result['amount'],
+          $result['price'],
+          $beer,
+          $packaging
         );
         $orderLine->setId($result['id_order_line']);
         array_push($lines, $beer);

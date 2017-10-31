@@ -22,9 +22,12 @@
     <ul class="dropdown-contenedor">
       <li><a href="/<?= BASE_URL ?>gestion" class="dropdown-link">Inicio</a></li>
       <li class="dropdown">
-        <a class="dropdown-btn">Pedidos</a>
+        <a class="dropdown-btn">Consultas</a>
         <div class="dropdown-contenido">
-          <a href="/">Consultar</a>
+          <a href="/<?= BASE_URL ?>gestionConsults/FilterOrdersByClient">Consultar ordenes por Cliente</a>
+          <a href="/<?= BASE_URL ?>gestionConsults/FilterOrdersByDates">Consultar ordenes por Fechas</a>
+          <a href="/<?= BASE_URL ?>gestionConsults/FilterOrdersBySubsidiary">Consultar ordenes por Sucursal</a>
+          <a href="/<?= BASE_URL ?>gestionConsults/ConsultSoldLiters">Consultar litros vendidos</a>
         </div>
       </li>
       <li class="dropdown">

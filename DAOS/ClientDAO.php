@@ -62,7 +62,39 @@ class ClientDAO extends SingletonDAO implements IDAO {
       }
     }
     if($stmt->errorCode() == 0) {
-      return $client;
+      if (isset($client)) {
+        return $client;
+      } else {
+        return null;
+      }
+    } else {
+        $errors = $stmt->errorInfo();
+        return $errors[2];
+    }
+  }
+
+  public function SelectByDNI($dni_client) {
+    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." WHERE dni = ?  LIMIT 1");
+    if ($stmt->execute(array($dni_client))) {
+      if ($result = $stmt->fetch()) {
+        $account = $this->AccountDAO->SelectByID($result['id_account']);
+        $client = new Client(
+          $result['name'],
+          $result['surname'],
+          $result['dni'],
+          $result['address'],
+          $result['phone'],
+          $account
+        );
+        $client->setId($result['id_client']);
+      }
+    }
+    if($stmt->errorCode() == 0) {
+      if (isset($client)) {
+        return $client;
+      } else {
+        return null;
+      }
     } else {
         $errors = $stmt->errorInfo();
         return $errors[2];

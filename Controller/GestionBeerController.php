@@ -17,6 +17,32 @@ class GestionBeerController extends GestionController implements IGestion {
 
   public function Index() {}
 
+  private function UploadImage() {
+    if(!file_exists(IMG_PATH)) {
+  		mkdir(IMG_PATH);
+    }
+    if((isset($_FILES['image'])) && ($_FILES['image']['name'] != '')) {
+      $file = IMG_PATH . basename($_FILES["image"]["name"]);
+
+			//Obtenemos la extensión del archivo. No sirve para comprobar el veradero tipo del archivo
+			$fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+
+			//Genera un array a partir de una verdera imagen. Retorna false si no es una archivo de imagen
+			$imageInfo = getimagesize($_FILES['image']['tmp_name']);
+			//var_dump($imageInfo);
+			if($imageInfo !== false) {
+				if(!file_exists($file))	{
+					if($_FILES['image']['size'] < MAX_IMG_SIZE) {
+						if (move_uploaded_file($_FILES["image"]["tmp_name"], $file)) {
+							return basename($_FILES["image"]["name"]);
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   /*
   La primera vez que entra llama a la vista.
   Cuando se envia el form desde la vista, la funcion recibe la nueva Cerveza
@@ -27,14 +53,20 @@ class GestionBeerController extends GestionController implements IGestion {
     Si recibo parametros, creo el objeto Beer y lo inserto en la BD.
     */
     if (isset($name)) {
+      /*
+      Si se envio algun archivo lo subo al servidor y le asigno el nombre a la cerveza
+      */
+      if($_FILES)	{
+        $image = $this->UploadImage($name);
+      }
       $beer = new Beer($name, $description, $price, $ibu, $srm, $graduation, $image);
-      $error = $this->beerDAO->Insert($beer);
-      if (!isset($error)) {
+      try {
+        $this->beerDAO->Insert($beer);
         $alert = "green";
         $msj = "Cerveza añadida correctamente: ".$beer->getName();
-      } else {
+      } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = "Ocurrio un problema";
+        $msj = $e->getMessage();
       }
     }
     require_once 'AdminViews/SubmitBeer.php';
@@ -47,16 +79,34 @@ class GestionBeerController extends GestionController implements IGestion {
     if (isset($name)) {
       $beer = new Beer($name, $description, $price, $ibu, $srm, $graduation, $image);
       $beer->setId($id_beer);
-      $error = $this->beerDAO->Update($beer);
-      if (!isset($error)) {
+      # Si se envia un archivo del formulario
+      if($_FILES)	{
+        if ($_FILES['image']['error'] != UPLOAD_ERR_NO_FILE) {
+          try {
+            $new_image = $this->UploadImage($name);
+            $beer->setImage($new_image);
+            $this->beerDAO->UpdateImage($beer);
+          } catch (\Exception $e) {
+            // TODO: Problema al subir el archivo
+          }
+        }
+      }
+      try {
+        $this->beerDAO->Update($beer);
         $alert = "green";
         $msj = "Cerveza modificada correctamente: ".$beer->getName();
-      } else {
+      } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = "Ocurrio un problema";
+        $msj = $e->getMessage();
       }
     }
-    $list = $this->beerDAO->SelectAll();
+    try {
+      $list = $this->beerDAO->SelectAll();
+    } catch (\Exception $e) {
+      // TODO: Algun cartel
+      echo $e->getMessage();
+    }
+
     require_once 'AdminViews/UpdateBeer.php';
   }
 
@@ -65,14 +115,14 @@ class GestionBeerController extends GestionController implements IGestion {
     Si recibo parametros, elimino el que tengo en la BD.
     */
     if (isset($name)) {
-      $error = $this->beerDAO->DeleteById($id_beer);
-      if (!isset($error)) {
+      try {
+        $error = $this->beerDAO->DeleteById($id_beer);
         $alert = "green";
         $msj = "Cerveza eliminada: ".$name." (id ".$id_beer.")";
-      } else {
+      } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = "Ocurrio un problema";
-      }
+        $msj = $e->getMessage();
+      }      
     }
     $list = $this->beerDAO->SelectAll();
     require_once 'AdminViews/DeleteBeer.php';

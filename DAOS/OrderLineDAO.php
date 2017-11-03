@@ -11,129 +11,121 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
   private $BeerDAO;
   private $PackagingDAO;
 
-  public function __construct() {
+  protected function __construct() {
     $this->pdo = Connection::getInstance();
     $this->BeerDAO = BeerDAO::getInstance();
     $this->PackagingDAO = PackagingDAO::getInstance();
   }
 
   public function Insert($object) {
-    $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (amount, price, id_beer, id_packaging, id_order) values (?,?,?,?,?)");
-    $stmt->execute(array(
-      $object->getAmount(),
-      $object->getPrice(),
-      $object->getBeer()->getId(),
-      $object->getPackaging()->getId(),
-      $object->getOrder()->getId()
-    ));
-    $object->setId($this->pdo->LastInsertId());
-    if($stmt->errorCode() == 0) {
-      return null;
-    } else {
-        $errors = $stmt->errorInfo();
-        return $errors[2];
+    try {
+      $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (amount, price, id_beer, id_packaging, id_order) values (?,?,?,?,?)");
+      $stmt->execute(array(
+        $object->getAmount(),
+        $object->getPrice(),
+        $object->getBeer()->getId(),
+        $object->getPackaging()->getId(),
+        $object->getOrder()->getId()
+      ));
+      $object->setId($this->pdo->LastInsertId());
+      return $object;
+    } catch (\PDOException $e) {
+      throw $e;
     }
   }
 
   public function Delete($object) {
-    $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_order_line = ?");
-    $stmt->execute(array($object->getId()));
-    if($stmt->errorCode() == 0) {
-      return null;
-    } else {
-        $errors = $stmt->errorInfo();
-        return $errors[2];
+    try {
+      $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_order_line = ?");
+      $stmt->execute(array($object->getId()));
+    } catch (\PDOException $e) {
+      throw $e;
     }
   }
 
   public function SelectByID($id) {
-    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." where id_order_line = ? LIMIT 1");
-    if ($stmt->execute(array($id))) {
-      if ($result = $stmt->fetch()) {
-        $beer = $this->BeerDAO->SelectByID($result['id_beer']);
-        $packaging = $this->PackagingDAO->SelectByID($result['id_packaging']);
-        $orderLine = new OrderLine(
-          $result['amount'],
-          $result['price'],
-          $beer,
-          $packaging
-        );
-        $orderLine->setId($result['id_order_line']);
+    try {
+      $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." where id_order_line = ? LIMIT 1");
+      if ($stmt->execute(array($id))) {
+        if ($result = $stmt->fetch()) {
+          $beer = $this->BeerDAO->SelectByID($result['id_beer']);
+          $packaging = $this->PackagingDAO->SelectByID($result['id_packaging']);
+          $orderLine = new OrderLine(
+            $result['amount'],
+            $result['price'],
+            $beer,
+            $packaging
+          );
+          $orderLine->setId($result['id_order_line']);
+          return $orderLine;
+        }
       }
-    }
-    if($stmt->errorCode() == 0) {
-      return $orderLine;
-    } else {
-        $errors = $stmt->errorInfo();
-        return $errors[2];
+    } catch (\PDOException $e) {
+      throw $e;
     }
   }
 
   public function SelectAll() {
-    $lines = array();
-    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table."");
-    if ($stmt->execute()) {
-      while ($result = $stmt->fetch()) {
-        $beer = $this->BeerDAO->SelectByID($result['id_beer']);
-        $packaging = $this->PackagingDAO->SelectByID($result['id_packaging']);
-        $orderLine = new OrderLine(
-          $result['amount'],
-          $result['price'],
-          $beer,
-          $packaging
-        );
-        $orderLine->setId($result['id_order_line']);
-        array_push($lines, $beer);
+    try {
+      $lines = array();
+      $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table."");
+      if ($stmt->execute()) {
+        while ($result = $stmt->fetch()) {
+          $beer = $this->BeerDAO->SelectByID($result['id_beer']);
+          $packaging = $this->PackagingDAO->SelectByID($result['id_packaging']);
+          $orderLine = new OrderLine(
+            $result['amount'],
+            $result['price'],
+            $beer,
+            $packaging
+          );
+          $orderLine->setId($result['id_order_line']);
+          array_push($lines, $beer);
+        }
+        return $lines;
       }
-    }
-    if($stmt->errorCode() == 0) {
-      return $lines;
-    } else {
-        $errors = $stmt->errorInfo();
-        return $errors[2];
+    } catch (\PDOException $e) {
+      throw $e;
     }
   }
 
   public function SelectAllFromOrderNumber($order_number) {
-    $lines = array();
-    $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." WHERE order_number = ? ");
-    if ($stmt->execute(array($order_number))) {
-      while ($result = $stmt->fetch()) {
-        $beer = $this->BeerDAO->SelectByID($result['id_beer']);
-        $packaging = $this->PackagingDAO->SelectByID($result['id_packaging']);
-        $orderLine = new OrderLine(
-          $result['amount'],
-          $result['price'],
-          $beer,
-          $packaging
-        );
-        $orderLine->setId($result['id_order_line']);
-        array_push($lines, $beer);
+    try {
+      $lines = array();
+      $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." WHERE order_number = ? ");
+      if ($stmt->execute(array($order_number))) {
+        while ($result = $stmt->fetch()) {
+          $beer = $this->BeerDAO->SelectByID($result['id_beer']);
+          $packaging = $this->PackagingDAO->SelectByID($result['id_packaging']);
+          $orderLine = new OrderLine(
+            $result['amount'],
+            $result['price'],
+            $beer,
+            $packaging
+          );
+          $orderLine->setId($result['id_order_line']);
+          array_push($lines, $beer);
+        }
+        return $lines;
       }
-    }
-    if($stmt->errorCode() == 0) {
-      return $lines;
-    } else {
-        $errors = $stmt->errorInfo();
-        return $errors[2];
+    } catch (\PDOException $e) {
+      throw $e;
     }
   }
 
   public function Update($object) {
-    $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET amount = ?, price = ?, id_beer = ?, id_packaging = ?, id_order = ? WHERE id_order_line = ?");
-    $stmt->execute(array(
-      $object->getAmount(),
-      $object->getPrice(),
-      $object->getBeer()->getId(),
-      $object->getPackaging()->getId(),
-      $object->getOrder()->getId(),
-      $object->getId()
-    ));
-    if($stmt->errorCode() == 0) {
-      return null;
-    } else {
-        $errors = $stmt->errorInfo();
-        return $errors[2];
+    try {
+      $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET amount = ?, price = ?, id_beer = ?, id_packaging = ?, id_order = ? WHERE id_order_line = ?");
+      $stmt->execute(array(
+        $object->getAmount(),
+        $object->getPrice(),
+        $object->getBeer()->getId(),
+        $object->getPackaging()->getId(),
+        $object->getOrder()->getId(),
+        $object->getId()
+      ));
+    } catch (\PDOException $e) {
+      throw $e;
     }
   }
 } ?>

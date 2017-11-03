@@ -1,4 +1,4 @@
-<?php namespace Daos;
+<?php namespace DAOS;
 
 /*abstract*/ class SingletonDAO {
 	  private static $instances = array();

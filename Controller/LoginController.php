@@ -1,4 +1,5 @@
 <?php namespace Controller;
+
 use DAOS\AccountDAO as AccountDAO;
 use Model\Account as Account;
 use DAOS\StaffDAO as StaffDAO;
@@ -25,14 +26,29 @@ class LoginController {
   }
 
   public function ProcesarLogin($username, $password) {
-    $account = $this->accountDAO->SelectByUsername($username);
+    try {
+      $account = $this->accountDAO->SelectByUsername($username);
+    } catch (Exception $e) {
+        // FIXME: Exception
+        $this->Index($e->getMessage());
+    }
     if (isset($account)) {
       if(strcmp ($account->getUserName() , $username ) == 0 && (strcmp ($account->getPassword() , $password )) == 0) {
         $_SESSION['account'] = $account;
         $account = $_SESSION['account'];
-        $staff = $this->staffDAO->SelectByAccount($account);
-        $client = $this->clientDAO->SelectByAccount($account);
-      if (isset($client) /* TODO && !isset($staff)*/) {
+        try {
+          $staff = $this->staffDAO->SelectByAccount($account);
+        } catch (Exception $e) {
+          // FIXME: Exception
+          $this->Index($e->getMessage());
+        }
+        try {
+          $client = $this->clientDAO->SelectByAccount($account);
+        } catch (Exception $e) {
+          // FIXME: Exception
+          $this->Index($e->getMessage());
+        }
+        if (isset($client) /* TODO && !isset($staff)*/) {
           $_SESSION['client'] = $client;
           header('location: /'.BASE_URL.'/listaCervezas');
         } elseif (isset($staff) && !isset($client)) {
@@ -40,11 +56,9 @@ class LoginController {
           $_SESSION['staff'] = $staff;
           header('location: /'.BASE_URL.'gestion');
         }
-      } else {
-        $this->Index('Credenciales incorrectas');
       }
     }
-    $this->Index('No se encontro el usuario');
+    $this->Index('Credenciales incorrectas');
   }
 
   public function Logout() {

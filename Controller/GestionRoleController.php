@@ -19,32 +19,39 @@ class GestionRoleController extends GestionController implements IGestion {
   public function Submit($rolename = null, $description = null) {
     if (isset($rolename) && isset($description)) {
       $role = new Role($rolename, $description);
-      $error = $this->roleDAO->Insert($role);
-      if (!isset($error)) {
+      try {
+      $role = $this->roleDAO->Insert($role);
+      if (isset($role)) {
         $alert = "green";
-        $msj = "Rol añadido correctamente: ".$rolename;
+        $msj = "Rol añadido correctamente: ".$role->getRolename();
       } else {
         $alert = "yellow";
         $msj = "Ocurrio un problema";
+      }
+      } catch (\Exception $e) {
+        $alert = "yellow";
+        $msj = $e->getMessage();
       }
     }
     require_once 'AdminViews/SubmitRole.php';
   }
 
   public function Update($id_role = null, $rolename = null, $description = null) {
-    /*
-    Si recibo parametros, creo el objeto Beer y actualizo el que tengo en la BD.
-    */
     if (isset($rolename)) {
       $role = new Role($rolename, $description);
       $role->setId($id_role);
-      $error = $this->roleDAO->Update($role);
-      if (!isset($error)) {
-        $alert = "green";
-        $msj = "Rol modificado correctamente: ".$role->getRolename();
-      } else {
+      try {
+          $role = $this->roleDAO->Update($role);
+          if (isset($role)) {
+            $alert = "green";
+            $msj = "Rol modificado correctamente: ".$role->getRolename();
+          } else {
+            $alert = "yellow";
+            $msj = "Ocurrio un problema";
+          }
+      } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = "Ocurrio un problema";
+        $msj = $e->getMessage();
       }
     }
     $list = $this->roleDAO->SelectAll();
@@ -55,14 +62,22 @@ class GestionRoleController extends GestionController implements IGestion {
     /*
     Si recibo parametros, elimino el que tengo en la BD.
     */
-    if (isset($rolename)) {
-      $error = $this->roleDAO->DeleteById($id_role);
-      if (!isset($error)) {
-        $alert = "green";
-        $msj = "Rol eliminado: ".$rolename." (id ".$id_role.")";
-      } else {
+    if (isset($rolename) && isset($id_role)) {
+      try {
+        if ($this->roleDAO->DeleteById($id_role)) {
+          $alert = "green";
+          $msj = "Rol eliminado: ".$rolename." (id ".$id_role.")";
+        } else {
+          $alert = "yellow";
+          $msj = "Ocurrio un problema";
+        }
+      } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = "Ocurrio un problema";
+        if ($e->getCode() == 1451) {
+          $msj = "No se ha podido eliminar. Rol actualmente en uso";
+        } else {
+          $msj = $e->getMessage();
+        }
       }
     }
     $list = $this->roleDAO->SelectAll();

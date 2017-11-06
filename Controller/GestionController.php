@@ -14,16 +14,4 @@ class GestionController {
   }
 
   public function Index() {}
-
-  public function Submit($object = null) {
-    require_once 'AdminViews/SubmitPackaging.php';
-  }
-
-  public function Update($object = null) {
-    require_once 'AdminViews/UpdatePackaging.php';
-  }
-
-  public function Delete($object = null) {
-    require_once 'AdminViews/DeletePackaging.php';
-  }
 } ?>

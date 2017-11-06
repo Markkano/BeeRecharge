@@ -19,29 +19,39 @@ class GestionSubsidiaryController extends GestionController {
   public function Submit($lat = 0.0, $lon = 0.0, $address = null, $phone = null) {
     if (isset($address)) {
       $subsidiary = new Subsidiary($address, $phone, $lat, $lon);
-      $error = $this->subsidiaryDAO->Insert($subsidiary);
-      if (!isset($error)) {
-        $alert = "green";
-        $msj = "Sucursal añadida correctamente: ".$subsidiary->getAddress()." id(".$subsidiary->getId().")";
-      } else {
+      try {
+        $subsidiary = $this->subsidiaryDAO->Insert($subsidiary);
+        if (isset($subsidiary)) {
+          $alert = "green";
+          $msj = "Sucursal añadida correctamente: ".$subsidiary->getAddress();
+        } else {
+          $alert = "yellow";
+          $msj = "Ocurrio un problema";
+        }
+      } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = "Ocurrio un problema";
+        $msj = $e->getMessage();
       }
     }
     require_once 'AdminViews/SubmitSubsidiary.php';
   }
 
   public function Update($lat = 0.0, $lon = 0.0, $id_subsidiary = null, $address = null, $phone = null) {
-    if (isset($address)) {
+    if (isset ($id_subsidiary) && isset($address) && isset($phone)) {
       $subsidiary = new Subsidiary($address, $phone, $lat, $lon);
       $subsidiary->setId($id_subsidiary);
-      $error = $this->subsidiaryDAO->Update($subsidiary);
-      if (!isset($error)) {
-        $alert = "green";
-        $msj = "Sucursal modificada correctamente: ".$subsidiary->getAddress();
-      } else {
+      try {
+          $subsidiary = $this->subsidiaryDAO->Update($subsidiary);
+          if (isset($subsidiary)) {
+            $alert = "green";
+            $msj = "Sucursal modificada correctamente: ".$subsidiary->getAddress();
+          } else {
+            $alert = "yellow";
+            $msj = "Ocurrio un problema";
+          }
+      } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = "Ocurrio un problema";
+        $msj = $e->getMessage();
       }
     }
     $list = $this->subsidiaryDAO->SelectAll();
@@ -49,14 +59,18 @@ class GestionSubsidiaryController extends GestionController {
   }
 
   public function Delete($address = null, $id_subsidiary = null) {
-    if (isset($address)) {
-      $error = $this->subsidiaryDAO->DeleteById($id_subsidiary);
-      if (!isset($error)) {
-        $alert = "green";
-        $msj = "Sucursal eliminada: ".$address." (id ".$id_subsidiary.")";
-      } else {
+    if (isset($address) && isset($id_subsidiary)) {
+      try {
+        if ($this->subsidiaryDAO->DeleteById($id_subsidiary)) {
+          $alert = "green";
+          $msj = "Sucursal eliminada: ".$address." (id ".$id_subsidiary.")";
+        } else {
+          $alert = "yellow";
+          $msj = "Ocurrio un problema";
+        }
+      } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = "Ocurrio un problema";
+        $msj = $e->getMessage();
       }
     }
     $list = $this->subsidiaryDAO->SelectAll();

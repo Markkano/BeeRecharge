@@ -19,13 +19,18 @@ class gestionPackagingController extends GestionController implements IGestion {
   public function Submit($description = null, $capacity = null, $factor = null) {
     if (isset($description)) {
       $packaging = new Packaging($description, $capacity, $factor);
-      $error = $this->packagingDAO->Insert($packaging);
-      if (!isset($error)) {
-        $alert = "green";
-        $msj = "Envase añadido correctamente: ".$packaging->getDescription();
-      } else {
+      try {
+        $packaging = $this->packagingDAO->Insert($packaging);
+        if (isset($packaging)) {
+          $alert = "green";
+          $msj = "Envase añadido correctamente: ".$packaging->getDescription();
+        } else {
+          $alert = "yellow";
+          $msj = "Ocurrio un problema";
+        }
+      } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = "Ocurrio un problema";
+        $msj = $e->getMessage();
       }
     }
     require_once 'AdminViews/SubmitPackaging.php';
@@ -35,13 +40,18 @@ class gestionPackagingController extends GestionController implements IGestion {
     if (isset($description)) {
       $packaging = new Packaging($description, $capacity, $factor);
       $packaging->setId($id_packaging);
-      $error = $this->packagingDAO->Update($packaging);
-      if (!isset($error)) {
-        $alert = "green";
-        $msj = "Envase modificado correctamente: ".$packaging->getDescription();
-      } else {
+      try {
+          $packaging = $this->packagingDAO->Update($packaging);
+          if (isset($packaging)) {
+            $alert = "green";
+            $msj = "Envase modificado correctamente: ".$packaging->getDescription();
+          } else {
+            $alert = "yellow";
+            $msj = "Ocurrio un problema";
+          }
+      } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = "Ocurrio un problema";
+        $msj = $e->getMessage();
       }
     }
     $list = $this->packagingDAO->SelectAll();
@@ -49,14 +59,18 @@ class gestionPackagingController extends GestionController implements IGestion {
   }
 
   public function Delete($description = null, $id_packaging = null) {
-    if (isset($description)) {
-      $error = $this->packagingDAO->DeleteById($id_packaging);
-      if (!isset($error)) {
-        $alert = "green";
-        $msj = "Envase eliminado: ".$description." (id ".$id_packaging.")";
-      } else {
+    if (isset($description) && isset($id_packaging)) {
+      try {
+        if ($this->packagingDAO->DeleteById($id_packaging)) {
+          $alert = "green";
+          $msj = "Envase eliminado: ".$description." (id ".$id_packaging.")";
+        } else {
+          $alert = "yellow";
+          $msj = "Ocurrio un problema";
+        }
+      } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = "Ocurrio un problema";
+        $msj = $e->getMessage();
       }
     }
     $list = $this->packagingDAO->SelectAll();

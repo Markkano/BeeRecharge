@@ -61,9 +61,14 @@ class GestionBeerController extends GestionController implements IGestion {
       }
       $beer = new Beer($name, $description, $price, $ibu, $srm, $graduation, $image);
       try {
-        $this->beerDAO->Insert($beer);
-        $alert = "green";
-        $msj = "Cerveza añadida correctamente: ".$beer->getName();
+        $beer = $this->beerDAO->Insert($beer);
+        if (isset($beer)) {
+          $alert = "green";
+          $msj = "Cerveza añadida correctamente: ".$beer->getName();
+        } else {
+          $alert = "yellow";
+          $msj = "Ocurrio un problema";
+        }
       } catch (\Exception $e) {
         $alert = "yellow";
         $msj = $e->getMessage();
@@ -86,18 +91,23 @@ class GestionBeerController extends GestionController implements IGestion {
             $new_image = $this->UploadImage($name);
             $beer->setImage($new_image);
             $this->beerDAO->UpdateImage($beer);
+            try {
+              $beer = $this->beerDAO->Update($beer);
+              if (isset($beer)) {
+                $alert = "green";
+                $msj = "Cerveza modificada correctamente: ".$beer->getName();
+              } else {
+                $alert = "yellow";
+                $msj = "Ocurrio un problema";
+              }
+            } catch (\Exception $e) {
+              $alert = "yellow";
+              $msj = $e->getMessage();
+            }
           } catch (\Exception $e) {
             // TODO: Problema al subir el archivo
           }
         }
-      }
-      try {
-        $this->beerDAO->Update($beer);
-        $alert = "green";
-        $msj = "Cerveza modificada correctamente: ".$beer->getName();
-      } catch (\Exception $e) {
-        $alert = "yellow";
-        $msj = $e->getMessage();
       }
     }
     try {
@@ -106,7 +116,6 @@ class GestionBeerController extends GestionController implements IGestion {
       // TODO: Algun cartel
       echo $e->getMessage();
     }
-
     require_once 'AdminViews/UpdateBeer.php';
   }
 
@@ -116,13 +125,17 @@ class GestionBeerController extends GestionController implements IGestion {
     */
     if (isset($name)) {
       try {
-        $error = $this->beerDAO->DeleteById($id_beer);
-        $alert = "green";
-        $msj = "Cerveza eliminada: ".$name." (id ".$id_beer.")";
+        if ($this->beerDAO->DeleteById($id_beer)) {
+          $alert = "green";
+          $msj = "Cerveza eliminada: ".$name." (id ".$id_beer.")";
+        } else {
+          $alert = "yellow";
+          $msj = "Ocurrio un problema";
+        }
       } catch (\Exception $e) {
         $alert = "yellow";
         $msj = $e->getMessage();
-      }      
+      }
     }
     $list = $this->beerDAO->SelectAll();
     require_once 'AdminViews/DeleteBeer.php';

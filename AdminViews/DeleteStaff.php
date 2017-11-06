@@ -21,7 +21,7 @@
       <input hidden="hidden" type="text" name="name" value="">
     </tr>
     <tr>
-      <td colspan="2"><input type="submit" class="submit" value="Eliminar Rol"></td>
+      <td colspan="2"><input type="submit" class="submit" value="Eliminar Staff"></td>
     </tr>
   </table>
 </form>

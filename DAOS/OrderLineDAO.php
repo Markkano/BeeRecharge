@@ -30,16 +30,18 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
       $object->setId($this->pdo->LastInsertId());
       return $object;
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
   public function Delete($object) {
     try {
       $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_order_line = ?");
-      $stmt->execute(array($object->getId()));
+      return ($stmt->execute(array($object->getId())));
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -61,7 +63,8 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
         }
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -85,7 +88,8 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
         return $lines;
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -109,7 +113,8 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
         return $lines;
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -125,7 +130,8 @@ class OrderLineDAO extends SingletonDAO implements IDAO {
         $object->getId()
       ));
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+$this->pdo->getException($e);
     }
   }
 } ?>

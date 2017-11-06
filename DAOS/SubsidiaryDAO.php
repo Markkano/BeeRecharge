@@ -24,25 +24,28 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
       $object->setId($this->pdo->LastInsertId());
       return $object;
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
   public function Delete($object) {
     try {
       $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_subsidiary = ?");
-      $stmt->execute(array($object->getId()));
+      return ($stmt->execute(array($object->getId())));
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
   public function DeleteById($id) {
     try {
       $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_subsidiary = ?");
-      $stmt->execute(array($id));
+      return ($stmt->execute(array($id)));
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -62,7 +65,8 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
         }
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -84,7 +88,8 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
         return $lista;
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -98,8 +103,10 @@ class SubsidiaryDAO extends SingletonDAO implements IDAO {
         $object->getLon(),
         $object->getId()
       ));
+      return $object;
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 } ?>

@@ -21,25 +21,28 @@ class PackagingDAO extends SingletonDAO implements IDAO {
       $object->setId($this->pdo->LastInsertId());
       return $object;
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
   public function Delete($object) {
     try {
       $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_packaging = ?");
-      $stmt->execute(array($object->getId()));
+      return ($stmt->execute(array($object->getId())));
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
   public function DeleteById($id) {
     try {
       $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_packaging = ?");
-      $stmt->execute(array($id));
+      return ($stmt->execute(array($id)));
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -58,7 +61,8 @@ class PackagingDAO extends SingletonDAO implements IDAO {
         return $packaging;
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -79,7 +83,8 @@ class PackagingDAO extends SingletonDAO implements IDAO {
         return $envases;
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -92,8 +97,10 @@ class PackagingDAO extends SingletonDAO implements IDAO {
         $object->getFactor(),
         $object->getId()
       ));
+      return $object;
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 } ?>

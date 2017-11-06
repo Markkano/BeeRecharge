@@ -36,16 +36,18 @@ class OrderDAO extends SingletonDAO implements IDAO {
       $object->setOrderNumber($this->pdo->LastInsertId());
       return $object;
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
   public function Delete($object) {
     try {
       $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE order_number = ?");
-      $stmt->execute(array($object->getOrderNumber()));
+      return ($stmt->execute(array($object->getOrderNumber())));
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -72,7 +74,8 @@ class OrderDAO extends SingletonDAO implements IDAO {
         }
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -101,7 +104,8 @@ class OrderDAO extends SingletonDAO implements IDAO {
         return $list;
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -126,11 +130,12 @@ class OrderDAO extends SingletonDAO implements IDAO {
           }
           $order->setOrderNumber($result['order_number']);
           array_push($list, $order);
-          return $list;
         }
+        return $list;
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -159,7 +164,8 @@ class OrderDAO extends SingletonDAO implements IDAO {
         return $list;
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+    $this->pdo->getException($e);
     }
   }
 
@@ -188,7 +194,8 @@ class OrderDAO extends SingletonDAO implements IDAO {
         return $list;
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -202,8 +209,10 @@ class OrderDAO extends SingletonDAO implements IDAO {
         $object->getSubsidiary()->getId(),
         $object->getOrderNumber()
       ));
+      return $object;
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 } ?>

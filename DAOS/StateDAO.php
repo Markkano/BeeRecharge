@@ -21,16 +21,28 @@ class StateDAO extends SingletonDAO implements IDAO {
       $object->setId($this->pdo->LastInsertId());
       return $object;
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
   public function Delete($object) {
     try {
       $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_state = ?");
-      $stmt->execute(array($object->getId()));
+      return ($stmt->execute(array($object->getId())));
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
+    }
+  }
+
+  public function DeleteById($id_state) {
+    try {
+      $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_state = ?");
+      return ($stmt->execute(array($id_state)));
+    } catch (\PDOException $e) {
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -47,14 +59,15 @@ class StateDAO extends SingletonDAO implements IDAO {
         }
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
   public function SelectAll() {
     try {
       $list = array();
-      $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table."");
+      $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." ORDER BY id_state ASC");
       if ($stmt->execute()) {
         while ($result = $stmt->fetch()) {
           $state = new State(
@@ -66,7 +79,8 @@ class StateDAO extends SingletonDAO implements IDAO {
         return $list;
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -77,8 +91,10 @@ class StateDAO extends SingletonDAO implements IDAO {
         $object->getState(),
         $object->getId()
       ));
+      return $object;
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 } ?>

@@ -14,7 +14,8 @@ class RoleDAO extends SingletonDAO implements IDAO {
     try {
 
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
     $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (rolename, description) values (?,?)");
     $stmt->execute(array(
@@ -28,18 +29,20 @@ class RoleDAO extends SingletonDAO implements IDAO {
   public function Delete($object) {
     try {
       $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_role = ?");
-      $stmt->execute(array($object->getId()));
+      return ($stmt->execute(array($object->getId())));
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
   public function DeleteById($id) {
     try {
       $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_role = ?");
-      $stmt->execute(array($id));
+      return ($stmt->execute(array($id)));
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -57,7 +60,8 @@ class RoleDAO extends SingletonDAO implements IDAO {
         }
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -77,7 +81,8 @@ class RoleDAO extends SingletonDAO implements IDAO {
         return $list;
       }
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 
@@ -89,8 +94,10 @@ class RoleDAO extends SingletonDAO implements IDAO {
         $object->getDescription(),
         $object->getId()
       ));
+      return $object;
     } catch (\PDOException $e) {
-      throw $e;
+      //throw $e;
+      $this->pdo->getException($e);
     }
   }
 } ?>

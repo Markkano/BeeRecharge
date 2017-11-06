@@ -1,6 +1,9 @@
 <?php namespace DAOS;
+
 use Config\Config as Config;
 use PDO;
+use Exception;
+
 class Connection {
 
   private static $instance = null;
@@ -28,6 +31,23 @@ class Connection {
 
   public function ErrorInfo() {
     return $this->pdo->errorInfo();
+  }
+
+  public function getException(\PDOException $e) {
+    $error = $e->errorInfo;
+    switch ($error[1]) {
+      case '1451':
+        throw new Exception("Integrity constraint violation", 1451);
+        break;
+
+      case '1062':
+        throw new Exception("Registro duplicado", 1062);
+        break;
+
+      default:
+        throw $e;
+        break;
+    }
   }
 }
 ?>

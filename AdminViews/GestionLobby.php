@@ -79,5 +79,13 @@
           <a href="/<?= BASE_URL ?>gestionTimeRange/Update">Modificacion</a>
         </div>
       </li>
+      <li class="dropdown">
+        <a class="dropdown-btn">Gestion Estados</a>
+        <div class="dropdown-contenido">
+          <a href="/<?= BASE_URL ?>gestionState/Submit">Alta</a>
+          <a href="/<?= BASE_URL ?>gestionState/Delete">Baja</a>
+          <a href="/<?= BASE_URL ?>gestionState/Update">Modificacion</a>
+        </div>
+      </li>
       <li><a href="/<?= BASE_URL ?>login/logout" class="dropdown-link">Cerrar sesión</a></li>
     </ul>

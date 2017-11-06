@@ -17,6 +17,9 @@ use Model\Role as Role;
 use DAOS\TimeRangeDAO as TimeRangeDAO;
 use Model\TimeRange as TimeRange;
 
+use DAOS\StateDAO as StateDAO;
+use Model\State as State;
+
 class AjaxController {
 
   private $beerDAO;
@@ -25,6 +28,7 @@ class AjaxController {
   private $staffDAO;
   private $roleDAO;
   private $timeRangeDAO;
+  private $stateDAO;
 
   public function GetBeer($id) {
     $this->beerDAO = BeerDAO::getInstance();
@@ -60,5 +64,11 @@ class AjaxController {
     $this->timeRangeDAO = TimeRangeDAO::getInstance();
     $timeRange = $this->timeRangeDAO->SelectByID($id);
     echo json_encode($timeRange->toJson());
+  }
+
+  public function GetState($id) {
+    $this->stateDAO = StateDAO::getInstance();
+    $state = $this->stateDAO->SelectByID($id);
+    echo json_encode($state->toJson());
   }
 } ?>

@@ -23,4 +23,11 @@ class State {
   public function setState($value) {
     $this->state = $value;
   }
+
+  public function toJson() {
+    return [
+			'id_state' => $this->id_state,
+			'state' => $this->state
+		];
+  }
 } ?>

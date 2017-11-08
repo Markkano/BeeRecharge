@@ -16,7 +16,7 @@
 
 		<div align="center" style="padding-top: 20px;">
 			<div>
-				<form name="form" action="/<?= BASE_URL ?>register/insertClient" method="post"> <!-- onsubmit="return Validar();">-->
+				<form name="form" action="/<?= BASE_URL ?>Register/InsertClient" method="post" onsubmit="return Validar();">
 					<table class="centrar tabla-register pizarra">
 						<tr>
 						  <td><label for="username">Nombre de Usuario</label></td>

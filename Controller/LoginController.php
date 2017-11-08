@@ -22,13 +22,13 @@ class LoginController {
   }
 
   public function Index($msj = null) {
-    require_once 'Views/login.php';
+    require_once 'Views/Login.php';
   }
 
   public function ProcesarLogin($username, $password) {
     try {
       $account = $this->accountDAO->SelectByUsername($username);
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
         // FIXME: Exception
         $this->Index($e->getMessage());
     }
@@ -38,23 +38,23 @@ class LoginController {
         $account = $_SESSION['account'];
         try {
           $staff = $this->staffDAO->SelectByAccount($account);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
           // FIXME: Exception
           $this->Index($e->getMessage());
         }
         try {
           $client = $this->clientDAO->SelectByAccount($account);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
           // FIXME: Exception
           $this->Index($e->getMessage());
         }
         if (isset($client) /* TODO && !isset($staff)*/) {
           $_SESSION['client'] = $client;
-          header('location: /'.BASE_URL.'/listaCervezas');
+          header('location: /'.BASE_URL.'Lobby');
         } elseif (isset($staff) && !isset($client)) {
           $_SESSION['role'] = $staff->getRole();
           $_SESSION['staff'] = $staff;
-          header('location: /'.BASE_URL.'gestion');
+          header('location: /'.BASE_URL.'Gestion');
         }
       }
     }

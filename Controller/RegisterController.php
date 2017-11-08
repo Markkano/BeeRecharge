@@ -7,19 +7,19 @@ use Model\Account as Account;
 
 class RegisterController {
 
-  private $AccountDAO;
-  private $ClientDAO;
+  private $accountDAO;
+  private $clientDAO;
 
   public function __construct() {
-    $this->AccountDAO = AccountDAO::getInstance();
-    $this->ClientDAO = ClientDAO::getInstance();
+    $this->accountDAO = AccountDAO::getInstance();
+    $this->clientDAO = ClientDAO::getInstance();
   }
 
   public function Index($msj = null, $alert = null) {
-  	require_once 'Views/register.php';
+  	require_once 'Views/Register.php';
   }
 
-  public function insertClient($username, $email, $password, $name, $surname, $dni, $address, $phone) {
+  public function InsertClient($username, $email, $password, $name, $surname, $dni, $address, $phone) {
     /*
     Creo la cuenta, creo el cliente y los inserto a la base de datos.
     */
@@ -33,24 +33,27 @@ class RegisterController {
       isset($address) && !strcmp($address, "") == 0 &&
       isset($phone) && !strcmp($phone, "") == 0 )
       {
+      try {
         $account = new Account($username, $email, $password, "");
-    		$client = new Client($name, $surname, $dni, $address, $phone, $account);
-        try {
-          $client = $this->ClientDAO->Insert($client);
+        $account = $this->accountDAO->Insert($account);
+        if (isset($account)) {
+          $client = new Client($name, $surname, $dni, $address, $phone, $account);
+          $client = $this->clientDAO->Insert($client);
           if (isset($client)) {
+            $_SESSION['account'] = $account;
             $_SESSION['client'] = $client;
-            header('location: /'.BASE_URL.'listaCervezas');
+            header('location: /'.BASE_URL.'Lobby');
+          } else {
+            throw new \Exception("Problema al insertar el Client", 1);
           }
-        } catch (Exception $e) {
-          // FIXME: Exception
-          $msj = "Ocurrio un problema";
-          $alert = "red";
-          $this->Index($msj, $alert);
+        } else {
+          throw new \Exception("Problema al insertar el Account", 1);
         }
-      } else {
-        $msj = "Compruebe los datos ingresados";
-        $alert = "red";
+      } catch (\Exception $e) {
+        $msj = "Ocurrio un problema procesando su solicitud";
+        $alert = "yellow";
         $this->Index($msj, $alert);
       }
+    }
   }
 } ?>

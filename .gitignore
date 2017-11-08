@@ -3,3 +3,5 @@ Image
 *.jpg
 Css/Font/
 *.backup
+/nbproject/private/
+nbproject

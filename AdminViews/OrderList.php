@@ -23,11 +23,11 @@
 
     <tr>
       <td><?= $order->getOrderNumber(); ?></td>
-      <td><a href="/<?= BASE_URL ?>GestionConsults/FilterOrdersByClient/<?= $order->getClient()->getDNI(); ?>"><?= $order->getClient()->getSurname().', '.$order->getClient()->getName(); ?></a></td>
+      <td><?= $order->getClient()->getSurname().', '.$order->getClient()->getName(); ?></td>
       <td><?= $order->getOrderDate(); ?></td>
       <td><?= $order->getState()->getState(); ?></td>
       <td><?= $order->getTotal(); ?></td>
-      <td><a href="/<?= BASE_URL ?>GestionConsults/FilterOrdersBySubsidiary/<?= $order->getSubsidiary()->getId(); ?>"><?= $order->getSubsidiary()->getAddress(); ?></a></td>
+      <td><?= $order->getSubsidiary()->getAddress(); ?></td>
     </tr>
 
   <?php } ?>

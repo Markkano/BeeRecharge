@@ -1,13 +1,14 @@
 <?php namespace Model;
 
+use Model\OrderLine as OrderLine;
+
 class Order {
 	private $order_number;
 	private $order_date;
 	private $state;
 	private $client;
 	private $subsidiary;
-	private $orderLines;
-	// TODO: private $send;
+	private $lineas = array();
 
 	public function __construct($order_date, $state, $client, $subsidiary) {
 		$this->setOrderDate($order_date);
@@ -29,7 +30,11 @@ class Order {
 	}
 
 	public function setOrderDate($value) {
-		$this->order_date = $value;
+		if ($value != null) {
+			$this->order_date = $value;
+		} else {
+			$this->order_date = date("d/m/y");
+		}
 	}
 
 	public function getState() {
@@ -57,10 +62,31 @@ class Order {
 	}
 
 	public function getTotal() {
-		return 0;
+		$total = 0;
+		foreach ($this->lineas as $value) {
+			$total += round($value->getPackaging->getFactor() * ( $value->getPackaging->getCapacity() * $value->getBeer->getPrice()), 2);
+		}
+		return $total;
 	}
 
-	public function NewOrderLine($orderLine) {
+	public function getOrderLines() {
+		return $this->lineas;
+	}
 
+	public function AddOrderLine($orderLine) {
+		array_push($this->lineas, $orderLine);
+	}
+
+	public function NewOrderLine($beer, $packaging, $amount) {
+		$price = round($packaging->getFactor() * ( $packaging->getCapacity() * $beer->getPrice()), 2);
+		$orderLine = new OrderLine($amount, $price, $beer, $packaging);
+		$this->AddOrderLine($orderLine);
+	}
+
+	public function DeleteOrderLine($index) {
+		if ($index >= 0 && $index <= sizeof($this->lineas)) {
+			unset($this->lineas);
+			$this->lineas = array_values($this->lineas);
+		}
 	}
 } ?>

@@ -79,17 +79,21 @@ class GestionSubsidiaryController extends GestionController {
 
   public function ManageMarkers($id_subsidiary = null, $lat = null, $lon = null) {
     if (isset($id_subsidiary)) {
-      #echo "id:".$id_subsidiary."  lat:".$lat."  lon:".$lon;
-      $subsidiary = $this->subsidiaryDAO->SelectById($id_subsidiary);
-      $subsidiary->setLat($lat);
-      $subsidiary->setLon($lon);
-      $error = $this->subsidiaryDAO->Update($subsidiary);
-      if (!isset($error)) {
-        $alert = "green";
-        $msj = "Sucursal modificada correctamente: ".$subsidiary->getAddress();
-      } else {
+      try {
+        $subsidiary = $this->subsidiaryDAO->SelectById($id_subsidiary);
+        $subsidiary->setLat($lat);
+        $subsidiary->setLon($lon);
+        $subsidiary = $this->subsidiaryDAO->Update($subsidiary);
+        if (isset($subsidiary)) {
+          $alert = "green";
+          $msj = "Sucursal modificada correctamente: ".$subsidiary->getAddress();
+        } else {
+          $alert = "yellow";
+          $msj = "Ocurrio un problema";
+        }
+      } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = "Ocurrio un problema";
+        $msj = $e->getMessage();
       }
     }
     $list = $this->subsidiaryDAO->SelectAll();

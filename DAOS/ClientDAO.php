@@ -17,7 +17,6 @@ class ClientDAO extends SingletonDAO implements IDAO {
 
   public function Insert($object) {
     try {
-      $this->AccountDAO->Insert($object->getAccount());
       $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (name, surname, dni, address, phone, id_account) values (?,?,?,?,?,?)");
       $stmt->execute(array(
         $object->getName(),

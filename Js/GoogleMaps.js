@@ -31,7 +31,6 @@ function GenerateMap() {
 
 function Mostrar(datos) {
   var subsidiary = JSON.parse(datos);
-  //console.log(subsidiary.lat + " " + subsidiary.lon);
   GenerateMarker(subsidiary);
 }
 

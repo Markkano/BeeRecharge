@@ -26,13 +26,17 @@ class OrderDAO extends SingletonDAO implements IDAO {
 
   public function Insert($object) {
     try {
-      $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (order_date, id_state, id_client, id_subsidiary) values (?,?,?,?,?)");
+      $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (order_date, id_state, id_client, id_subsidiary, total) values (?,?,?,?,?)");
       $stmt->execute(array(
         $object->getOrderDate(),
         $object->getState()->getId(),
         $object->getClient()->getId(),
+        $object->getTotal(),
         $object->getSubsidiary()->getId()
       ));
+      foreach ($object->getOrderLines() as $order_line) {
+        $this->orderLineDAO->Insert($order_line);
+      }
       $object->setOrderNumber($this->pdo->LastInsertId());
       return $object;
     } catch (\PDOException $e) {

@@ -26,7 +26,12 @@ class OrderDAO extends SingletonDAO implements IDAO {
 
   public function Insert($object) {
     try {
-      $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (order_date, id_state, id_client, id_subsidiary, total) values (?,?,?,?,?)");
+      echo "<br/>INSERT INTO (order_date, id_state, id_client, id_subsidiary, total) values (".$object->getOrderDate().",".
+      $object->getState()->getId().",".
+      $object->getClient()->getId().",".
+      $object->getTotal().",".
+      $object->getSubsidiary()->getId().")<br/>";
+      $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (order_date, id_state, id_client, total, id_subsidiary) values (?,?,?,?,?)");
       $stmt->execute(array(
         $object->getOrderDate(),
         $object->getState()->getId(),
@@ -34,10 +39,10 @@ class OrderDAO extends SingletonDAO implements IDAO {
         $object->getTotal(),
         $object->getSubsidiary()->getId()
       ));
-      foreach ($object->getOrderLines() as $order_line) {
-        $this->orderLineDAO->Insert($order_line);
-      }
       $object->setOrderNumber($this->pdo->LastInsertId());
+      foreach ($object->getOrderLines() as $order_line) {
+        $this->orderLineDAO->Insert($order_line, $object->getOrderNumber());
+      }
       return $object;
     } catch (\PDOException $e) {
       //throw $e;
@@ -71,7 +76,7 @@ class OrderDAO extends SingletonDAO implements IDAO {
             $subsidiary
           );
           foreach ($orderLines as $line) {
-            $order->NewOrderLine($line);
+            $order->AddOrderLine($line);
           }
           $order->setOrderNumber($result['order_number']);
           return $order;
@@ -100,7 +105,7 @@ class OrderDAO extends SingletonDAO implements IDAO {
             $subsidiary
           );
           foreach ($orderLines as $line) {
-            $order->NewOrderLine($line);
+            $order->AddOrderLine($line);
           }
           $order->setOrderNumber($result['order_number']);
           array_push($list, $order);
@@ -130,7 +135,7 @@ class OrderDAO extends SingletonDAO implements IDAO {
             $subsidiary
           );
           foreach ($orderLines as $line) {
-            $order->NewOrderLine($line);
+            $order->AddOrderLine($line);
           }
           $order->setOrderNumber($result['order_number']);
           array_push($list, $order);
@@ -160,7 +165,7 @@ class OrderDAO extends SingletonDAO implements IDAO {
             $subsidiary
           );
           foreach ($orderLines as $line) {
-            $order->NewOrderLine($line);
+            $order->AddOrderLine($line);
           }
           $order->setOrderNumber($result['order_number']);
           array_push($list, $order);
@@ -190,7 +195,7 @@ class OrderDAO extends SingletonDAO implements IDAO {
             $subsidiary
           );
           foreach ($orderLines as $line) {
-            $order->NewOrderLine($line);
+            $order->AddOrderLine($line);
           }
           $order->setOrderNumber($result['order_number']);
           array_push($list, $order);

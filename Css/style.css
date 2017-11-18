@@ -76,6 +76,28 @@
   text-decoration: underline;
 }
 
+.orden-background {
+  margin: auto;
+  margin-top: 20px;
+  padding: 20px;
+  width: 650px;
+}
+
+.orden-head {
+  margin: auto;
+  width: 500px;
+  margin-bottom: 20px;
+}
+
+.orden-head td {
+  padding: 10px;
+}
+
+.orden-body {
+  margin: auto;
+  width: 600px;
+}
+
 /********** VENTANA POPUP **********/
 /*
 popup: <div> que define el popup.

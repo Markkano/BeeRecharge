@@ -1,59 +1,65 @@
-<body class="fondo-carga expandir-fondo">
- <div class="centrar" style="width: 80%; margin-top: 40px;">
-	 <form action='/<?= BASE_URL ?>Order/NewOrder' method='post'>
-		<!-- cabecera del pedido  !-->
-		<center>
-			<p class="tabla-envases pizarra expandir-fondo" style="font-family: 'Old Bookshop'"> INGRESO  DE  PEDIDO </p></center>
-      <table align='center' class="tabla-envases pizarra expandir-fondo">
-      	<tr>
-      		<td>Fecha: </td>
-      		<td><input type="text" name=""
-      			value="<?= $order->getOrderDate(); ?>" disabled></td>
-      	</tr>
-      	<tr>
-      		<td>Sucursal: </td>
-      		<td>
-        		<?php if ($subsidiary == null) { ?>
-        			<a href="/<?= BASE_URL ?>Lobby/ElegirSucursal" class="btn-volver"> Ingresar Sucursal</a>
-        		<?php } else { ?>
-        			<input type="text" name="sucursal" value="<?= $subsidiary->getAddress(); ?>" disabled>
-        		<?php } ?>
-      		</td>
-      	</tr>
-      	<tr><td colspan="2" align="left">Detalle: </td></tr>
+<body class="expandir-fondo">
+<style media="screen">
+  .f {
+    font-family: 'Old Bookshop';
+  }
+</style>
+  <div class="pizarra expandir-fondo orden-background">
+    <form class="" action="/<?= BASE_URL ?>Order/NewOrder" method="post">
+      <table class="orden-head">
+        <tr>
+          <td colspan="2">Confirmar Orden</td>
+        </tr>
+        <tr class="f">
+          <td>
+            <label for="name">Nombre:</label>
+            <input type="text" name="name" value="<?= $order->getClient()->getSurname().' ,'.$order->getClient()->getName(); ?>" disabled>
+          </td>
+          <td>
+            <label for="date">Fecha:</label>
+            <input type="text" name="date" value="<?= $order->getOrderDate(); ?>" disabled>
+          </td>
+        </tr>
+        <tr class="f"> <!-- Sucursal -->
+          <td colspan="2"><label for="subsidiary">Sucursal:</label>
+            <?php if ($subsidiary == null) { ?>
+            <a href="/<?= BASE_URL ?>Lobby/ElegirSucursal"><button type="button">Ingresar Sucursal</button></a>
+            <?php } else { ?>
+            <input type="text" name="subsidiary" value="<?= $subsidiary->getAddress(); ?>" disabled>
+            <?php } ?>
+          </td>
+        </tr>
       </table>
-
-      <!-- detalle del pedido  !-->
-      <table align='center' class="tabla-envases pizarra expandir-fondo">
-    	   <center><tr>
+      <table class="orden-body" style="margin-top: 30px; font-size: 18px;"> <!-- detalle del pedido  !-->
+        <tr>
           <td>CERVEZA</td>
           <td>ENVASE</td>
+          <td>CANTIDAD</td>
           <td>SUBTOTAL</td>
-        	</tr></center>
-
-        	<?php
-            $orderlines = $order->getOrderLines();
-            $total = 0;
-
-            foreach ($orderlines as $orderline) {?>
-            <tr>
-              <td><?= $orderline->getBeer()->getName(); ?></td>
-              <td><?= $orderline->getPackaging()->getDescription(); ?></td>
-              <td><?php $subtotal = $orderline->getAmount() * $orderline->getPrice();
-                    echo '$'.$subtotal;?></td>
-              <?php $total = $total + $subtotal; ?>
-            </tr>
-          <?php }?>
-          <tr>
-          	<td colspan="2">TOTAL</td>
-          	<td align="right"><?='$'.$total;?></td>>
+          <td></td>
+        </tr>
+        <?php $total = 0;
+        foreach ($order->getOrderLines() as $orderline) {
+          $subtotal = $orderline->getAmount() * $orderline->getPrice();
+          $total += $subtotal; ?>
+          <tr class="f">
+            <td><?= $orderline->getBeer()->getName(); ?></td>
+            <td><?= $orderline->getPackaging()->getDescription(); ?></td>
+            <td><?= $orderline->getAmount(); ?></td>
+            <td><?= '$'.$subtotal; ?></td>
+            <td><a href="">Eliminar</a></td>
           </tr>
+        <?php }?>
+        <tr>
+          <td colspan="5" style="padding: 15px 50px 15px 0px; text-align: right;">Total: $<?= $total; ?></td>
+        </tr>
         <!-- acciones del pedido  !-->
-       	<tr>
+        <tr>
           <input type="hidden" name="total" value=<?= $total;?>>
-          <td><a href="/<?= BASE_URL ?>Lobby" class="btn-volver">Ingresar Nueva Cerveza</a></td>
-          <td align="right"><a href="/<?= BASE_URL ?>Order/DeleteOrder" class="btn-volver"> Eliminar Pedido</td>
-          <td><input type="submit" name="enter" value='Ingresar Pedido' class="submit"></td>
+
+          <td><a href="/<?= BASE_URL ?>Lobby" class="btn-order"><button type="button">Ingresar otra Cerveza</button></a></td>
+          <td><a href="/<?= BASE_URL ?>Order/DeleteOrder" class="btn-order"><button type="button">Eliminar Pedido</button></td>
+          <td><input type="submit" name="" value='Ingresar Pedido'></td>
         </tr>
       </table>
     </form>

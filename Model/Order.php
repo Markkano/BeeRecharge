@@ -64,7 +64,7 @@ class Order {
 	public function getTotal() {
 		$total = 0;
 		foreach ($this->lineas as $value) {
-			$total += round($value->getPackaging->getFactor() * ( $value->getPackaging->getCapacity() * $value->getBeer->getPrice()), 2);
+			$total += round($value->getPackaging()->getFactor() * ( $value->getPackaging()->getCapacity() * $value->getBeer()->getPrice()), 2);
 		}
 		return $total;
 	}

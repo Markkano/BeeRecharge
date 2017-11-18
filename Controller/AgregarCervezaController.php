@@ -1,6 +1,10 @@
 <?php namespace Controller;
+
+use Model\Beer as Beer;
 use DAOS\BeerDAO as BeerDAO;
+use Model\Packaging as Packaging;
 use DAOS\PackagingDAO as PackagingDAO;
+use Model\Order as Order;
 
 class AgregarCervezaController {
 
@@ -12,18 +16,20 @@ class AgregarCervezaController {
     $this->packagingDAO = PackagingDAO::getInstance();
   }
 
-  public function Traer($id) {
-    $beer = $this->beerDAO->SelectByID($id);
-    return $beer;
-  }
-
-  public function Mostrar($id) {
-    $beer = $this->Traer($id);
-    $envases = $this->packagingDAO->SelectAll();
-    if (isset($beer)) {
-      require_once 'Views/agregarCerveza.php';
-    } else {
-      #TODO Cerveza no encontrada
+  public function NewBeer($id_beer, $id_packaging, $cant) {
+    try {
+      $beer = $this->beerDAO->SelectByID($id_beer);
+      $packaging = $this->packagingDAO->SelectByID($id_packaging);
+      if (isset($_SESSION['order'])) {
+        $order = $_SESSION['order'];
+      } else {
+        $order = new Order(null, null, $_SESSION['client'], null);
+      }
+      $order->NewOrderLine($beer, $packaging, $cant);
+      $_SESSION['order'] = $order;
+      header('location: /'.BASE_URL.'Lobby');
+    } catch (Exception $e) {
+      echo "Error! ".$e->getMessage();
     }
   }
 } ?>

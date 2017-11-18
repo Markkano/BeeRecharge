@@ -106,14 +106,11 @@ class AccountDAO extends SingletonDAO implements IDAO {
 
   public function Update($object) {
     try {
-      $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET name = ?, description = ?, price = ?, graduation = ?, ibu = ?, srm = ?, image = ? WHERE id_account = ?");
+      $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET username = ?, email = ?, password = ?, image = ? WHERE id_account = ?");
       $stmt->execute(array(
-        $object->getName(),
-        $object->getDescription(),
-        $object->getPrice(),
-        $object->getGraduation(),
-        $object->getIbu(),
-        $object->getSrm(),
+        $object->getUsername(),
+        $object->getEmail(),
+        $object->getPassword(),
         $object->getImage(),
         $object->getId()
       ));

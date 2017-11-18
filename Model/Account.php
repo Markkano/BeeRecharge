@@ -5,13 +5,11 @@ class Account	{
 	private $username;
 	private $email;
 	private $password;
-	private $image;
 
-	public function __construct ($username, $email, $password, $image) {
+	public function __construct ($username, $email, $password) {
 		$this->setUsername($username);
 		$this->setEmail($email);
 		$this->setPassword($password);
-		$this->setImage($image);
 	}
 
 	public function setId($value) {
@@ -45,22 +43,4 @@ class Account	{
 	public function getPassword()	{
 		return $this->password;
 	}
-
-	public function setImage($value) 	{
-		$this->image = $value;
-	}
-
-	public function getImage() {
-		return $this->image;
-	}
-
-	public function toJson() {
-    return [
-			'id_account' => $this->id_account,
-			'name' => $this->username,
-			'email' => $this->email,
-			'password' => $this->password,
-			'image' => $this->image
-		];
-  }
 } ?>

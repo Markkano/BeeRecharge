@@ -57,6 +57,9 @@
       <td><label for="image">Imagen</label></td>
     </tr>
     <tr>
+      <td colspan="2" id="img"></td>
+    </tr>
+    <tr>
       <td colspan="2"><input type="file" name="image" value=""></td>
     </tr>
     <tr>
@@ -93,6 +96,13 @@ function Mostrar(datos) {
   form.ibu.value = beer.ibu;
   form.srm.value = beer.srm;
   form.graduation.value = beer.graduation;
+
+  if (beer.image != "" && beer.image != null) {
+    var img = "/<?= BASE_URL.IMG_PATH ?>"+beer.image;
+    document.getElementById('img').innerHTML = "<img src="+img+">";
+  } else {
+    document.getElementById('img').innerHTML = "";
+  }
 }
 
 function Actualizar() {

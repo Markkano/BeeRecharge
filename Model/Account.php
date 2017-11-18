@@ -43,4 +43,13 @@ class Account	{
 	public function getPassword()	{
 		return $this->password;
 	}
+
+	public function toJson() {
+  	return [
+			'id_account' => $this->id_account,
+			'name' => $this->username,
+			'email' => $this->email,
+			'password' => $this->password
+		];
+	}
 } ?>

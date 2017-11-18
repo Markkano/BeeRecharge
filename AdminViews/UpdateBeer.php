@@ -54,6 +54,15 @@
       <td colspan="2"><input type="number" step="0.1" min="0" name="graduation" value=""></td>
     </tr>
     <tr>
+      <td><label>Envases</label></td>
+    </tr>
+    <?php foreach($packagings_list as $pack) { ?>
+    <tr>
+      <td><?= $pack->getDescription(); ?></td>
+      <td><input type="checkbox" name="packagings[]" value="<?= $pack->getId(); ?>"></td>
+    </tr>
+    <?php } ?>
+    <tr>
       <td><label for="image">Imagen</label></td>
     </tr>
     <tr>
@@ -87,6 +96,26 @@ function Validar() {
   return ok;
 }
 
+function DesmarcarTodos() {
+  inputs = document.getElementsByTagName('input');
+  for (i = 0; i < inputs.length; i++) {
+    if (inputs[i].type == "checkbox") {
+      inputs[i].checked = false;
+    }
+  }
+}
+
+function Marcar(id_packaging) {
+  inputs = document.getElementsByTagName('input');
+  for (i = 0; i < inputs.length; i++) {
+    if (inputs[i].type == "checkbox") {
+      if (inputs[i].value == id_packaging) {
+        inputs[i].checked = true;
+      }
+    }
+  }
+}
+
 function Mostrar(datos) {
   var beer = JSON.parse(datos);
   var form = document.form;
@@ -96,6 +125,11 @@ function Mostrar(datos) {
   form.ibu.value = beer.ibu;
   form.srm.value = beer.srm;
   form.graduation.value = beer.graduation;
+
+  DesmarcarTodos();
+  for (var i = 0; i < beer.packagings.length; i++) {
+    Marcar(beer.packagings[i].id_packaging);
+  }
 
   if (beer.image != "" && beer.image != null) {
     var img = "/<?= BASE_URL.IMG_PATH ?>"+beer.image;

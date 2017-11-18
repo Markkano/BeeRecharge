@@ -46,6 +46,15 @@
           <td colspan="2"><input type="number" step="0.1" min="0" name="graduation" value=""></td>
         </tr>
         <tr>
+          <td><label>Envases</label></td>
+        </tr>
+        <?php foreach($packagings_list as $pack) { ?>
+        <tr>
+          <td><?= $pack->getDescription(); ?></td>
+          <td><input type="checkbox" name="packagings[]" value="<?= $pack->getId(); ?>"></td>
+        </tr>
+        <?php } ?>
+        <tr>
           <td><label for="image">Imagen</label></td>
         </tr>
         <tr>

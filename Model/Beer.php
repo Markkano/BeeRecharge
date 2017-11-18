@@ -9,6 +9,7 @@ class Beer {
 	private $ibu;
 	private $srm;
 	private $graduation;
+	private $packagings = array();
 
 	public function __construct($name, $description, $price, $ibu, $srm, $graduation, $image = "") {
 		$this->setName($name);
@@ -84,7 +85,25 @@ class Beer {
 		$this->graduation = $value;
 	}
 
+	public function getPackagings() {
+		return $this->packagings;
+	}
+
+	public function setPackagings($value) {
+		$this->packagings = $value;
+	}
+
+	public function AddPackaging($packaging) {
+		if ($packaging != null) {
+			array_push($this->packagings, $packaging);
+		}
+	}
+
 	public function toJson() {
+		$packagings = array();
+		foreach ($this->packagings as $pack) {
+			array_push($packagings, $pack->toJson());
+		}
     return [
 			'id_beer' => $this->id_beer,
 			'name' => $this->name,
@@ -93,7 +112,8 @@ class Beer {
 			'ibu' => $this->ibu,
 			'srm' => $this->srm,
 			'graduation' => $this->graduation,
-			'image' => $this->image
+			'image' => $this->image,
+			'packagings' => $packagings
 		];
   }
 } ?>

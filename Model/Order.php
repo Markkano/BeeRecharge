@@ -33,7 +33,7 @@ class Order {
 		if ($value != null) {
 			$this->order_date = $value;
 		} else {
-			$this->order_date = date("d/m/y");
+			$this->order_date = date("Y-m-d");
 		}
 	}
 

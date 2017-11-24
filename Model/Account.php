@@ -5,6 +5,7 @@ class Account	{
 	private $username;
 	private $email;
 	private $password;
+	private $image;
 
 	public function __construct ($username, $email, $password) {
 		$this->setUsername($username);
@@ -42,6 +43,14 @@ class Account	{
 
 	public function getPassword()	{
 		return $this->password;
+	}
+
+	public function setImage($value) {
+		$this->image = $value;
+	}
+
+	public function getImage() {
+		return $this->image;
 	}
 
 	public function toJson() {

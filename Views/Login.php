@@ -52,6 +52,7 @@
     </table>
     <script type="text/javascript" src="/<?= BASE_URL ?>Js/Ajax.js" charset="utf-8"></script>
     <script type="text/javascript" src="/<?= BASE_URL ?>Js/facebookLogin.js" charset="utf-8"></script>
+    <script type="text/javascript" src="//connect.facebook.net/en_US/sdk.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </body>
 </html>

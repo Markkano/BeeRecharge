@@ -1,9 +1,11 @@
 <?php namespace Controller;
 
+use Model\Order as Order;
 use DAOS\BeerDAO as BeerDAO;
 use DAOS\PackagingDAO as PackagingDAO;
 use DAOS\SubsidiaryDAO as SubsidiaryDAO;
 use DAOS\TimeRangeDAO as TimeRangeDAO;
+use DAOS\ClientDAO as ClientDAO;
 
 class LobbyController {
 
@@ -11,14 +13,20 @@ class LobbyController {
   private $packagingDAO;
   private $subsidiaryDAO;
   private $timeRangeDAO;
+  private $clientDAO;
 
   public function __construct() {
     $this->beerDAO = BeerDAO::getInstance();
     $this->packagingDAO = PackagingDAO::getInstance();
     $this->subsidiaryDAO = SubsidiaryDAO::getInstance();
     $this->timeRangeDAO = TimeRangeDAO::getInstance();
+    $this->clientDAO = ClientDAO::getInstance();
     if (!isset($_SESSION['account'])) {
       header('location: /'.BASE_URL);
+    }
+    if (!isset($_SESSION['order'])) {
+      $client = $this->clientDAO->SelectByAccount($_SESSION['account']);
+      $_SESSION['order'] = new Order(null, null, $client, null);
     }
     require_once 'Views/Lobby.php';
   }
@@ -34,10 +42,8 @@ class LobbyController {
       if (isset($beer)) {
         require_once 'Views/AgregarCerveza.php';
       } else {
-        #TODO Cerveza no encontrada
       }
     } catch (\Exception $e) {
-      // TODO: Controlar Exception
     }
   }
 

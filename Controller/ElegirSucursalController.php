@@ -21,7 +21,7 @@ class ElegirSucursalController {
       }
       $order->setSubsidiary($subsidiary);
       $_SESSION['order'] = $order;
-      header('location: /'.BASE_URL.'Lobby');
+      header('location: /'.BASE_URL.'Lobby/SubmitOrder');
     } catch (Exception $e) {
       echo "Error! ".$e->getMessage();
     }

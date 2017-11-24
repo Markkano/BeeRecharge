@@ -8,13 +8,15 @@ class Order {
 	private $state;
 	private $client;
 	private $subsidiary;
+	private $send;
 	private $lineas = array();
 
-	public function __construct($order_date, $state, $client, $subsidiary) {
+	public function __construct($order_date, $state, $client, $subsidiary, $send = null) {
 		$this->setOrderDate($order_date);
 		$this->setState($state);
 		$this->setClient($client);
 		$this->setSubsidiary($subsidiary);
+		$this->setSend($send);
 	}
 
 	public function getOrderNumber() {
@@ -61,10 +63,18 @@ class Order {
 		$this->subsidiary = $value;
 	}
 
+	public function getSend() {
+		return $this->send;
+	}
+
+	public function setSend($value) {
+		$this->send = $value;
+	}
+
 	public function getTotal() {
 		$total = 0;
 		foreach ($this->lineas as $value) {
-			$total += round($value->getPackaging()->getFactor() * ( $value->getPackaging()->getCapacity() * $value->getBeer()->getPrice()), 2);
+			$total += round(($value->getPackaging()->getFactor() * ( $value->getPackaging()->getCapacity() * $value->getBeer()->getPrice()) * $value->getAmount()), 2);
 		}
 		return $total;
 	}
@@ -85,7 +95,7 @@ class Order {
 
 	public function DeleteOrderLine($index) {
 		if ($index >= 0 && $index <= sizeof($this->lineas)) {
-			unset($this->lineas);
+			unset($this->lineas[$index]);
 			$this->lineas = array_values($this->lineas);
 		}
 	}

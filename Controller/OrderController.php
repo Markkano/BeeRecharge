@@ -12,14 +12,26 @@ class OrderController {
   public function __construct() {
     $this->orderDAO = OrderDAO::getInstance();
     $this->stateDAO = StateDAO::getInstance();
-    require_once 'Views/Order.php';
   }
 
   public function Index() {
-
+    require_once 'Views/SubmitOrder.php';
   }
 
-  public function NewOrder() {
+  public function NewOrder($select) {
+    if (isset($_SESSION['order'])) {
+      $order = $_SESSION['order'];
+      if (strcmp($select, '1') == 0) {
+        header('location: /'.BASE_URL.'Send');
+      } else {
+        $this->ConfirmOrder();
+      }
+    } else {
+      header('location: /'.BASE_URL.'Lobby');
+    }
+  }
+
+  public function ConfirmOrder() {
     if (isset($_SESSION['order'])) {
       $order = $_SESSION['order'];
       try {
@@ -27,16 +39,10 @@ class OrderController {
         $order->setState($state);
         $order = $this->orderDAO->Insert($order);
         $this->DeleteOrder();
-        if (!isset($order)) {
-          throw new \Exception("Ocurrio un problema al insertar la orden", 1);
-        }
       } catch (\Exception $e) {
-        echo $e->getMessage();
-        echo $e->getTraceAsString();
       }
-    } else {
-      header('location: /'.BASE_URL.'Lobby');
     }
+    header('location: /'.BASE_URL.'Lobby');
   }
 
   public function DeleteOrder() {

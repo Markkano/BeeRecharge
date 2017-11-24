@@ -56,4 +56,11 @@ class RegisterController {
       }
     }
   }
+
+  public function facebookRegister() {
+    $nya = explode('-', $_SESSION['usuario']->getUsername());
+    $name = $nya[0];
+    $surname = $nya[1];
+    require_once 'Views/Register.php';
+  }
 } ?>

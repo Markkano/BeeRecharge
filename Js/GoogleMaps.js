@@ -40,4 +40,5 @@ function GenerateMarker(subsidiary) {
   document.form.lat.value = lat;
   document.form.lon.value = lon;
   marker.setPosition({lat:lat, lng:lon});
-};
+  map.panTo({lat:lat, lng:lon});
+}

@@ -136,13 +136,8 @@ class GestionBeerController extends GestionController implements IGestion {
         $msj = $e->getMessage();
       }
     }
-    try {
-      $list = $this->beerDAO->SelectAll();
-      $packagings_list = $this->packagingDAO->SelectAll();
-    } catch (\Exception $e) {
-      // TODO: Algun cartel
-      echo $e->getMessage();
-    }
+    $list = $this->beerDAO->SelectAll();
+    $packagings_list = $this->packagingDAO->SelectAll();
     require_once 'AdminViews/UpdateBeer.php';
   }
 

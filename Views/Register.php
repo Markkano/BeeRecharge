@@ -16,47 +16,53 @@
 
 		<div align="center" style="padding-top: 20px;">
 			<div>
-				<form name="form" action="/<?= BASE_URL ?>Register/InsertClient" method="post" onsubmit="return Validar();">
+				<form name="form" action="/<?= BASE_URL ?>Register/InsertClient" method="post" onsubmit="return Validar();" enctype='multipart/form-data'>
 					<table class="centrar tabla-register pizarra">
 						<tr>
-						  <td><label for="username">Nombre de Usuario</label></td>
-						  <td><input type="text" name="username" value=""></td>
+							<td><label for="username">Nombre de Usuario</label></td>
+							<td><input type="text" name="username"
+								value="" ></td>
 						</tr>
 						<tr>
-						  <td><label for="email">Correo Electronico</label></td>
-						  <td><input type="email" name="email" value=""></td>
+							<td><label for="email">Correo Electronico</label></td>
+							<td><input type="email" name="email"
+								value="<?php isset($_SESSION['usuario']) ? $usuario=$_SESSION['usuario']->getEmail() : $usuario=""; echo($usuario); ?>"></td>
 						</tr>
 						<tr>
-						  <td><label for="password">Contraseña</label></td>
-						  <td><input type="password" name="password" value=""></td>
+							<td><label for="password">Contraseña</label></td>
+							<td><input type="password" name="password" value=""></td>
 						</tr>
 						<tr>
-						  <td><label for="name">Nombre</label></td>
-						  <td><input type="text" name="name" value=""></td>
+							<td><label for="name">Nombre</label></td>
+							<td><input type="text" name="name" value="<?php if(isset($name)) echo $name;?>"></td>
 						</tr>
 						<tr>
-						  <td><label for="surname">Apellido</label></td>
-						  <td><input type="text" name="surname" value=""></td>
+							<td><label for="surname">Apellido</label></td>
+							<td><input type="text" name="surname" value="<?php if(isset($surname)) echo $surname;?>"></td>
 						</tr>
 						<tr>
-						  <td><label for="dni">DNI</label></td>
-						  <td><input type="text" name="dni" value=""></td>
+							<td><label for="dni">DNI</label></td>
+							<td><input type="text" name="dni" value=""></td>
 						</tr>
 						<tr>
-						  <td><label for="address">Direccion</label></td>
-						  <td><input type="text" name="address" value=""></td>
+							<td><label for="address">Direccion</label></td>
+							<td><input type="text" name="address" value=""></td>
 						</tr>
 						<tr>
-						  <td><label for="phone">Teléfono</label></td>
-						  <td><input type="tel" name="phone" value=""></td>
+							<td><label for="phone">Teléfono</label></td>
+							<td><input type="tel" name="phone" value=""></td>
 						</tr>
 						<tr>
-						  <td colspan="2"><input type="submit" class="btn-login" value="Registrarse"></td>
+							<td colspan="2" align="center"><img src="<?=$_SESSION['fotoPerfil'];?>" width='100px'></td>
+						</tr>
+						<tr>
+							<td colspan="2"><input type="submit" class="btn-login" value="Registrarse"></td>
 						</tr>
 					</table>
 				</form>
 			</div>
 		</div>
+
 		<script type="text/javascript">
 		function Validar() {
 			var ok = true;

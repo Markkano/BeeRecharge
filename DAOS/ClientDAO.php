@@ -92,10 +92,10 @@ class ClientDAO extends SingletonDAO implements IDAO {
     }
   }
 
-  public function SelectByAccount($object) {
+  public function SelectByAccount($account) {
     try {
       $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." WHERE id_account = ?  LIMIT 1");
-      if ($stmt->execute(array($object->getId()))) {
+      if ($stmt->execute(array($account->getId()))) {
         if ($result = $stmt->fetch()) {
           $account = $this->AccountDAO->SelectByID($result['id_account']);
           $client = new Client(

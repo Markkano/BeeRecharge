@@ -31,7 +31,7 @@
 }
 
 .pizarra {
-  background-image: url("/BeeRecharge/Css/pizarra.jpg");
+  background-image: url("pizarra.jpg");
   border: 2px solid;
   padding-bottom: 15px;
   font-size: 20px;
@@ -39,7 +39,7 @@
 }
 
 .fondo-madera {
-  background-image: url("/BeeRecharge/Css/background.jpg");
+  background-image: url("background.jpg");
   background-attachment: fixed;
 }
 

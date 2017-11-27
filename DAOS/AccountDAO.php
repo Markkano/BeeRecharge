@@ -81,6 +81,27 @@ class AccountDAO extends SingletonDAO implements IDAO {
     }
   }
 
+  public function SelectByEmail($username) {
+    try {
+      $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." WHERE email = ? LIMIT 1");
+      if ($stmt->execute(array($username))) {
+        if ($result = $stmt->fetch()) {
+          $account = new Account(
+            $result['username'],
+            $result['email'],
+            $result['password'],
+            $result['image']
+          );
+          $account->setId($result['id_account']);
+          return $account;
+        }
+      }
+    } catch (\PDOException $e) {
+      //throw $e;
+      $this->pdo->getException($e);
+    }
+  }
+
   public function SelectAll() {
     try {
       $list = array();

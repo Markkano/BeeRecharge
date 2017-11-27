@@ -22,21 +22,21 @@ function User(name, surname, email, password, image)
     xfbml      : true,
     version    : 'v2.10'
     });
-    FB.AppEvents.logPageView();   
+    FB.AppEvents.logPageView();
   };
 
   function checkLoginState() {
-    FB.getLoginStatus(function(response) 
+    FB.getLoginStatus(function(response)
     { statusChangeCallback(response); });
   }
 
  function statusChangeCallback(response) {
-    if (response.status === 'connected') 
+    if (response.status === 'connected')
     {
         datPer();
-    } 
+    }
     else {
-      alert("not connected, not logged into facebook, we don't know. Good Luck! talk with Marcos D.");
+      alert("Que pena, no estas conectado ni logueado, pucha. Anda a hablar con facebook");
     }
   }
 
@@ -46,7 +46,7 @@ function User(name, surname, email, password, image)
     '/me', 'GET', {"fields":"email,first_name,last_name,id,gender,picture"},
       function(response) {
         usrNombre = response.first_name;
-        usrApellido =  response.last_name;     
+        usrApellido =  response.last_name;
         usrCorreo = response.email;
         usrID = response.id;
         usrPicture = response.picture.data.url;
@@ -55,8 +55,7 @@ function User(name, surname, email, password, image)
         var usuarioJSON = JSON.stringify(usuario);
         $('#user').val(usuarioJSON);
         $('#fb').submit();
-       
+
     }
   );
 }
-

@@ -293,6 +293,34 @@ class OrderDAO extends SingletonDAO implements IDAO {
     }
   }
 
+  public function SelectSendLitersBetweenDatesAndGroupedByBeer($from, $to){
+    try{
+      $tablePackaging='Packagings';
+      $list = array();
+      $stmt = $this->pdo->Prepare(
+        "SELECT Beers.name AS 'Tipo de cerveza', Round((SUM(OrderLines.amount) * Packagings.capacity),   u2) AS 'Total' FROM OrderLines ".
+        "RIGHT JOIN Beers ON OrderLines.id_beer = Beers.id_beer ".
+        "RIGHT JOIN Packagings ON OrderLines.id_packaging = Packagings.id_packaging ".
+        "INNER JOIN Orders ON OrderLines.order_number = Orders.order_number ".
+        "WHERE date(Orders.order_date) BETWEEN ? AND ? ".
+        "GROUP BY Beers.id_beer "
+      );
+       if ($stmt->execute(array($from, $to))) {
+        while ($result = $stmt->fetch()) {
+        $tipoCerveza = $result['Tipo de cerveza'];
+        $total = $result['Total'];
+        array_push($list, $tipoCerveza);
+        array_push($list, $total);
+        }
+        return $list;
+      }
+
+    }catch (\PDOException $e) {
+      //throw $e;
+      $this->pdo->getException($e);
+    }
+  }
+
   public function Update($object) {
     try {
       $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET order_date = ?, id_state = ?, id_client = ?, id_subsidiary = ? WHERE order_number = ?");

@@ -100,7 +100,21 @@ class GestionConsultsController extends GestionController {
     }
   }
 
-  public function ConsultSoldLiters($from = null, $to = null) {
+public function ConsultSoldLiters($from = null, $to = null) {
+    if (isset($from) && isset($to)) {
+      try {
+        $list = $this->orderDAO->SelectSendLitersBetweenDatesAndGroupedByBeer($from, $to);
+        if (empty($list)) {
+          throw new \Exception("No hay pedidos entre estas fechas", 1);
+        }
+      } catch (\Exception $e) {
+        $alert = "yellow";
+        $msj = $e->getMessage();
+      }
+    }
     require_once 'AdminViews/ConsultSoldLiters.php';
+    if (!empty($list)) {
+      require_once 'AdminViews/OrderListBeers.php';
+    } 
   }
 } ?>

@@ -5,11 +5,13 @@ class Packaging {
 	private $description;
 	private $capacity;
 	private $factor;
+	private $image;
 
-	public function __construct($description, $capacity, $factor)	{
+	public function __construct($description, $capacity, $factor, $image = null)	{
 		$this->setDescription($description);
 		$this->setCapacity($capacity);
 		$this->setFactor($factor);
+		$this->setImage($image);
 	}
 
 	public function getId(){
@@ -44,12 +46,21 @@ class Packaging {
 		$this->factor = $value;
 	}
 
+	public function setImage($value = null){
+		$this->image = $value;
+	}
+
+	public function getImage(){
+		return $this->image;
+	}
+
 	public function toJson() {
     return [
 			'id_packaging' => $this->id_packaging,
 			'description' => $this->description,
 			'capacity' => $this->capacity,
-			'factor' => $this->factor
+			'factor' => $this->factor,
+			'image' => $this->image
 		];
   }
 } ?>

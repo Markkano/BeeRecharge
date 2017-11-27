@@ -31,8 +31,8 @@
           <td>
             <label for="send">Elegir método de envío</label>
             <select class="" name="send" style="width:180px;">
-              <option value="0">Sin Envío</option>
-              <option value="1">Con Envío</option>
+              <option value="1">Retiro en Sucursal</option>
+              <option value="2">Envío a Domicilio</option>
             </select>
         </tr>
       </table>

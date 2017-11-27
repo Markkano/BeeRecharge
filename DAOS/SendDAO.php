@@ -20,11 +20,12 @@ class SendDAO extends SingletonDAO implements IDAO {
 
   public function Insert($object) {
     try {
-      $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (address, id_state, id_time_range) values (?,?,?)");
+      $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (address, id_state, id_time_range, date) values (?,?,?,?)");
       $stmt->execute(array(
         $object->getAddress(),
         $object->getState()->getId(),
-        $object->getTimeRange()->getId()
+        $object->getTimeRange()->getId(),
+        $object->getSendDate()
       ));
       $object->setId($this->pdo->LastInsertId());
       return $object;
@@ -60,7 +61,8 @@ class SendDAO extends SingletonDAO implements IDAO {
           $send = new Send(
             $result['address'],
             $state,
-            $time_range
+            $time_range,
+            $result['date']
           );
           $send->setId($result['id_send']);
           return $send;
@@ -82,7 +84,8 @@ class SendDAO extends SingletonDAO implements IDAO {
           $send = new Send(
             $result['address'],
             $state,
-            $time_range
+            $time_range,
+            $result['date']
           );
           $send->setId($result['id_send']);
           array_push($list, $send);
@@ -96,11 +99,12 @@ class SendDAO extends SingletonDAO implements IDAO {
 
   public function Update($object) {
     try {
-      $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET state = ?, id_state = ?, id_time_range = ? WHERE id_send = ?");
+      $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET state = ?, id_state = ?, id_time_range = ?, date = ? WHERE id_send = ?");
       $stmt->execute(array(
         $object->getAddress(),
         $object->getState()->getId(),
         $object->getTimeRange()->getId(),
+        $object->getSendDate(),
         $object->getId()
       ));
       return $object;

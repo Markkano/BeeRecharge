@@ -12,11 +12,12 @@ class PackagingDAO extends SingletonDAO implements IDAO {
 
   public function Insert($object) {
     try {
-      $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (description, capacity, factor) values (?,?,?)");
+      $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (description, capacity, factor, image) values (?,?,?,?)");
       $stmt->execute(array(
         $object->getDescription(),
         $object->getCapacity(),
         $object->getFactor(),
+        $object->getImage()
       ));
       $object->setId($this->pdo->LastInsertId());
       return $object;
@@ -54,7 +55,8 @@ class PackagingDAO extends SingletonDAO implements IDAO {
           $packaging = new Packaging(
             $result['description'],
             $result['capacity'],
-            $result['factor']
+            $result['factor'],
+            $result['image']
           );
           $packaging->setId($result['id_packaging']);
         }
@@ -75,13 +77,28 @@ class PackagingDAO extends SingletonDAO implements IDAO {
           $packaging = new Packaging(
             $result['description'],
             $result['capacity'],
-            $result['factor']
+            $result['factor'],
+            $result['image']
           );
           $packaging->setId($result['id_packaging']);
           array_push($envases, $packaging);
         }
         return $envases;
       }
+    } catch (\PDOException $e) {
+      //throw $e;
+      $this->pdo->getException($e);
+    }
+  }
+
+  public function UpdateImage($packaging) {
+    try {
+      $stmt = $this->pdo->Prepare("UPDATE ".$this->table." SET image = ? WHERE id_packaging = ?");
+      $stmt->execute(array(
+        $packaging->getImage(),
+        $packaging->getId()
+      ));
+      return $packaging;
     } catch (\PDOException $e) {
       //throw $e;
       $this->pdo->getException($e);

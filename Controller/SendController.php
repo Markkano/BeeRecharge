@@ -23,6 +23,7 @@ class SendController {
       $order = $_SESSION['order'];
       $client = $order->getClient();
       $time_range_list = $this->timeRangeDAO->SelectAll();
+      require_once 'Views/Lobby.php';
       require_once 'Views/SelectSend.php';
     } else {
       header('location: /'.BASE_URL.'Lobby');
@@ -33,13 +34,13 @@ class SendController {
     return $this->sendDAO->Insert($send);
   }
 
-  public function SubmitSend($select, $address, $id_time_range) {
+  public function SubmitSend($date, $select, $address, $id_time_range) {
     if (isset($_SESSION['order'])) {
       $order = $_SESSION['order'];
       $state = $this->stateDAO->SelectById(1);
       $timeRange = $this->timeRangeDAO->SelectById($id_time_range);
       $address = (strcmp($select, '0') == 0) ? $order->getClient()->getAddress() : $address;
-      $send = new Send($address, $state, $timeRange);
+      $send = new Send($address, $state, $timeRange, $date);
       $send = $this->InsertSend($send);
       $order->setSend($send);
       $_SESSION['order'] = $order;

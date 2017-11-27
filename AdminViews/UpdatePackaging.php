@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionPackaging/Update" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionPackaging/Update" method="post" onsubmit="return Validar();" enctype="multipart/form-data">
   <table class="centrar">
     <tr>
       <td><h1>Modificar Envase</h1></td>
@@ -36,6 +36,13 @@
       <td colspan="2"><input type="number" step="0.01" min="0" name="factor" value="1.0"></td>
     </tr>
     <tr>
+      <td colspan="2" id="img"></td>
+    </tr>
+    <tr>
+      <td colspan="2"><input type="file" name="image" value=""></td>
+    </tr>
+    <tr>
+    <tr>
       <td colspan="2"><input type="submit" class="submit" value="Guardar cambios"></td>
     </tr>
   </table>
@@ -62,6 +69,13 @@ function Mostrar(datos) {
   form.description.value = packaging.description;
   form.capacity.value = packaging.capacity;
   form.factor.value = packaging.factor;
+
+  if (packaging.image != "" && packaging.image != null) {
+    var img = "/<?= BASE_URL.IMG_PATH ?>"+packaging.image;
+    document.getElementById('img').innerHTML = "<img src="+img+">";
+  } else {
+    document.getElementById('img').innerHTML = "";
+  }
 }
 
 function Actualizar() {

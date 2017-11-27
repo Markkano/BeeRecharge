@@ -36,6 +36,13 @@ class LoginController {
     header('location: /'.BASE_URL.'Gestion');
   }
 
+  private function LoginBoth($client,$staff){
+    $_SESSION['client'] = $client;
+    $_SESSION['role'] = $staff->getRole();
+    $_SESSION['staff'] = $staff;
+    header('location: /'.BASE_URL.'SelectOption');
+  }
+
   public function ProcesarLogin($username, $password) {
     try {
       $account = $this->accountDAO->SelectByUsername($username);
@@ -57,7 +64,7 @@ class LoginController {
         } elseif (isset($staff) && !isset($client)) {
           $this->LoginStaff($staff);
         } elseif (isset($staff) && isset($client)) {
-          $this->LoginStaff($staff);
+          $this->LoginBoth($client, $staff);
         }
       }
     }
@@ -90,11 +97,11 @@ class LoginController {
           } elseif (isset($staff) && !isset($client)) {
             $this->LoginStaff($staff);
           } elseif (isset($staff) && isset($client)) {
-            $this->LoginStaff($staff);
+            $this->LoginBoth($client, $staff);
           }
         } else {
-        $_SESSION['usuario']=$usuario;
-        $_SESSION['fotoPerfil']=$image;
+        $_SESSION['usuario'] = $usuario;
+        $_SESSION['fotoPerfil'] = $image;
         header('location: /'.BASE_URL.'Register/facebookRegister');
       }
     }

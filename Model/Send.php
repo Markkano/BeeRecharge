@@ -5,11 +5,13 @@ class Send {
   private $address;
   private $state;
   private $time_range;
+  private $date;
 
-  public function __construct($address, $state, $time_range) {
+  public function __construct($address, $state, $time_range, $date) {
     $this->setAddress($address);
     $this->setState($state);
     $this->setTimeRange($time_range);
+    $this->setSendDate($date);
   }
 
   public function getId() {
@@ -42,5 +44,13 @@ class Send {
 
   public function setTimeRange(TimeRange $value) {
     $this->time_range = $value;
+  }
+
+  public function getSendDate() {
+    return $this->sendDate;
+  }
+
+  public function setSendDate($value) {
+    $this->sendDate = $value;
   }
 } ?>

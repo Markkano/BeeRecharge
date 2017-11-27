@@ -27,6 +27,7 @@ class GestionBeerController extends GestionController implements IGestion {
     }
     if((isset($_FILES['image'])) && ($_FILES['image']['name'] != '')) {
       $file = IMG_PATH . basename($_FILES["image"]["name"]);
+      $file = str_replace(' ', '', $file);
 
 			//Obtenemos la extensión del archivo. No sirve para comprobar el veradero tipo del archivo
 			$fileExtension = pathinfo($file, PATHINFO_EXTENSION);
@@ -37,7 +38,7 @@ class GestionBeerController extends GestionController implements IGestion {
 			if($imageInfo !== false) {
 				if($_FILES['image']['size'] < MAX_IMG_SIZE) {
 					if (move_uploaded_file($_FILES["image"]["tmp_name"], $file)) {
-						return basename($_FILES["image"]["name"]);
+						return basename($file);
           }
         }
       }
@@ -59,7 +60,7 @@ class GestionBeerController extends GestionController implements IGestion {
       Si se envio algun archivo lo subo al servidor y le asigno el nombre a la cerveza
       */
       if($_FILES)	{
-        $image = $this->UploadImage($name);
+        $image = $this->UploadImage();
       }
       $beer = new Beer($name, $description, $price, $ibu, $srm, $graduation, $image);
       if (isset($packagings) && is_array($packagings)) {
@@ -96,7 +97,6 @@ class GestionBeerController extends GestionController implements IGestion {
     /*
     Si recibo parametros, creo el objeto Beer y actualizo el que tengo en la BD.
     */
-    echo $image;
     if (isset($name)) {
       $beer = new Beer($name, $description, $price, $ibu, $srm, $graduation, $image);
       $beer->setId($id_beer);
@@ -115,9 +115,8 @@ class GestionBeerController extends GestionController implements IGestion {
         if($_FILES)	{
           if ($_FILES['image']['error'] != UPLOAD_ERR_NO_FILE) {
             try {
-              $new_image = $this->UploadImage($name);
+              $new_image = $this->UploadImage();
               $beer->setImage($new_image);
-              print_r($beer->toJson());
               $beer = $this->beerDAO->UpdateImage($beer);
             } catch (\Exception $e) {
               // TODO: Problema al subir el archivo

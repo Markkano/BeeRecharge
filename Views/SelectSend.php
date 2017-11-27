@@ -10,6 +10,10 @@
 			<form name="" action="/<?= BASE_URL ?>Send/SubmitSend" method="post">
 				<table class="centrar tabla-register pizarra">
           <tr>
+            <td align="right"><label for="date"> Fecha de entrega: </label></td>
+            <td><input type="date" name="senDate" min=<?= date('Y-m-d'); ?> value=<?=date("Y-m-d")?>></td>
+          </tr>
+          <tr>
             <td><label for="send">Envío a mi domicilio</label></td>
             <td><input type="radio" name="send" value="0" checked></td>
           </tr>
@@ -27,7 +31,7 @@
               <input type="text" name="address" value="">
             </td>
           </tr>
-					<tr>
+          <tr>
 						<td><label for="timeRange">Rango Horario de envio</label></td>
           </tr>
           <tr>
@@ -39,6 +43,9 @@
               </select>
             </td>
 					</tr>
+          <tr>
+
+          </tr>
 					<tr>
 						<td colspan="2"><input type="submit" class="btn-login" value="Confirmar Envío"></td>
 					</tr>

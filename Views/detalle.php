@@ -16,6 +16,16 @@
             <input type="text" name="subsidiary" value="<?= $order->getSubsidiary()->getAddress(); ?>" disabled>
           </td>
         </tr>
+        <?php if($order->getSend()!= null){?>
+        <tr>
+          <td>Fecha de envio:</td>
+          <td><?=$order->getSend()->getSendDate();?></td>
+        </tr>
+        <tr>
+          <td>Direccion de envio:</td>
+          <td><?=$order->getSend()->getAddress();?></td>
+        </tr>
+        <?php } ?>
       </table>
        <table class="tabla-envases pizarra expandir-fondo" align="center" style="font-family: 'Old Bookshop'"> <!-- detalle del pedido  !-->
         <tr>

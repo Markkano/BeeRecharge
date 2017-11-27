@@ -27,23 +27,48 @@ class OrderDAO extends SingletonDAO implements IDAO {
     $this->sendDAO = SendDAO::getInstance();
   }
 
-  public function Insert($object) {
+  private function InsertWithoutSend($object) {
     try {
       $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (order_date, id_state, id_client, total, id_subsidiary, id_send) values (?,?,?,?,?,?)");
-      $aux_id_send = ($object->getSend() !== null) ? $object->getSend()->getId() : null;
       $stmt->execute(array(
         $object->getOrderDate(),
         $object->getState()->getId(),
         $object->getClient()->getId(),
         $object->getTotal(),
         $object->getSubsidiary()->getId(),
-        $aux_id_send
+        null
       ));
       $object->setOrderNumber($this->pdo->LastInsertId());
       foreach ($object->getOrderLines() as $order_line) {
         $this->orderLineDAO->Insert($order_line, $object->getOrderNumber());
       }
       return $object;
+    } catch (\PDOException $e) {
+      //throw $e;
+      $this->pdo->getException($e);
+    }
+  }
+
+  public function Insert($object) {
+    try {
+      $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (order_date, id_state, id_client, total, id_subsidiary, id_send) values (?,?,?,?,?,?)");
+      if($object->getSend() == null) {
+        $this->InsertWithoutSend($object);
+      } else {
+        $stmt->execute(array(
+          $object->getOrderDate(),
+          $object->getState()->getId(),
+          $object->getClient()->getId(),
+          $object->getTotal(),
+          $object->getSubsidiary()->getId(),
+          $object->getSend()->getId()
+        ));
+        $object->setOrderNumber($this->pdo->LastInsertId());
+        foreach ($object->getOrderLines() as $order_line) {
+          $this->orderLineDAO->Insert($order_line, $object->getOrderNumber());
+        }
+        return $object;
+      }
     } catch (\PDOException $e) {
       //throw $e;
       $this->pdo->getException($e);
@@ -69,11 +94,16 @@ class OrderDAO extends SingletonDAO implements IDAO {
           $client = $this->clientDAO->SelectByID($result['id_client']);
           $subsidiary = $this->subsidiaryDAO->SelectByID($result['id_subsidiary']);
           $orderLines = $this->orderLineDAO->SelectAllFromOrderNumber($result['order_number']);
+          if($result['id_send'] != null)
+            $send = $this->sendDAO->SelectByID($result['id_send']);
+          else
+            $send = null;
           $order = new Order(
             $result['order_date'],
             $state,
             $client,
-            $subsidiary
+            $subsidiary,
+            $send
           );
           foreach ($orderLines as $line) {
             $order->AddOrderLine($line);
@@ -98,11 +128,16 @@ class OrderDAO extends SingletonDAO implements IDAO {
           $client = $this->clientDAO->SelectByID($result['id_client']);
           $subsidiary = $this->subsidiaryDAO->SelectByID($result['id_subsidiary']);
           $orderLines = $this->orderLineDAO->SelectAllFromOrderNumber($result['order_number']);
+          if($result['id_send'] != null)
+            $send = $this->sendDAO->SelectByID($result['id_send']);
+          else
+            $send = null;
           $order = new Order(
             $result['order_date'],
             $state,
             $client,
-            $subsidiary
+            $subsidiary,
+            $send
           );
           foreach ($orderLines as $line) {
             $order->AddOrderLine($line);
@@ -128,11 +163,16 @@ class OrderDAO extends SingletonDAO implements IDAO {
           $client = $this->clientDAO->SelectByID($result['id_client']);
           $subsidiary = $this->subsidiaryDAO->SelectByID($result['id_subsidiary']);
           $orderLines = $this->orderLineDAO->SelectAllFromOrderNumber($result['order_number']);
+          if ($result['id_send'] != null)
+            $send = $this->sendDAO->SelectByID($result['id_send']);
+          else
+            $send = null;
           $order = new Order(
             $result['order_date'],
             $state,
             $client,
-            $subsidiary
+            $subsidiary,
+            $send
           );
           foreach ($orderLines as $line) {
             $order->AddOrderLine($line);
@@ -158,11 +198,16 @@ class OrderDAO extends SingletonDAO implements IDAO {
           $client = $this->clientDAO->SelectByID($result['id_client']);
           $subsidiary = $this->subsidiaryDAO->SelectByID($result['id_subsidiary']);
           $orderLines = $this->orderLineDAO->SelectAllFromOrderNumber($result['order_number']);
+          if($result['id_send'] != null)
+            $send = $this->sendDAO->SelectByID($result['id_send']);
+          else
+            $send = null;
           $order = new Order(
             $result['order_date'],
             $state,
             $client,
-            $subsidiary
+            $subsidiary,
+            $send
           );
           foreach ($orderLines as $line) {
             $order->AddOrderLine($line);
@@ -188,11 +233,16 @@ class OrderDAO extends SingletonDAO implements IDAO {
           $client = $this->clientDAO->SelectByID($result['id_client']);
           $subsidiary = $this->subsidiaryDAO->SelectByID($result['id_subsidiary']);
           $orderLines = $this->orderLineDAO->SelectAllFromOrderNumber($result['order_number']);
+          if($result['id_send'] != null)
+            $send = $this->sendDAO->SelectByID($result['id_send']);
+          else
+            $send = null;
           $order = new Order(
             $result['order_date'],
             $state,
             $client,
-            $subsidiary
+            $subsidiary,
+            $send
           );
           foreach ($orderLines as $line) {
             $order->AddOrderLine($line);
@@ -218,11 +268,16 @@ class OrderDAO extends SingletonDAO implements IDAO {
           $client = $this->clientDAO->SelectByID($result['id_client']);
           $subsidiary = $this->subsidiaryDAO->SelectByID($result['id_subsidiary']);
           $orderLines = $this->orderLineDAO->SelectAllFromOrderNumber($result['order_number']);
+          if($result['id_send'] != null)
+            $send = $this->sendDAO->SelectByID($result['id_send']);
+          else
+            $send = null;
           $order = new Order(
             $result['order_date'],
             $state,
             $client,
-            $subsidiary
+            $subsidiary,
+            $send
           );
           foreach ($orderLines as $line) {
             $order->AddOrderLine($line);

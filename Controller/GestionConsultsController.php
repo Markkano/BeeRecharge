@@ -4,12 +4,14 @@ use DAOS\OrderDAO as OrderDAO;
 use Model\Order as Order;
 use DAOS\ClientDAO as ClientDAO;
 use DAOS\SubsidiaryDAO as SubsidiaryDAO;
+use DAOS\StateDAO as StateDAO;
 
 class GestionConsultsController extends GestionController {
 
   private $orderDAO;
   private $clientDAO;
   private $subsidiaryDAO;
+  private $stateDAO;
 
 
   public function __construct() {
@@ -18,9 +20,15 @@ class GestionConsultsController extends GestionController {
     $this->orderDAO = OrderDAO::getInstance();
     $this->clientDAO = ClientDAO::getInstance();
     $this->subsidiaryDAO = SubsidiaryDAO::getInstance();
+    $this->stateDAO = StateDAO::getInstance();
   }
 
   public function Index() {}
+
+  private function List($list) {
+    $state_list = $this->stateDAO->SelectAll();
+    require_once 'AdminViews/OrderList.php';
+  }
 
   public function FilterOrdersByClient($client_dni = null) {
     if(isset($client_dni)) {
@@ -41,7 +49,7 @@ class GestionConsultsController extends GestionController {
     }
     require_once 'AdminViews/FilterOrdersByClient.php';
     if (!empty($list)) {
-      require_once 'AdminViews/OrderList.php';
+      $this->List($list);
     }
   }
 
@@ -59,7 +67,7 @@ class GestionConsultsController extends GestionController {
     }
     require_once 'AdminViews/FilterOrdersByDates.php';
     if (!empty($list)) {
-      require_once 'AdminViews/OrderList.php';
+      $this->List($list);
     }
   }
 
@@ -85,10 +93,10 @@ class GestionConsultsController extends GestionController {
     } catch (\Exception $e) {
       $alert = "yellow";
       $msj = $e->getMessage();
-    }    
+    }
     require_once 'AdminViews/FilterOrdersBySubsidiary.php';
     if (!empty($list)) {
-      require_once 'AdminViews/OrderList.php';
+      $this->List($list);
     }
   }
 

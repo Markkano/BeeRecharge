@@ -20,10 +20,15 @@
       <!-- Envases y precio -->
       <table class="tabla-envases pizarra expandir-fondo">
         <tr>
-          <td colspan="3"><?= $beer->getName(); ?> disponible en:</td>
+          <td colspan="4"><?= $beer->getName(); ?> disponible en:</td>
         </tr>
         <?php foreach ($beer->getPackagings() as $package) { ?>
           <tr>
+            <td>
+              <?php if ($package->getDescription() != null) { ?>
+              <img src="/<?= BASE_URL.IMG_PATH ?><?= $package->getImage(); ?>" style="height: 50px;">
+              <?php } ?>
+            </td>
             <td><?= $package->getDescription(); ?></td>
             <td>$<?= round($package->getFactor() * ( $package->getCapacity() * $beer->getPrice()), 2); ?></td>
             <td><input type="button" name="" value="Agregar a pedido" style="cursor: pointer; cursor: hand;"

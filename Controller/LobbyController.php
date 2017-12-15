@@ -32,8 +32,23 @@ class LobbyController {
   }
 
   public function Index() {
-    $cervezas = $this->beerDAO->SelectAll();
+    try {
+      $cervezas = $this->beerDAO->SelectAll();
+      $cervezas = $this->QuitarCervezasSinPackaging($cervezas);
+    } catch (\Exception $e) {
+        // TODO: Manejar Exception
+    }
     require_once 'Views/ListaCervezas.php';
+  }
+
+  private function QuitarCervezasSinPackaging($lista) {
+    $aux = array();
+    foreach ($lista as $cerveza) {
+      if (!empty($cerveza->getPackagings())) {
+        array_push($aux, $cerveza);
+      }
+    }
+    return $aux;
   }
 
   public function AgregarCerveza($id_beer) {

@@ -24,8 +24,7 @@ class AccountDAO extends SingletonDAO implements IDAO {
       $object->setId($this->pdo->LastInsertId());
       return $object;
     } catch (\PDOException $e) {
-      //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -34,8 +33,7 @@ class AccountDAO extends SingletonDAO implements IDAO {
       $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_account = ?");
       return ($stmt->execute(array($object->getId())));
     } catch (\PDOException $e) {
-      //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -55,8 +53,7 @@ class AccountDAO extends SingletonDAO implements IDAO {
         }
       }
     } catch (\PDOException $e) {
-      //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -76,8 +73,7 @@ class AccountDAO extends SingletonDAO implements IDAO {
         }
       }
     } catch (\PDOException $e) {
-      //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -97,8 +93,7 @@ class AccountDAO extends SingletonDAO implements IDAO {
         }
       }
     } catch (\PDOException $e) {
-      //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -120,8 +115,7 @@ class AccountDAO extends SingletonDAO implements IDAO {
         return $list;
       }
     } catch (\PDOException $e) {
-      //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -137,8 +131,7 @@ class AccountDAO extends SingletonDAO implements IDAO {
       ));
       return $object;
     } catch (\PDOException $e) {
-      //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 } ?>

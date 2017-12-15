@@ -18,9 +18,9 @@ class UpdateOrderController {
       $state = $this->stateDAO->SelectById($id_state);
       $order->setState($state);
       $order = $this->orderDAO->Update($order);
-      header('location: /'.BASE_URL.'Gestion');
+      echo $order->getState()->getId();
     } catch (Exception $e) {
-      header('location: /'.BASE_URL.'Gestion');
+      echo "error";
     }
   }
 } ?>

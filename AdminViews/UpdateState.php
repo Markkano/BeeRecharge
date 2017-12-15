@@ -1,9 +1,4 @@
-<?php if (isset($alert) && !strcmp($alert, "") == 0) { ?>
-  <div class="alert <?= $alert; ?>">
-    <?= $msj; ?>
-  </div>
-<?php } ?>
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionState/Update" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionState/UpdateState" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Modificar Estado</h1></td>
@@ -12,7 +7,8 @@
       <td colspan="2">
         <select name="id" id="state" onchange="Actualizar()">
           <?php foreach($list as $state) { ?>
-          <option value="<?= $state->getId(); ?>"><?= $state->getState(); ?></option>
+          <option <?php if (isset($id_state) && ($id_state == $state->getId())) { echo "selected"; } ?>
+            value="<?= $state->getId(); ?>"><?= $state->getState(); ?></option>
           <?php } ?>
         </select>
       </td>

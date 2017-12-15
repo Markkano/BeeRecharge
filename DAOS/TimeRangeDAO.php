@@ -23,7 +23,7 @@ class TimeRangeDAO extends SingletonDAO implements IDAO {
       return $object;
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -33,7 +33,7 @@ class TimeRangeDAO extends SingletonDAO implements IDAO {
       return ($stmt->execute(array($object->getId())));
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -43,7 +43,7 @@ class TimeRangeDAO extends SingletonDAO implements IDAO {
       return ($stmt->execute(array($id)));
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -62,7 +62,7 @@ class TimeRangeDAO extends SingletonDAO implements IDAO {
       }
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -83,7 +83,7 @@ class TimeRangeDAO extends SingletonDAO implements IDAO {
       }
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -98,7 +98,7 @@ class TimeRangeDAO extends SingletonDAO implements IDAO {
       return $object;
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 } ?>

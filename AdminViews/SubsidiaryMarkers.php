@@ -1,9 +1,3 @@
-<?php if (isset($alert) && !strcmp($alert, "") == 0) { ?>
-  <div class="alert <?= $alert; ?>">
-    <?= $msj; ?>
-  </div>
-<?php } ?>
-
 <form class="form" name="form" method="post" action="/<?= BASE_URL ?>gestionSubsidiary/ManageMarkers">
   <table class="centrar">
     <tr>
@@ -19,8 +13,8 @@
       </td>
     </tr>
     <tr>
-      <td><input type="text" name="lat" value=""></td>
-      <td><input type="text" name="lon" value=""></td>
+      <td><input type="hidden" name="lat" value=""></td>
+      <td><input type="hidden" name="lon" value=""></td>
     </tr>
     <tr>
       <td colspan="2">

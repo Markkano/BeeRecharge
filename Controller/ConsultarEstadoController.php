@@ -51,18 +51,16 @@ class consultarEstadoController extends GestionController {
 		}
 	}
 
-	public function verDetalle($order)
-	{
-		try{
-				$order=$this->OrderDAO->SelectByID($order);
-				require_once 'Views/Lobby.php';
-				require_once 'Views/detalle.php';
+	public function verDetalle($order) {
+		try {
+			$order = $this->OrderDAO->SelectByID($order);
+			require_once 'Views/Lobby.php';
+			require_once 'Views/detalle.php';
 		}
 		catch(\PDOException $e ){
-				echo "Error! ".$e->getMessage();
-			}
-
+			echo "Error! ".$e->getMessage();
+		} catch(\Exception $e ){
+			echo "Error! ".$e->getMessage();
+		}
 	}
-}
-
-?>
+} ?>

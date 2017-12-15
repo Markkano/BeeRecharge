@@ -30,7 +30,7 @@ class SendDAO extends SingletonDAO implements IDAO {
       $object->setId($this->pdo->LastInsertId());
       return $object;
     } catch (\PDOException $e) {
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -38,7 +38,7 @@ class SendDAO extends SingletonDAO implements IDAO {
     try {
       return ($this->DeleteById(array($object->getId())));
     } catch (\PDOException $e) {
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -47,7 +47,7 @@ class SendDAO extends SingletonDAO implements IDAO {
       $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_send = ?");
       return ($stmt->execute(array($id_send)));
     } catch (\PDOException $e) {
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -69,7 +69,7 @@ class SendDAO extends SingletonDAO implements IDAO {
         }
       }
     } catch (\PDOException $e) {
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -93,7 +93,7 @@ class SendDAO extends SingletonDAO implements IDAO {
         return $list;
       }
     } catch (\PDOException $e) {
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -109,7 +109,7 @@ class SendDAO extends SingletonDAO implements IDAO {
       ));
       return $object;
     } catch (\PDOException $e) {
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 } ?>

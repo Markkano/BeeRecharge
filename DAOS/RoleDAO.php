@@ -15,7 +15,7 @@ class RoleDAO extends SingletonDAO implements IDAO {
 
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
     $stmt = $this->pdo->Prepare("INSERT INTO ".$this->table." (rolename, description) values (?,?)");
     $stmt->execute(array(
@@ -32,7 +32,7 @@ class RoleDAO extends SingletonDAO implements IDAO {
       return ($stmt->execute(array($object->getId())));
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -42,7 +42,7 @@ class RoleDAO extends SingletonDAO implements IDAO {
       return ($stmt->execute(array($id)));
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -61,7 +61,7 @@ class RoleDAO extends SingletonDAO implements IDAO {
       }
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -82,7 +82,7 @@ class RoleDAO extends SingletonDAO implements IDAO {
       }
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -97,7 +97,7 @@ class RoleDAO extends SingletonDAO implements IDAO {
       return $object;
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 } ?>

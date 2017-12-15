@@ -1,10 +1,6 @@
-    <?php if (isset($alert) && !strcmp($alert, "") == 0) { ?>
-      <div class="alert <?= $alert; ?>">
-        <?= $msj; ?>
-      </div>
-    <?php } ?>
-
-    <form class="form" name="form" action="/<?= BASE_URL ?>gestionBeer/Submit" method="post" onsubmit="return Validar();" enctype="multipart/form-data">
+<style> span { float: right; font-size: 12px; }
+span:hover { text-decoration: underline; } </style>
+    <form class="form" name="form" action="/<?= BASE_URL ?>gestionBeer/SubmitBeer" method="post" onsubmit="return Validar();" enctype="multipart/form-data">
       <table class="centrar">
         <tr>
           <td><h1>Nueva Cerveza</h1></td>
@@ -46,13 +42,19 @@
           <td colspan="2"><input type="number" step="0.1" min="0" name="graduation" value=""></td>
         </tr>
         <tr>
-          <td><label>Envases</label></td>
+          <td><label>Envases</label> <span onclick="SelTodos();">Seleccionar todos</span></td>
         </tr>
-        <?php foreach($packagings_list as $pack) { ?>
+        <?php
+        if (is_array($packagings_list) && !empty($packagings_list)) {
+          foreach($packagings_list as $pack) { ?>
         <tr>
           <td><?= $pack->getDescription(); ?></td>
           <td><input type="checkbox" name="packagings[]" value="<?= $pack->getId(); ?>"></td>
         </tr>
+        <?php } } else { ?>
+          <tr>
+            <td><label>No se encontraron Envases</label></td>
+          </tr>
         <?php } ?>
         <tr>
           <td><label for="image">Imagen</label></td>
@@ -83,6 +85,15 @@
       }
 
       return ok;
+    }
+
+    function SelTodos() {
+      inputs = document.getElementsByTagName('input');
+      for (i = 0; i < inputs.length; i++) {
+        if (inputs[i].type == "checkbox") {
+          inputs[i].checked = true;
+        }
+      }
     }
     </script>
   </body>

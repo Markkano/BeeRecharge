@@ -82,7 +82,7 @@ class LoginController {
         $image = $objeto->image;
 
         $usuario = new Account($username,$email,$password);
-        $account= $this->accountDAO->SelectByUsername($username);
+        $account= $this->accountDAO->SelectByEmail($email);
         if(isset($account)) {
             $_SESSION['account'] = $account;
             $account = $_SESSION['account'];
@@ -111,6 +111,7 @@ class LoginController {
     unset($_SESSION['account']);
     unset($_SESSION['role']);
     unset($_SESSION['staff']);
+    unset($_SESSION['order']);
     header('location: /'.BASE_URL);
   }
 } ?>

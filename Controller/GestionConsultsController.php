@@ -37,14 +37,19 @@ class GestionConsultsController extends GestionController {
         if (isset($client)) {
           $list = $this->orderDAO->SelectAllFromClientDNI($client_dni);
           if (empty($list)) {
-            throw new \Exception("El cliente no posee pedidos", 1);
+            $alert = "green";
+            $msj = "El cliente no posee pedidos";
+            $this->Alert($msj, $alert);
           }
         } else {
-          throw new \Exception("No se encontro el Cliente", 1);
+          $alert = "green";
+          $msj = "No se encontro el Cliente";
+          $this->Alert($msj, $alert);
         }
       } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = $e->getMessage();
+        $msj = "Ocurrio un problema al traer la lista de Ordenes";
+        $this->Alert($msj, $alert);
       }
     }
     require_once 'AdminViews/FilterOrdersByClient.php';
@@ -115,6 +120,6 @@ public function ConsultSoldLiters($from = null, $to = null) {
     require_once 'AdminViews/ConsultSoldLiters.php';
     if (!empty($list)) {
       require_once 'AdminViews/OrderListBeers.php';
-    } 
+    }
   }
 } ?>

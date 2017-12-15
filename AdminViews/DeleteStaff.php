@@ -1,9 +1,4 @@
-<?php if (isset($alert) && !strcmp($alert, "") == 0) { ?>
-  <div class="alert <?= $alert; ?>">
-    <?= $msj; ?>
-  </div>
-<?php } ?>
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionStaff/Delete" method="post" onsubmit="return Confirmar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionStaff/DeleteStaff" method="post" onsubmit="return Confirmar();">
   <tr>
     <td><h1>Eliminar Staff</h1></td>
   </tr>
@@ -12,7 +7,8 @@
       <td colspan="2">
         <select name="staff" onchange="Actualizar()">
           <?php foreach($list as $staff) { ?>
-          <option value="<?=$staff->getId();?>"><?= $staff->getSurname().", ".$staff->getName();?></option>
+          <option <?php if (isset($id_staff) && ($id_staff == $staff->getId())) { echo "selected"; } ?>
+            value="<?=$staff->getId();?>"><?= $staff->getSurname().", ".$staff->getName();?></option>
           <?php } ?>
         </select>
       </td>

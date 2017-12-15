@@ -3,7 +3,7 @@
     <?= $msj; ?>
   </div>
 <?php } ?>
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionPackaging/Update" method="post" onsubmit="return Validar();" enctype="multipart/form-data">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionPackaging/UpdatePackaging" method="post" onsubmit="return Validar();" enctype="multipart/form-data">
   <table class="centrar">
     <tr>
       <td><h1>Modificar Envase</h1></td>
@@ -11,8 +11,9 @@
     <tr>
       <td colspan="2">
         <select name="id" id="packaging" onchange="Actualizar()">
-          <?php foreach($list as $beer) { ?>
-          <option value="<?=$beer->getId();?>"><?=$beer->getDescription();?></option>
+          <?php foreach($list as $packaging) { ?>
+          <option <?php if (isset($id_packaging) && ($id_packaging == $packaging->getId())) { echo "selected"; } ?>
+            value="<?=$packaging->getId();?>"><?=$packaging->getDescription();?></option>
           <?php } ?>
         </select>
       </td>

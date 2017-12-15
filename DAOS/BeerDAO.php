@@ -37,16 +37,15 @@ class BeerDAO extends SingletonDAO implements IDAO {
       }
       return $object;
     } catch (\PDOException $e) {
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
   public function Delete($object) {
     try {
-      $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_beer = ?");
-      return ($stmt->execute(array($object->getId())));
+      return ($this->DeleteById($object->getId()));
     } catch (\PDOException $e) {
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -56,7 +55,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
       $stmt->execute(array($id));
       return ($stmt->execute(array($id)));
     } catch (\PDOException $e) {
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -74,7 +73,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
       }
       return $packagings;
     } catch (\PDOException $e) {
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -99,14 +98,14 @@ class BeerDAO extends SingletonDAO implements IDAO {
         }
       }
     } catch (\PDOException $e) {
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
   public function SelectAll() {
     try {
       $cervezas = array();
-      $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table."");
+      $stmt = $this->pdo->Prepare("SELECT * FROM ".$this->table." ORDER BY name ASC");
       if ($stmt->execute()) {
         while ($result = $stmt->fetch()) {
           $beer = new Beer(
@@ -126,8 +125,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
         return $cervezas;
       }
     } catch (\PDOException $e) {
-      //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -155,7 +153,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
       return $object;
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -169,7 +167,7 @@ class BeerDAO extends SingletonDAO implements IDAO {
       return $beer;
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 } ?>

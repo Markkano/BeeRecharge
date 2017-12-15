@@ -51,6 +51,10 @@ class Send {
   }
 
   public function setSendDate($value) {
-    $this->sendDate = $value;
+    if ($value != null) {
+			$this->sendDate = $value;
+		} else {
+			$this->sendDate = date("Y-m-d");
+    }
   }
 } ?>

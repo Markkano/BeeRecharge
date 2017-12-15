@@ -23,17 +23,15 @@ class PackagingDAO extends SingletonDAO implements IDAO {
       return $object;
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
   public function Delete($object) {
     try {
-      $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_packaging = ?");
-      return ($stmt->execute(array($object->getId())));
+      return ($this->DeleteById($object->getId()));
     } catch (\PDOException $e) {
-      //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -42,8 +40,7 @@ class PackagingDAO extends SingletonDAO implements IDAO {
       $stmt = $this->pdo->Prepare("DELETE FROM ".$this->table." WHERE id_packaging = ?");
       return ($stmt->execute(array($id)));
     } catch (\PDOException $e) {
-      //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -64,7 +61,7 @@ class PackagingDAO extends SingletonDAO implements IDAO {
       }
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -87,7 +84,7 @@ class PackagingDAO extends SingletonDAO implements IDAO {
       }
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -101,7 +98,7 @@ class PackagingDAO extends SingletonDAO implements IDAO {
       return $packaging;
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 
@@ -117,7 +114,7 @@ class PackagingDAO extends SingletonDAO implements IDAO {
       return $object;
     } catch (\PDOException $e) {
       //throw $e;
-      $this->pdo->getException($e);
+      throw $e;
     }
   }
 } ?>

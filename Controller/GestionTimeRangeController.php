@@ -10,13 +10,38 @@ class GestionTimeRangeController extends GestionController {
 
 	public function __construct() {
   	self::$roles = array('Admin', 'Empleado');
-		$this->timeRangeDAO = TimeRangeDAO::getInstance();
-  	parent::__construct();
+		try {
+			$this->timeRangeDAO = TimeRangeDAO::getInstance();
+		} catch (\Exception $e) {
+			$alert = "red";
+			$msj = "Error: Ocurrio un problema al conectar con la Base de Datos";
+		} finally {
+			parent::__construct();
+			if (isset($msj) && isset($alert)) {
+				$this->Alert($msj, $alert);
+				die();
+			}
+		}
 	}
 
 	public function Index() {}
 
-	public function Submit($from = null, $to = null) {
+	private function getTimeRangeList() {
+		try {
+      return $this->timeRangeDAO->SelectAll();
+    } catch (\Exception $e) {
+      $alert = "red";
+      $msj = "Ocurrio un problema con la Base de Datos";
+      $this->Alert($msj, $alert);
+      die();
+    }
+	}
+
+	public function Submit() {
+    require_once 'AdminViews/SubmitTimeRange.php';
+	}
+
+	public function SubmitTimeRange($from = null, $to = null) {
 		if (isset($from) && isset($to)) {
       $timeRange = new TimeRange($from, $to);
       try {
@@ -24,19 +49,26 @@ class GestionTimeRangeController extends GestionController {
         if (isset($timeRange)) {
           $alert = "green";
           $msj = "Rango Horario añadido correctamente";
+					$this->Alert($msj, $alert);
         } else {
-          $alert = "yellow";
-          $msj = "Ocurrio un problema";
+					throw new \Exception("", 1);
         }
       } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = $e->getMessage();
+        $msj = "Problema al añadir el rango horario";
+				$this->Alert($msj, $alert);
       }
     }
-    require_once 'AdminViews/SubmitTimeRange.php';
+		$this->Submit();
 	}
 
-	public function Update($id_timeRange = null, $from = null, $to = null) {
+	public function Update($id_timeRange = null) {
+		$list = $this->getTimeRangeList();
+		//requerir la vista correspondiente
+		require_once 'AdminViews/UpdateTimeRange.php';
+	}
+
+	public function UpdateTimeRange($id_timeRange = null, $from = null, $to = null) {
 		if (isset($id_timeRange) && isset($from) && isset($to)) {
       $timeRange = new TimeRange($from, $to);
       $timeRange->setId($id_timeRange);
@@ -45,39 +77,49 @@ class GestionTimeRangeController extends GestionController {
           if (isset($timeRange)) {
             $alert = "green";
             $msj = "Rango horario modificado correctamente";
-          } else {
-            $alert = "yellow";
-            $msj = "Ocurrio un problema";
-          }
+						$this->Alert($msj, $alert);
+						$this->Update($id_timeRange);
+	        } else {
+						throw new \Exception("", 1);
+	        }
       } catch (\Exception $e) {
-        $alert = "yellow";
-        $msj = $e->getMessage();
+				$alert = "yellow";
+        $msj = "Problema al modificar el rango horario";
+				$this->Alert($msj, $alert);
       }
     }
-		$list = $this->timeRangeDAO->SelectAll();
-		//requerir la vista correspondiente
-		require_once 'AdminViews/UpdateTimeRange.php';
+		$this->Update();
 	}
 
 	public function Delete($id_timeRange = null) {
+    $list = $this->getTimeRangeList();
+    require_once 'AdminViews/DeleteTimeRange.php';
+	}
+
+	public function DeleteTimeRange($id_timeRange = null) {
 		if (isset($id_timeRange)) {
       try {
         if ($this->timeRangeDAO->DeleteById($id_timeRange)) {
           $alert = "green";
           $msj = "Rango Horario eliminado";
-        } else {
-          $alert = "yellow";
-          $msj = "Ocurrio un problema";
-        }
-      } catch (\Exception $e) {
-        $alert = "yellow";
-        $msj = $e->getMessage();
-      }
-  	}
-    $list = $this->timeRangeDAO->SelectAll();
-    //requerira la vista correspondiente
-    require_once 'AdminViews/DeleteTimeRange.php';
+				} else {
+					throw new \Exception("", 1);
+				}
+			} catch (\PDOException $e) {
+				$error = $e->errorInfo;
+				$alert = "yellow";
+				if ($error[1] == '1451') {
+					$msj = "No se pudo eliminar, el rango horario esta asignado a un envio";
+				} else {
+					$msj = "Ocurrio un problema con la Base de Datos: error ".$error[1];
+				}
+				$this->Alert($msj, $alert);
+			} catch (\Exception $e) {
+				$alert = "yellow";
+				$msj = "Problema al eliminar el rango horario";
+				$this->Alert($msj, $alert);
+	  	}
+			$this->Delete();
+		}
 	}
-}
-
-?>
+} ?>

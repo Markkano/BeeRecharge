@@ -21,7 +21,7 @@ class OrderController {
   public function NewOrder($select) {
     if (isset($_SESSION['order'])) {
       $order = $_SESSION['order'];
-      if (strcmp($select, '1') == 0) {
+      if (strcmp($select, '2') == 0) {
         header('location: /'.BASE_URL.'Send');
       } else {
         $this->ConfirmOrder();

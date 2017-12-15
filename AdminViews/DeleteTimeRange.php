@@ -1,9 +1,4 @@
-<?php if (isset($alert) && !strcmp($alert, "") == 0) { ?>
-  <div class="alert <?= $alert; ?>">
-    <?= $msj; ?>
-  </div>
-<?php } ?>
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionTimeRange/Delete" method="post" onsubmit="return Confirmar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionTimeRange/DeleteTimeRange" method="post" onsubmit="return Confirmar();">
   <tr>
     <td><h1>Eliminar Horario</h1></td>
   </tr>

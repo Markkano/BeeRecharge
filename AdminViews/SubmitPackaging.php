@@ -1,10 +1,4 @@
-<?php if (isset($alert) && !strcmp($alert, "") == 0) { ?>
-  <div class="alert <?= $alert; ?>">
-    <?= $msj; ?>
-  </div>
-<?php } ?>
-
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionPackaging/Submit" method="post" onsubmit="return Validar();" enctype="multipart/form-data">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionPackaging/SubmitPackaging" method="post" onsubmit="return Validar();" enctype="multipart/form-data">
   <table class="centrar">
     <tr>
       <td><h1>Nuevo Envase</h1></td>

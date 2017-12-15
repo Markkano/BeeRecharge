@@ -10,33 +10,74 @@ class GestionSubsidiaryController extends GestionController {
 
   public function __construct() {
     self::$roles = array('Admin');
-    $this->subsidiaryDAO = SubsidiaryDAO::getInstance();
-    parent::__construct();
+    try {
+      $this->subsidiaryDAO = SubsidiaryDAO::getInstance();
+    } catch (\Exception $e) {
+      $alert = "red";
+      $msj = "Error: Ocurrio un problema al conectar con la Base de Datos";
+    } finally {
+      parent::__construct();
+      if (isset($msj) && isset($alert)) {
+        $this->Alert($msj, $alert);
+        die();
+      }
+    }
   }
 
   public function Index() {}
 
-  public function Submit($lat = 0.0, $lon = 0.0, $address = null, $phone = null) {
-    if (isset($address)) {
+  private function getSubsidiaryList() {
+    try {
+      $list = $this->subsidiaryDAO->SelectAll();
+    } catch (\Exception $e) {
+      $alert = "red";
+      $msj = "Ocurrio un problema al traer la lista de Sucursales";
+      $this->Alert($msj, $alert);
+      $list = array();
+    }
+    return $list;
+  }
+
+  public function Submit() {
+    require_once 'AdminViews/SubmitSubsidiary.php';
+  }
+
+  public function SubmitSubsidiary($lat = 0.0, $lon = 0.0, $address = null, $phone = null) {
+    if (isset($address) && isset($phone)) {
       $subsidiary = new Subsidiary($address, $phone, $lat, $lon);
       try {
         $subsidiary = $this->subsidiaryDAO->Insert($subsidiary);
         if (isset($subsidiary)) {
           $alert = "green";
           $msj = "Sucursal añadida correctamente: ".$subsidiary->getAddress();
+          $this->Alert($msj, $alert);
         } else {
-          $alert = "yellow";
-          $msj = "Ocurrio un problema";
+          throw new \Exception("", 1);
         }
+      } catch (\PDOException $e) {
+        $error = $e->errorInfo;
+        $alert = "yellow";
+        if ($error[1] == '1062') { //Entrada duplicada
+          $msj = "Ya existe una sucursal con esa Direccion";
+        } else {
+          $msj = "Ocurrio un problema con la Base de Datos: error ".$error[1];
+        }
+        $this->Alert($msj, $alert);
       } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = $e->getMessage();
+        $msj = "Ocurrio un problema";
+        $this->Alert($msj, $alert);
       }
     }
-    require_once 'AdminViews/SubmitSubsidiary.php';
+    $this->Submit();
   }
 
-  public function Update($lat = 0.0, $lon = 0.0, $id_subsidiary = null, $address = null, $phone = null) {
+  public function Update($id_subsidiary = null) {
+    $list = $this->getSubsidiaryList();
+    require_once 'AdminViews/UpdateSubsidiary.php';
+  }
+
+  public function UpdateSubsidiary($lat = 0.0, $lon = 0.0, $id_subsidiary = null, $address = null, $phone = null) {
     if (isset ($id_subsidiary) && isset($address) && isset($phone)) {
       $subsidiary = new Subsidiary($address, $phone, $lat, $lon);
       $subsidiary->setId($id_subsidiary);
@@ -45,36 +86,59 @@ class GestionSubsidiaryController extends GestionController {
           if (isset($subsidiary)) {
             $alert = "green";
             $msj = "Sucursal modificada correctamente: ".$subsidiary->getAddress();
+            $this->Alert($msj, $alert);
           } else {
-            $alert = "yellow";
-            $msj = "Ocurrio un problema";
+            throw new \Exception("", 1);
           }
+      } catch (\PDOException $e) {
+        $error = $e->errorInfo;
+        $alert = "yellow";
+        if ($error[1] == '1062') { //Entrada duplicada
+          $msj = "Ya existe otra sucursal con esa Direccion";
+        } else {
+          $msj = "Ocurrio un problema con la Base de Datos: error ".$error[1];
+        }
+        $this->Alert($msj, $alert);
       } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = $e->getMessage();
+        $msj = "Ocurrio un problema al actualizar la sucursal";
+        $this->Alert($msj, $alert);
       }
     }
-    $list = $this->subsidiaryDAO->SelectAll();
-    require_once 'AdminViews/UpdateSubsidiary.php';
+    $this->Update($id_subsidiary);
   }
 
-  public function Delete($address = null, $id_subsidiary = null) {
+  public function Delete() {
+    $list = $this->getSubsidiaryList();
+    require_once 'AdminViews/DeleteSubsidiary.php';
+  }
+
+  public function DeleteSubsidiary($address = null, $id_subsidiary = null) {
     if (isset($address) && isset($id_subsidiary)) {
       try {
         if ($this->subsidiaryDAO->DeleteById($id_subsidiary)) {
           $alert = "green";
           $msj = "Sucursal eliminada: ".$address." (id ".$id_subsidiary.")";
+          $this->Alert($msj, $alert);
         } else {
-          $alert = "yellow";
-          $msj = "Ocurrio un problema";
+          throw new \Exception("", 1);
         }
+      } catch (\PDOException $e) {
+        $error = $e->errorInfo;
+        $alert = "yellow";
+        if ($error[1] == '1451') {
+          $msj = "No se pudo eliminar, la sucursal ya posee pedidos";
+        } else {
+          $msj = "Ocurrio un problema con la Base de Datos: error ".$error[1];
+        }
+        $this->Alert($msj, $alert);
       } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = $e->getMessage();
+        $msj = "Ocurrio un problema al eliminar la sucursal";
+        $this->Alert($msj, $alert);
       }
     }
-    $list = $this->subsidiaryDAO->SelectAll();
-    require_once 'AdminViews/DeleteSubsidiary.php';
+    $this->Delete();
   }
 
   public function ManageMarkers($id_subsidiary = null, $lat = null, $lon = null) {
@@ -87,16 +151,17 @@ class GestionSubsidiaryController extends GestionController {
         if (isset($subsidiary)) {
           $alert = "green";
           $msj = "Sucursal modificada correctamente: ".$subsidiary->getAddress();
+          $this->Alert($msj, $alert);
         } else {
-          $alert = "yellow";
-          $msj = "Ocurrio un problema";
+          throw new \Exception("", 1);
         }
       } catch (\Exception $e) {
         $alert = "yellow";
-        $msj = $e->getMessage();
+        $msj = "Ocurrio un problema";
+        $this->Alert($msj, $alert);
       }
     }
-    $list = $this->subsidiaryDAO->SelectAll();
+    $list = $this->getSubsidiaryList();
     require_once 'AdminViews/SubsidiaryMarkers.php';
   }
 }

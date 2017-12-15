@@ -1,10 +1,4 @@
-<?php if (isset($alert) && !strcmp($alert, "") == 0) { ?>
-  <div class="alert <?= $alert; ?>">
-    <?= $msj; ?>
-  </div>
-<?php } ?>
-
-<form class="form" name="form" action="/<?= BASE_URL ?>gestionSubsidiary/Submit" method="post" onsubmit="return Validar();">
+<form class="form" name="form" action="/<?= BASE_URL ?>gestionSubsidiary/SubmitSubsidiary" method="post" onsubmit="return Validar();">
   <table class="centrar">
     <tr>
       <td><h1>Nueva Sucursal</h1></td>
